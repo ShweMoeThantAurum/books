@@ -6,20 +6,7 @@
     "lang": "Burmese",
     "status": "finished",
     "summary": "",
-    "entries": [
-      {
-        "type": "note",
-        "text": "ဂျပန်ရောက်မြန်မာနိုင်ငံသားတစ်ဦးရဲ့ အတွေ့အကြုံများ"
-      },
-      {
-        "type": "note",
-        "text": "ဇာတ်ကားတစ်ပုဒ်လိုရေးထား"
-      },
-      {
-        "type": "note",
-        "text": "Plot တင်ပြပုံကောင်း"
-      }
-    ]
+    "notes": "ဂျပန်ရောက်မြန်မာနိုင်ငံသားတစ်ဦးရဲ့ အတွေ့အကြုံများ\nဇာတ်ကားတစ်ပုဒ်လိုရေးထား\nPlot တင်ပြပုံကောင်း"
   },
   {
     "id": "_euxtvaci0",
@@ -28,16 +15,7 @@
     "lang": "Burmese",
     "status": "finished",
     "summary": "",
-    "entries": [
-      {
-        "type": "note",
-        "text": "မိဘတွေခေတ် ၁၉၅၀-၁၉၆၀ ဖွားတွေရဲ့ ဖြတ်သန်းမှုကိုလေ့လာနိုင်"
-      },
-      {
-        "type": "note",
-        "text": "မြန်မာနိုင်ငံရဲ့ နေဝင်းအာဏာသိမ်းပြီး ဖြတ်သန်းမှု ခေတ်အဆက်ဆက်ကိုလေ့လာနိုင်"
-      }
-    ]
+    "notes": "မိဘတွေခေတ် ၁၉၅၀-၁၉၆၀ ဖွားတွေရဲ့ ဖြတ်သန်းမှုကိုလေ့လာနိုင်\nမြန်မာနိုင်ငံရဲ့ နေဝင်းအာဏာသိမ်းပြီး ဖြတ်သန်းမှု ခေတ်အဆက်ဆက်ကိုလေ့လာနိုင်"
   },
   {
     "id": "_5l3uxiogx",
@@ -46,16 +24,7 @@
     "lang": "Burmese",
     "status": "finished",
     "summary": "",
-    "entries": [
-      {
-        "type": "note",
-        "text": "အက်ဆေးတွေရဲ့အရေးပါပုံကို သိရ"
-      },
-      {
-        "type": "note",
-        "text": "အက်ဆေးတွေဖတ်ချင်စိတ်ဖြစ်ပေါ်လာအောင်ပေးနိုင်"
-      }
-    ]
+    "notes": "အက်ဆေးတွေရဲ့အရေးပါပုံကို သိရ\nအက်ဆေးတွေဖတ်ချင်စိတ်ဖြစ်ပေါ်လာအောင်ပေးနိုင်"
   },
   {
     "id": "_chiw82dx0",
@@ -64,12 +33,7 @@
     "lang": "Burmese",
     "status": "finished",
     "summary": "",
-    "entries": [
-      {
-        "type": "note",
-        "text": "မိဘတစ်ယောက်အနေဖြင့်၊ လူကြီးတစ်ယောက်အနေဖြင့် ပြုသင့်တဲ့၊ စဉ်းစားတွေးခေါ်သင့်တဲ့ အတွေးအခေါ်များရ"
-      }
-    ]
+    "notes": "မိဘတစ်ယောက်အနေဖြင့်၊ လူကြီးတစ်ယောက်အနေဖြင့် ပြုသင့်တဲ့၊ စဉ်းစားတွေးခေါ်သင့်တဲ့ အတွေးအခေါ်များရ"
   },
   {
     "id": "_tvymduwvo",
@@ -78,16 +42,7 @@
     "lang": "English",
     "status": "finished",
     "summary": "",
-    "entries": [
-      {
-        "type": "note",
-        "text": "ကြော်ငြာတွေရဲ့ စကားလုံးအသုံးချပုံ အလိမ်အငြာများ"
-      },
-      {
-        "type": "note",
-        "text": "နိုင်ငံရေးသမားတွေရဲ့ စကားလုံးရွေးခြယ်မှု ပရိယာလ်များ စသည်ဖြင့်"
-      }
-    ]
+    "notes": "ကြော်ငြာတွေရဲ့ စကားလုံးအသုံးချပုံ အလိမ်အငြာများ\nနိုင်ငံရေးသမားတွေရဲ့ စကားလုံးရွေးခြယ်မှု ပရိယာလ်များ စသည်ဖြင့်"
   },
   {
     "id": "_23jtftqxo",
@@ -96,16 +51,7 @@
     "lang": "English",
     "status": "finished",
     "summary": "",
-    "entries": [
-      {
-        "type": "note",
-        "text": "နိုင်ငံတွေဘာကြောင့်ကျဆုံးရလဲ"
-      },
-      {
-        "type": "note",
-        "text": "သီအိုရီနှစ်ခုထုတ် (လွတ်လပ်တဲ့ နိုင်ငံရေးစနစ်ရှိရင် လွတ်လပ်တဲ့ စီးပွားရေးဖြစ်ထွန်း၊ အပိတ်နိုင်ငံရေးစနစ်ရှိရင် အပိတ်စီးပွားရေးဖြစ်)"
-      }
-    ]
+    "notes": "နိုင်ငံတွေဘာကြောင့်ကျဆုံးရလဲ\nသီအိုရီနှစ်ခုထုတ် (လွတ်လပ်တဲ့ နိုင်ငံရေးစနစ်ရှိရင် လွတ်လပ်တဲ့ စီးပွားရေးဖြစ်ထွန်း၊ အပိတ်နိုင်ငံရေးစနစ်ရှိရင် အပိတ်စီးပွားရေးဖြစ်)"
   },
   {
     "id": "_7nbeezh3t",
@@ -114,24 +60,7 @@
     "lang": "Burmese",
     "status": "finished",
     "summary": "",
-    "entries": [
-      {
-        "type": "note",
-        "text": "သမိုင်းတွင် မအိုဇာမရှိ"
-      },
-      {
-        "type": "note",
-        "text": "ဦးပေါ်ဦး မရှိ"
-      },
-      {
-        "type": "note",
-        "text": "မယ်နုအုတ်ကျောင်း အမှား"
-      },
-      {
-        "type": "note",
-        "text": "ကနောင်မင်းသားရေမြုပ်ဗုံးအမှား"
-      }
-    ]
+    "notes": "သမိုင်းတွင် မအိုဇာမရှိ\nဦးပေါ်ဦး မရှိ\nမယ်နုအုတ်ကျောင်း အမှား\nကနောင်မင်းသားရေမြုပ်ဗုံးအမှား"
   },
   {
     "id": "_uj3oiru5l",
@@ -140,12 +69,7 @@
     "lang": "English",
     "status": "finished",
     "summary": "",
-    "entries": [
-      {
-        "type": "note",
-        "text": "ဘာလို့ဒီကမ္ဘာကြီးကပိုကောင်းလဲ၊ data တွေကို ဘယ်လိုမှန်ကုန်စွာကြည့်ရမလဲ"
-      }
-    ]
+    "notes": "ဘာလို့ဒီကမ္ဘာကြီးကပိုကောင်းလဲ၊ data တွေကို ဘယ်လိုမှန်ကုန်စွာကြည့်ရမလဲ"
   },
   {
     "id": "_avqiy18zy",
@@ -154,16 +78,7 @@
     "lang": "English",
     "status": "finished",
     "summary": "",
-    "entries": [
-      {
-        "type": "note",
-        "text": "အောက်ခြေသန်းထစ်ထောင်ဘာလို့ဖြစ်နေ"
-      },
-      {
-        "type": "note",
-        "text": "ဆင်းရဲပြီးသားနိုင်ငံတွေဘာလို့ဆက်ဆင်းရဲနေလဲ အချက်ငါးချက်ဖြင့်တင်ပြ"
-      }
-    ]
+    "notes": "အောက်ခြေသန်းထစ်ထောင်ဘာလို့ဖြစ်နေ\nဆင်းရဲပြီးသားနိုင်ငံတွေဘာလို့ဆက်ဆင်းရဲနေလဲ အချက်ငါးချက်ဖြင့်တင်ပြ"
   },
   {
     "id": "_wefba2v5b",
@@ -172,40 +87,7 @@
     "lang": "Burmese",
     "status": "finished",
     "summary": "",
-    "entries": [
-      {
-        "type": "note",
-        "text": "သတ်ပုံပြင်သူများ၊ စာတတ်ပေတတ်လူပေါ"
-      },
-      {
-        "type": "note",
-        "text": "A spoon does not know the taste of soup, nor a learned fool the taste of wisdom"
-      },
-      {
-        "type": "note",
-        "text": "လူဆိုတာ သဘာဝတရားက ခြယ်မှုန်းရေးသားထားတဲ့ နောက်ကြောင်းခံပုံဝတ္ထုလေးတွေရှိစမြဲ မဟုတ်လား"
-      },
-      {
-        "type": "note",
-        "text": "မောင်ဝံသ၊ ဆရာကြီးမင်းသိင်္ခ"
-      },
-      {
-        "type": "note",
-        "text": "ရုပ်ရှင်ရဲ့ရနံ့ - ရှိန်ဝါ"
-      },
-      {
-        "type": "note",
-        "text": "Manchester by the Sea"
-      },
-      {
-        "type": "note",
-        "text": "ဝါရိတ္တသီလ"
-      },
-      {
-        "type": "note",
-        "text": "ရှေးကဝိပါက် ခုနစ်ရက်၊ ကာလဝိပါက် နောက်ပိုးတက်"
-      }
-    ]
+    "notes": "သတ်ပုံပြင်သူများ၊ စာတတ်ပေတတ်လူပေါ\nA spoon does not know the taste of soup, nor a learned fool the taste of wisdom\nလူဆိုတာ သဘာဝတရားက ခြယ်မှုန်းရေးသားထားတဲ့ နောက်ကြောင်းခံပုံဝတ္ထုလေးတွေရှိစမြဲ မဟုတ်လား\nမောင်ဝံသ၊ ဆရာကြီးမင်းသိင်္ခ\nရုပ်ရှင်ရဲ့ရနံ့ - ရှိန်ဝါ\nManchester by the Sea\nဝါရိတ္တသီလ\nရှေးကဝိပါက် ခုနစ်ရက်၊ ကာလဝိပါက် နောက်ပိုးတက်"
   },
   {
     "id": "_ljjhmpqn4",
@@ -214,16 +96,7 @@
     "lang": "Burmese",
     "status": "finished",
     "summary": "",
-    "entries": [
-      {
-        "type": "note",
-        "text": "၁၉၃၆-၁၉၅၀ ဝန်းကျင် မြန်မာနိုင်ငံ၏နာမည်ကျော် စာရေးဆရာအချို့၊ ပုဂ္ဂိုလ်အချို့တို့၏ နေထိုင်မှုဘဝပုံရိပ်များကို စာရေးဆရာဒဂုန်ဆရာမြင်ကွင်းမှလေ့လာနိုင်၊ ၎င်းလူများ၏လူသားဆန်မှုများကိုမြင်ရ"
-      },
-      {
-        "type": "note",
-        "text": "မောင်သာဆွေ၊ မင်းသုဝဏ်"
-      }
-    ]
+    "notes": "၁၉၃၆-၁၉၅၀ ဝန်းကျင် မြန်မာနိုင်ငံ၏နာမည်ကျော် စာရေးဆရာအချို့၊ ပုဂ္ဂိုလ်အချို့တို့၏ နေထိုင်မှုဘဝပုံရိပ်များကို စာရေးဆရာဒဂုန်ဆရာမြင်ကွင်းမှလေ့လာနိုင်၊ ၎င်းလူများ၏လူသားဆန်မှုများကိုမြင်ရ\nမောင်သာဆွေ၊ မင်းသုဝဏ်"
   },
   {
     "id": "_xabra4tif",
@@ -232,28 +105,7 @@
     "lang": "Burmese",
     "status": "finished",
     "summary": "",
-    "entries": [
-      {
-        "type": "note",
-        "text": "ဇာတ်လမ်း ဇာတ်သွားကောင်း"
-      },
-      {
-        "type": "note",
-        "text": "လွတ်လပ်ရေးမရခင်နှင့် လွတ်လပ်ရေးရပြီးစ မြန်မာပြည်၌နေထိုင်သောမိသားစုတို့၏ လှုပ်ရှားပုံ၊ နေထိုင်ပုံတို့အားလေ့လာနိုင်။"
-      },
-      {
-        "type": "note",
-        "text": "စာရေးသူ၏ စာရေးရခြင်းရည်ရွယ်ချက် အထူးကောင်းမွန်၊ မွန်မြတ်၏။"
-      },
-      {
-        "type": "note",
-        "text": "စာအုပ်ဖတ်ပြီး ရင်၌ လေးလေးပင်ပင်ခံစားချက်မျိုးကျန်။"
-      },
-      {
-        "type": "note",
-        "text": "ဇာတ်ကောင်များ၏ သရုပ်များကို အသေးစိတ်ရေးသားဖော်ပြထား၍ စိတ်ထဲ၌ပုံဖော်ရာတွင် လွယ်ကူ။ သရုပ်များကို ပိုင်နိုင်စွာလည်းပုံဖော်ထား၏။"
-      }
-    ]
+    "notes": "ဇာတ်လမ်း ဇာတ်သွားကောင်း\nလွတ်လပ်ရေးမရခင်နှင့် လွတ်လပ်ရေးရပြီးစ မြန်မာပြည်၌နေထိုင်သောမိသားစုတို့၏ လှုပ်ရှားပုံ၊ နေထိုင်ပုံတို့အားလေ့လာနိုင်။\nစာရေးသူ၏ စာရေးရခြင်းရည်ရွယ်ချက် အထူးကောင်းမွန်၊ မွန်မြတ်၏။\nစာအုပ်ဖတ်ပြီး ရင်၌ လေးလေးပင်ပင်ခံစားချက်မျိုးကျန်။\nဇာတ်ကောင်များ၏ သရုပ်များကို အသေးစိတ်ရေးသားဖော်ပြထား၍ စိတ်ထဲ၌ပုံဖော်ရာတွင် လွယ်ကူ။ သရုပ်များကို ပိုင်နိုင်စွာလည်းပုံဖော်ထား၏။"
   },
   {
     "id": "_7tbtlqmk4",
@@ -262,32 +114,7 @@
     "lang": "Burmese",
     "status": "reading",
     "summary": "",
-    "entries": [
-      {
-        "type": "link",
-        "url": "https://archive.org/details/dli.pahar.2892/page/166/mode/2up",
-        "text": "Burma's Icy Mountains — Kingdon-Ward"
-      },
-      {
-        "type": "link",
-        "url": "https://archive.org/details/narrativeofmissi00yulerich",
-        "text": "A Narrative of the Mission Sent by the Governor-General of India to the Court of Ava in 1855 — Sir Henry Yule (1820-1889)"
-      },
-      {
-        "type": "note",
-        "text": "မယ်နုနှင့်ကုန်းဘောင်ရှာပုံတော်"
-      },
-      {
-        "type": "link",
-        "url": "https://archive.org/details/mandalayandothe02ocogoog/mode/2up",
-        "text": "မန္တလေးနှင့်အခြားမြို့ဟောင်းများ"
-      },
-      {
-        "type": "link",
-        "url": "https://archive.org/details/fp_Silent_Spring-Rachel_Carson-1962/mode/2up",
-        "text": "တိတ်ဆိတ်သောနွေဦးရာသီ / Silent Spring — Rachel Carson"
-      }
-    ]
+    "notes": "@ https://archive.org/details/dli.pahar.2892/page/166/mode/2up Burma's Icy Mountains — Kingdon-Ward\n@ https://archive.org/details/narrativeofmissi00yulerich A Narrative of the Mission Sent by the Governor-General of India to the Court of Ava in 1855 — Sir Henry Yule (1820-1889)\nမယ်နုနှင့်ကုန်းဘောင်ရှာပုံတော်\n@ https://archive.org/details/mandalayandothe02ocogoog/mode/2up မန္တလေးနှင့်အခြားမြို့ဟောင်းများ\n@ https://archive.org/details/fp_Silent_Spring-Rachel_Carson-1962/mode/2up တိတ်ဆိတ်သောနွေဦးရာသီ / Silent Spring — Rachel Carson"
   },
   {
     "id": "_j532b5goh",
@@ -296,7 +123,7 @@
     "lang": "English",
     "status": "toread",
     "summary": "",
-    "entries": []
+    "notes": ""
   },
   {
     "id": "_n0it0t4qr",
@@ -305,7 +132,7 @@
     "lang": "English",
     "status": "toread",
     "summary": "",
-    "entries": []
+    "notes": ""
   },
   {
     "id": "_shh5zckul",
@@ -314,7 +141,7 @@
     "lang": "English",
     "status": "toread",
     "summary": "",
-    "entries": []
+    "notes": ""
   },
   {
     "id": "_3kf2hr72p",
@@ -323,7 +150,7 @@
     "lang": "English",
     "status": "toread",
     "summary": "",
-    "entries": []
+    "notes": ""
   },
   {
     "id": "_tqgfep5i5",
@@ -332,7 +159,7 @@
     "lang": "English",
     "status": "toread",
     "summary": "",
-    "entries": []
+    "notes": ""
   },
   {
     "id": "_zokl1r4oi",
@@ -341,7 +168,7 @@
     "lang": "English",
     "status": "toread",
     "summary": "",
-    "entries": []
+    "notes": ""
   },
   {
     "id": "_lvo8v7xrd",
@@ -350,7 +177,7 @@
     "lang": "English",
     "status": "toread",
     "summary": "",
-    "entries": []
+    "notes": ""
   },
   {
     "id": "_k9nr6bp6h",
@@ -359,7 +186,7 @@
     "lang": "English",
     "status": "toread",
     "summary": "",
-    "entries": []
+    "notes": ""
   },
   {
     "id": "_sxb26t2j2",
@@ -368,7 +195,7 @@
     "lang": "English",
     "status": "toread",
     "summary": "",
-    "entries": []
+    "notes": ""
   },
   {
     "id": "_5tly6dbf8",
@@ -377,7 +204,7 @@
     "lang": "English",
     "status": "toread",
     "summary": "",
-    "entries": []
+    "notes": ""
   },
   {
     "id": "_poj0fdhi0",
@@ -386,7 +213,7 @@
     "lang": "English",
     "status": "toread",
     "summary": "",
-    "entries": []
+    "notes": ""
   },
   {
     "id": "_tzc6qbf2m",
@@ -395,7 +222,7 @@
     "lang": "English",
     "status": "toread",
     "summary": "",
-    "entries": []
+    "notes": ""
   },
   {
     "id": "_xzqtrrwko",
@@ -404,7 +231,7 @@
     "lang": "English",
     "status": "finished",
     "summary": "",
-    "entries": []
+    "notes": ""
   },
   {
     "id": "_5p7aysm0s",
@@ -413,7 +240,7 @@
     "lang": "English",
     "status": "finished",
     "summary": "",
-    "entries": []
+    "notes": ""
   },
   {
     "id": "_yf1s1g6dd",
@@ -422,7 +249,7 @@
     "lang": "English",
     "status": "toread",
     "summary": "",
-    "entries": []
+    "notes": ""
   },
   {
     "id": "_2wvllx39s",
@@ -431,7 +258,7 @@
     "lang": "English",
     "status": "toread",
     "summary": "",
-    "entries": []
+    "notes": ""
   },
   {
     "id": "_ooe77bq06",
@@ -440,7 +267,7 @@
     "lang": "English",
     "status": "toread",
     "summary": "",
-    "entries": []
+    "notes": ""
   },
   {
     "id": "_xhm133lby",
@@ -449,7 +276,7 @@
     "lang": "English",
     "status": "toread",
     "summary": "",
-    "entries": []
+    "notes": ""
   },
   {
     "id": "_youkb4uxf",
@@ -458,7 +285,7 @@
     "lang": "English",
     "status": "toread",
     "summary": "",
-    "entries": []
+    "notes": ""
   },
   {
     "id": "_qhn5m3w8p",
@@ -467,7 +294,7 @@
     "lang": "English",
     "status": "toread",
     "summary": "",
-    "entries": []
+    "notes": ""
   },
   {
     "id": "_x51bv6nwu",
@@ -476,7 +303,7 @@
     "lang": "English",
     "status": "toread",
     "summary": "",
-    "entries": []
+    "notes": ""
   },
   {
     "id": "_7bq3aa3nd",
@@ -485,7 +312,7 @@
     "lang": "English",
     "status": "toread",
     "summary": "",
-    "entries": []
+    "notes": ""
   },
   {
     "id": "_9yeop2nnx",
@@ -494,7 +321,7 @@
     "lang": "English",
     "status": "toread",
     "summary": "",
-    "entries": []
+    "notes": ""
   },
   {
     "id": "_7wl9z9j2v",
@@ -503,7 +330,7 @@
     "lang": "English",
     "status": "toread",
     "summary": "",
-    "entries": []
+    "notes": ""
   },
   {
     "id": "_nvc2lux5q",
@@ -512,7 +339,7 @@
     "lang": "English",
     "status": "toread",
     "summary": "",
-    "entries": []
+    "notes": ""
   },
   {
     "id": "_yydwxch5z",
@@ -521,7 +348,7 @@
     "lang": "English",
     "status": "toread",
     "summary": "",
-    "entries": []
+    "notes": ""
   },
   {
     "id": "_cvj2dcsg8",
@@ -530,7 +357,7 @@
     "lang": "English",
     "status": "toread",
     "summary": "",
-    "entries": []
+    "notes": ""
   },
   {
     "id": "_vpuayo2k4",
@@ -539,7 +366,7 @@
     "lang": "English",
     "status": "toread",
     "summary": "",
-    "entries": []
+    "notes": ""
   },
   {
     "id": "_k0w2crkvc",
@@ -548,7 +375,7 @@
     "lang": "English",
     "status": "toread",
     "summary": "",
-    "entries": []
+    "notes": ""
   },
   {
     "id": "_098psltj9",
@@ -557,7 +384,7 @@
     "lang": "English",
     "status": "toread",
     "summary": "",
-    "entries": []
+    "notes": ""
   },
   {
     "id": "_xrag4glub",
@@ -566,7 +393,7 @@
     "lang": "English",
     "status": "toread",
     "summary": "",
-    "entries": []
+    "notes": ""
   },
   {
     "id": "_nq7x60equ",
@@ -575,7 +402,7 @@
     "lang": "English",
     "status": "toread",
     "summary": "",
-    "entries": []
+    "notes": ""
   },
   {
     "id": "_xjeq8v5fq",
@@ -584,7 +411,7 @@
     "lang": "English",
     "status": "toread",
     "summary": "",
-    "entries": []
+    "notes": ""
   },
   {
     "id": "_qgzmjij2g",
@@ -593,7 +420,7 @@
     "lang": "English",
     "status": "toread",
     "summary": "",
-    "entries": []
+    "notes": ""
   },
   {
     "id": "_q3onhh8bu",
@@ -602,7 +429,7 @@
     "lang": "English",
     "status": "toread",
     "summary": "",
-    "entries": []
+    "notes": ""
   },
   {
     "id": "_6yf0l9n10",
@@ -611,7 +438,7 @@
     "lang": "English",
     "status": "toread",
     "summary": "",
-    "entries": []
+    "notes": ""
   },
   {
     "id": "_ydpppgfpc",
@@ -620,7 +447,7 @@
     "lang": "English",
     "status": "toread",
     "summary": "",
-    "entries": []
+    "notes": ""
   },
   {
     "id": "_imfqg4t7b",
@@ -629,7 +456,7 @@
     "lang": "English",
     "status": "toread",
     "summary": "",
-    "entries": []
+    "notes": ""
   },
   {
     "id": "_v0dhhv5vp",
@@ -638,7 +465,7 @@
     "lang": "English",
     "status": "toread",
     "summary": "",
-    "entries": []
+    "notes": ""
   },
   {
     "id": "_4uz2qxlqd",
@@ -647,7 +474,7 @@
     "lang": "English",
     "status": "toread",
     "summary": "",
-    "entries": []
+    "notes": ""
   },
   {
     "id": "_rqrmmk12s",
@@ -656,7 +483,7 @@
     "lang": "English",
     "status": "toread",
     "summary": "",
-    "entries": []
+    "notes": ""
   },
   {
     "id": "_pp6qywqef",
@@ -665,7 +492,7 @@
     "lang": "English",
     "status": "toread",
     "summary": "",
-    "entries": []
+    "notes": ""
   },
   {
     "id": "_niy18vf6p",
@@ -674,7 +501,7 @@
     "lang": "English",
     "status": "toread",
     "summary": "",
-    "entries": []
+    "notes": ""
   },
   {
     "id": "_swwskje9k",
@@ -683,7 +510,7 @@
     "lang": "English",
     "status": "toread",
     "summary": "",
-    "entries": []
+    "notes": ""
   },
   {
     "id": "_jc20vj4uf",
@@ -692,7 +519,7 @@
     "lang": "English",
     "status": "toread",
     "summary": "",
-    "entries": []
+    "notes": ""
   },
   {
     "id": "_1opww5py0",
@@ -701,7 +528,7 @@
     "lang": "English",
     "status": "toread",
     "summary": "",
-    "entries": []
+    "notes": ""
   },
   {
     "id": "_m0at4ro9t",
@@ -710,7 +537,7 @@
     "lang": "English",
     "status": "toread",
     "summary": "",
-    "entries": []
+    "notes": ""
   },
   {
     "id": "_yj33mcdr1",
@@ -719,7 +546,7 @@
     "lang": "English",
     "status": "toread",
     "summary": "",
-    "entries": []
+    "notes": ""
   },
   {
     "id": "_g7y6lg52m",
@@ -728,7 +555,7 @@
     "lang": "English",
     "status": "toread",
     "summary": "",
-    "entries": []
+    "notes": ""
   },
   {
     "id": "_f7je518bt",
@@ -737,7 +564,7 @@
     "lang": "English",
     "status": "toread",
     "summary": "",
-    "entries": []
+    "notes": ""
   },
   {
     "id": "_0fnqse4mk",
@@ -746,7 +573,7 @@
     "lang": "English",
     "status": "toread",
     "summary": "",
-    "entries": []
+    "notes": ""
   },
   {
     "id": "_k2u5kbtkh",
@@ -755,7 +582,7 @@
     "lang": "English",
     "status": "toread",
     "summary": "",
-    "entries": []
+    "notes": ""
   },
   {
     "id": "_ggh31lo1t",
@@ -764,7 +591,7 @@
     "lang": "Burmese",
     "status": "toread",
     "summary": "",
-    "entries": []
+    "notes": ""
   },
   {
     "id": "_ivavtweq5",
@@ -773,7 +600,7 @@
     "lang": "Burmese",
     "status": "toread",
     "summary": "",
-    "entries": []
+    "notes": ""
   },
   {
     "id": "_tnfor2yfu",
@@ -782,7 +609,7 @@
     "lang": "Burmese",
     "status": "toread",
     "summary": "",
-    "entries": []
+    "notes": ""
   },
   {
     "id": "_nwywksazk",
@@ -791,7 +618,7 @@
     "lang": "Burmese",
     "status": "toread",
     "summary": "",
-    "entries": []
+    "notes": ""
   },
   {
     "id": "_la2xniasq",
@@ -800,7 +627,7 @@
     "lang": "Burmese",
     "status": "toread",
     "summary": "",
-    "entries": []
+    "notes": ""
   },
   {
     "id": "_cb5z4oewi",
@@ -809,7 +636,7 @@
     "lang": "Burmese",
     "status": "toread",
     "summary": "",
-    "entries": []
+    "notes": ""
   },
   {
     "id": "_po1k8u819",
@@ -818,7 +645,7 @@
     "lang": "Burmese",
     "status": "toread",
     "summary": "",
-    "entries": []
+    "notes": ""
   },
   {
     "id": "_2dfdb6whr",
@@ -827,7 +654,7 @@
     "lang": "Burmese",
     "status": "toread",
     "summary": "",
-    "entries": []
+    "notes": ""
   },
   {
     "id": "_r4x1b2ks3",
@@ -836,7 +663,7 @@
     "lang": "Burmese",
     "status": "toread",
     "summary": "",
-    "entries": []
+    "notes": ""
   },
   {
     "id": "_yyq7rfowi",
@@ -845,7 +672,7 @@
     "lang": "Burmese",
     "status": "toread",
     "summary": "",
-    "entries": []
+    "notes": ""
   },
   {
     "id": "_lir37c2kv",
@@ -854,7 +681,7 @@
     "lang": "Burmese",
     "status": "toread",
     "summary": "",
-    "entries": []
+    "notes": ""
   },
   {
     "id": "_8vigkcmb1",
@@ -863,7 +690,7 @@
     "lang": "Burmese",
     "status": "toread",
     "summary": "",
-    "entries": []
+    "notes": ""
   },
   {
     "id": "_sptvg51je",
@@ -872,7 +699,7 @@
     "lang": "Burmese",
     "status": "toread",
     "summary": "",
-    "entries": []
+    "notes": ""
   },
   {
     "id": "_z01jk8ehp",
@@ -881,7 +708,7 @@
     "lang": "Burmese",
     "status": "toread",
     "summary": "",
-    "entries": []
+    "notes": ""
   },
   {
     "id": "_hfhx6y12d",
@@ -890,7 +717,7 @@
     "lang": "Burmese",
     "status": "toread",
     "summary": "",
-    "entries": []
+    "notes": ""
   },
   {
     "id": "_50720sutp",
@@ -899,7 +726,7 @@
     "lang": "Burmese",
     "status": "toread",
     "summary": "",
-    "entries": []
+    "notes": ""
   },
   {
     "id": "_wy1nqcy1n",
@@ -908,7 +735,7 @@
     "lang": "Burmese",
     "status": "toread",
     "summary": "",
-    "entries": []
+    "notes": ""
   },
   {
     "id": "_rrgsjrpu5",
@@ -917,7 +744,7 @@
     "lang": "Burmese",
     "status": "toread",
     "summary": "",
-    "entries": []
+    "notes": ""
   },
   {
     "id": "_5oy8fzlhu",
@@ -926,7 +753,7 @@
     "lang": "Burmese",
     "status": "toread",
     "summary": "",
-    "entries": []
+    "notes": ""
   },
   {
     "id": "_zffder4a3",
@@ -935,7 +762,7 @@
     "lang": "Burmese",
     "status": "toread",
     "summary": "",
-    "entries": []
+    "notes": ""
   },
   {
     "id": "_0myxxka6c",
@@ -944,7 +771,7 @@
     "lang": "Burmese",
     "status": "toread",
     "summary": "",
-    "entries": []
+    "notes": ""
   },
   {
     "id": "_xisamiqv9",
@@ -953,7 +780,7 @@
     "lang": "Burmese",
     "status": "toread",
     "summary": "",
-    "entries": []
+    "notes": ""
   },
   {
     "id": "_fukkqr7qa",
@@ -962,7 +789,7 @@
     "lang": "Burmese",
     "status": "toread",
     "summary": "",
-    "entries": []
+    "notes": ""
   },
   {
     "id": "_3mhvs4q9v",
@@ -971,7 +798,7 @@
     "lang": "Burmese",
     "status": "toread",
     "summary": "",
-    "entries": []
+    "notes": ""
   },
   {
     "id": "_0k7ve4qfx",
@@ -980,7 +807,7 @@
     "lang": "Burmese",
     "status": "toread",
     "summary": "",
-    "entries": []
+    "notes": ""
   },
   {
     "id": "_hrzfk75yq",
@@ -989,7 +816,7 @@
     "lang": "Burmese",
     "status": "toread",
     "summary": "",
-    "entries": []
+    "notes": ""
   },
   {
     "id": "_iy7lsq98r",
@@ -998,6 +825,6 @@
     "lang": "Burmese",
     "status": "toread",
     "summary": "",
-    "entries": []
+    "notes": ""
   }
 ]
