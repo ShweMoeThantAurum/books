@@ -1,1513 +1,647 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Reading Journal</title>
-    <style>
-        :root {
-            --bg: #faf9f6;
-            --sidebar-bg: #f0ede8;
-            --border: #e0dbd3;
-            --text: #2c2c2c;
-            --text-muted: #888;
-            --accent: #c97d4e;
-            --accent-light: #f5ebe0;
-            --badge-toread: #e8e0d5;
-            --badge-reading: #d4e8f5;
-            --badge-finished: #d5e8d5;
-            --badge-toread-text: #7a6a5a;
-            --badge-reading-text: #2a6a9a;
-            --badge-finished-text: #2a7a2a;
-            --sidebar-w: 300px;
-            --radius: 10px;
-            --shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            height: 100vh;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .topbar {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 18px;
-            height: 56px;
-            background: var(--bg);
-            border-bottom: 1px solid var(--border);
-            flex-shrink: 0;
-            gap: 12px;
-        }
-
-        .topbar-left {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .topbar h1 {
-            font-size: 17px;
-            font-weight: 700;
-            font-family: Georgia, serif;
-            letter-spacing: -0.3px;
-            white-space: nowrap;
-        }
-
-        .topbar h1 span {
-            color: var(--accent);
-        }
-
-        .hamburger {
-            display: none;
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 4px;
-            color: var(--text);
-        }
-
-        .hamburger svg {
-            display: block;
-        }
-
-        .nav-tabs {
-            display: flex;
-            gap: 2px;
-        }
-
-        .nav-tabs button {
-            background: none;
-            border: none;
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--text-muted);
-            padding: 7px 12px;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-
-        .nav-tabs button:hover {
-            background: var(--sidebar-bg);
-        }
-
-        .nav-tabs button.active {
-            color: var(--accent);
-            background: var(--accent-light);
-        }
-
-        .topbar-actions {
-            display: flex;
-            gap: 8px;
-        }
-
-        .btn {
-            background: var(--accent);
-            color: #fff;
-            border: none;
-            padding: 8px 14px;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            white-space: nowrap;
-            transition: opacity .15s;
-        }
-
-        .btn:hover {
-            opacity: .85;
-        }
-
-        .btn-ghost {
-            background: none;
-            color: var(--text-muted);
-            border: 1px solid var(--border);
-        }
-
-        .btn-ghost:hover {
-            background: var(--sidebar-bg);
-            opacity: 1;
-        }
-
-        .btn-sm {
-            padding: 6px 11px;
-            font-size: 13px;
-        }
-
-        #content {
-            flex: 1;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .page {
-            position: absolute;
-            inset: 0;
-            overflow-y: auto;
-            display: none;
-        }
-
-        .page.show {
-            display: block;
-        }
-
-        #viewLibrary.show {
-            display: flex;
-            overflow: hidden;
-            padding: 0;
-        }
-
-        .wrap {
-            max-width: 760px;
-            margin: 0 auto;
-            padding: 30px 24px 70px;
-        }
-
-        .eyebrow {
-            font-size: 12px;
-            font-weight: 700;
-            letter-spacing: 1.2px;
-            text-transform: uppercase;
-            color: var(--accent);
-        }
-
-        .page-head {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-            margin-bottom: 16px;
-        }
-
-        .search-bar {
-            width: 100%;
-            padding: 11px 14px;
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            background: #fff;
-            font-size: 14px;
-            color: var(--text);
-            outline: none;
-            margin-bottom: 18px;
-        }
-
-        .search-bar:focus {
-            border-color: var(--accent);
-        }
-
-        .home-title {
-            font-family: Georgia, serif;
-            font-size: 30px;
-            line-height: 1.2;
-            margin-top: 8px;
-        }
-
-        .home-author {
-            color: var(--text-muted);
-            margin: 6px 0 14px;
-            font-size: 15px;
-        }
-
-        .reading-pills {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-            margin-top: 10px;
-        }
-
-        .pill {
-            border: 1px solid var(--border);
-            background: var(--bg);
-            color: var(--text);
-            border-radius: 20px;
-            padding: 5px 12px;
-            font-size: 13px;
-            cursor: pointer;
-            font-family: Georgia, serif;
-        }
-
-        .pill.active {
-            background: var(--accent-light);
-            border-color: var(--accent);
-            color: var(--accent);
-        }
-
-        .status-row {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 16px;
-        }
-
-        .status-select {
-            padding: 6px 10px;
-            border-radius: 8px;
-            border: 1px solid var(--border);
-            background: var(--bg);
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--text);
-            cursor: pointer;
-            outline: none;
-        }
-
-        .status-select:focus {
-            border-color: var(--accent);
-        }
-
-        .home-foot {
-            margin-top: 22px;
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-
-        .home-foot a {
-            color: var(--accent);
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 14px;
-        }
-
-        .home-foot a:hover {
-            text-decoration: underline;
-        }
-
-        .save-status {
-            font-size: 13px;
-            color: var(--text-muted);
-        }
-
-        .save-status.saved {
-            color: #4caf7d;
-        }
-
-        .notes-editor {
-            width: 100%;
-            min-height: 44vh;
-            padding: 18px;
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            font-size: 16px;
-            line-height: 1.8;
-            background: #fff;
-            font-family: inherit;
-            outline: none;
-            resize: vertical;
-            color: var(--text);
-        }
-
-        .notes-editor:focus {
-            border-color: var(--accent);
-        }
-
-        .syntax-hint {
-            font-size: 13px;
-            color: var(--text-muted);
-            margin-top: 10px;
-            line-height: 1.7;
-        }
-
-        .syntax-hint code {
-            background: var(--sidebar-bg);
-            padding: 1px 6px;
-            border-radius: 5px;
-            font-size: 12px;
-        }
-
-        .suggest-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        .suggest-card {
-            display: flex;
-            gap: 16px;
-            background: #fff;
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 16px;
-            box-shadow: var(--shadow);
-            cursor: pointer;
-            transition: transform .12s;
-        }
-
-        .suggest-card:hover {
-            transform: translateY(-2px);
-        }
-
-        .suggest-cover {
-            width: 74px;
-            height: 108px;
-            flex-shrink: 0;
-            border-radius: 6px;
-            background-size: cover;
-            background-position: center;
-            background-color: var(--sidebar-bg);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-muted);
-            font-family: Georgia, serif;
-            font-size: 26px;
-        }
-
-        .suggest-body {
-            min-width: 0;
-        }
-
-        .suggest-body h3 {
-            font-family: Georgia, serif;
-            font-size: 18px;
-            line-height: 1.25;
-        }
-
-        .suggest-body .meta {
-            font-size: 13px;
-            color: var(--text-muted);
-            margin: 4px 0 8px;
-        }
-
-        .suggest-summary {
-            font-size: 13px;
-            color: var(--text);
-            line-height: 1.6;
-            display: -webkit-box;
-            -webkit-line-clamp: 4;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-
-        .feed {
-            display: flex;
-            flex-direction: column;
-            gap: 22px;
-        }
-
-        .feed-card {
-            background: #fff;
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 22px 24px;
-            box-shadow: var(--shadow);
-        }
-
-        .feed-top {
-            display: flex;
-            gap: 14px;
-            margin-bottom: 14px;
-        }
-
-        .feed-cover {
-            width: 54px;
-            height: 80px;
-            flex-shrink: 0;
-            border-radius: 5px;
-            background-size: cover;
-            background-position: center;
-            background-color: var(--sidebar-bg);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-muted);
-            font-family: Georgia, serif;
-        }
-
-        .feed-card h3 {
-            font-family: Georgia, serif;
-            font-size: 20px;
-            line-height: 1.25;
-        }
-
-        .feed-card .meta {
-            font-size: 13px;
-            color: var(--text-muted);
-            margin-top: 4px;
-        }
-
-        .feed-actions {
-            margin-top: 16px;
-        }
-
-        .feed-none {
-            color: var(--text-muted);
-            font-style: italic;
-            font-size: 14px;
-        }
-
-        .feed-empty {
-            text-align: center;
-            color: var(--text-muted);
-            padding: 60px 20px;
-            font-size: 15px;
-        }
-
-        /* NOTE DISPLAY (inline-tag parsed) */
-        .notes-view {
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-        }
-
-        .nv-empty {
-            color: var(--text-muted);
-            font-style: italic;
-        }
-
-        .nv-note {
-            font-size: 15px;
-            line-height: 1.8;
-            white-space: pre-wrap;
-            word-wrap: break-word;
-            overflow-wrap: anywhere;
-        }
-
-        .nv-note a {
-            color: var(--accent);
-        }
-
-        .nv-list {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .nv-list li {
-            position: relative;
-            padding-left: 22px;
-            font-size: 15px;
-            line-height: 1.7;
-            word-wrap: break-word;
-            overflow-wrap: anywhere;
-        }
-
-        .nv-list li::before {
-            content: '›';
-            position: absolute;
-            left: 5px;
-            top: -1px;
-            color: var(--accent);
-            font-weight: 700;
-            font-size: 16px;
-        }
-
-        .nv-list li a {
-            color: var(--accent);
-        }
-
-        .nv-quote {
-            font-family: Georgia, serif;
-            font-style: italic;
-            font-size: 16px;
-            line-height: 1.7;
-            padding: 10px 18px;
-            border-left: 3px solid var(--accent);
-            background: var(--accent-light);
-            border-radius: 0 10px 10px 0;
-            white-space: pre-wrap;
-        }
-
-        .nv-quote::before {
-            content: '“';
-            color: var(--accent);
-            margin-right: 3px;
-        }
-
-        .nv-link {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 9px 12px;
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            text-decoration: none;
-            color: var(--text);
-            background: var(--bg);
-            transition: background .12s;
-        }
-
-        .nv-link:hover {
-            background: var(--accent-light);
-        }
-
-        .nv-fav {
-            width: 18px;
-            height: 18px;
-            flex-shrink: 0;
-            border-radius: 3px;
-        }
-
-        .nv-link-label {
-            flex: 1;
-            font-size: 14px;
-            min-width: 0;
-        }
-
-        .nv-link-dom {
-            font-size: 12px;
-            color: var(--text-muted);
-            flex-shrink: 0;
-            white-space: nowrap;
-        }
-
-        .about-box {
-            display: flex;
-            gap: 16px;
-            background: var(--sidebar-bg);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 16px;
-        }
-
-        .about-cover {
-            width: 72px;
-            height: 104px;
-            flex-shrink: 0;
-            border-radius: 6px;
-            background-size: cover;
-            background-position: center;
-            background-color: var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-muted);
-            font-family: Georgia, serif;
-            font-size: 24px;
-        }
-
-        .about-body {
-            min-width: 0;
-        }
-
-        .about-label {
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: .6px;
-            text-transform: uppercase;
-            color: var(--text-muted);
-            margin-bottom: 6px;
-        }
-
-        .about-summary {
-            font-size: 13px;
-            line-height: 1.65;
-            color: var(--text);
-            display: -webkit-box;
-            -webkit-line-clamp: 5;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-
-        .sidebar {
-            width: var(--sidebar-w);
-            background: var(--sidebar-bg);
-            border-right: 1px solid var(--border);
-            display: flex;
-            flex-direction: column;
-            flex-shrink: 0;
-            overflow: hidden;
-            transition: transform .25s ease;
-        }
-
-        .sidebar-search {
-            padding: 12px;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .sidebar-search input {
-            width: 100%;
-            padding: 8px 12px;
-            border-radius: 8px;
-            border: 1px solid var(--border);
-            background: var(--bg);
-            font-size: 14px;
-            color: var(--text);
-            outline: none;
-        }
-
-        .sidebar-search input:focus {
-            border-color: var(--accent);
-        }
-
-        .sidebar-list {
-            flex: 1;
-            overflow-y: auto;
-            padding: 8px 0;
-        }
-
-        .status-group {
-            margin-bottom: 4px;
-        }
-
-        .status-label {
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: .8px;
-            text-transform: uppercase;
-            color: var(--text-muted);
-            padding: 8px 16px 4px;
-        }
-
-        .book-item {
-            padding: 10px 16px;
-            cursor: pointer;
-            border-radius: 8px;
-            margin: 1px 8px;
-            transition: background .1s;
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-        }
-
-        .book-item:hover {
-            background: var(--border);
-        }
-
-        .book-item.active {
-            background: var(--accent-light);
-        }
-
-        .book-item-info {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .book-item-title {
-            font-size: 14px;
-            font-weight: 600;
-            font-family: Georgia, serif;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .book-item-author {
-            font-size: 12px;
-            color: var(--text-muted);
-            margin-top: 2px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .note-dot {
-            color: var(--accent);
-            font-size: 11px;
-        }
-
-        .badge {
-            font-size: 10px;
-            font-weight: 700;
-            padding: 2px 7px;
-            border-radius: 20px;
-            white-space: nowrap;
-            flex-shrink: 0;
-            margin-top: 2px;
-        }
-
-        .badge-toread {
-            background: var(--badge-toread);
-            color: var(--badge-toread-text);
-        }
-
-        .badge-reading {
-            background: var(--badge-reading);
-            color: var(--badge-reading-text);
-        }
-
-        .badge-finished {
-            background: var(--badge-finished);
-            color: var(--badge-finished-text);
-        }
-
-        .main {
-            flex: 1;
-            overflow-y: auto;
-            padding: 32px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .empty-state {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-muted);
-            gap: 12px;
-            text-align: center;
-        }
-
-        .empty-state .icon {
-            font-size: 48px;
-        }
-
-        .book-header {
-            display: flex;
-            align-items: flex-start;
-            justify-content: space-between;
-            gap: 16px;
-            flex-wrap: wrap;
-        }
-
-        .book-title-area h2 {
-            font-size: 26px;
-            font-family: Georgia, serif;
-            font-weight: 700;
-            line-height: 1.2;
-        }
-
-        .book-title-area .author {
-            font-size: 15px;
-            color: var(--text-muted);
-            margin-top: 4px;
-        }
-
-        .book-actions {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-            align-items: center;
-        }
-
-        .divider {
-            border: none;
-            border-top: 1px solid var(--border);
-        }
-
-        .note-section {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .note-section>label {
-            font-size: 13px;
-            font-weight: 700;
-            letter-spacing: .4px;
-            color: var(--text-muted);
-            text-transform: uppercase;
-        }
-
-        .overlay {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, .35);
-            z-index: 100;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .overlay.open {
-            display: flex;
-        }
-
-        .modal {
-            background: var(--bg);
-            border-radius: 14px;
-            padding: 28px;
-            width: 100%;
-            max-width: 480px;
-            box-shadow: 0 8px 40px rgba(0, 0, 0, .15);
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            max-height: 88vh;
-            overflow-y: auto;
-        }
-
-        .modal h3 {
-            font-size: 18px;
-            font-family: Georgia, serif;
-        }
-
-        .modal-field {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        .modal-field label {
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--text-muted);
-        }
-
-        .modal-field input,
-        .modal-field select {
-            padding: 10px 12px;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            font-size: 14px;
-            background: #fff;
-            color: var(--text);
-            outline: none;
-        }
-
-        .modal-field input:focus,
-        .modal-field select:focus {
-            border-color: var(--accent);
-        }
-
-        .modal-actions {
-            display: flex;
-            justify-content: flex-end;
-            gap: 8px;
-            margin-top: 4px;
-            flex-wrap: wrap;
-        }
-
-        .modal-tools {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-            border-top: 1px solid var(--border);
-            padding-top: 14px;
-        }
-
-        @media (max-width:720px) {
-            .topbar h1 {
-                display: none;
-            }
-
-            .nav-tabs button {
-                padding: 7px 9px;
-                font-size: 13px;
-            }
-
-            .btn {
-                padding: 7px 11px;
-            }
-
-            .wrap {
-                padding: 22px 16px 60px;
-            }
-
-            .home-title {
-                font-size: 24px;
-            }
-
-            .book-title-area h2 {
-                font-size: 21px;
-            }
-
-            .sidebar {
-                position: absolute;
-                top: 0;
-                left: 0;
-                bottom: 0;
-                z-index: 50;
-                transform: translateX(-100%);
-                width: 80vw;
-                max-width: 300px;
-            }
-
-            .sidebar.open {
-                transform: translateX(0);
-                box-shadow: 4px 0 20px rgba(0, 0, 0, .12);
-            }
-
-            body.in-library .hamburger {
-                display: block;
-            }
-
-            .main {
-                padding: 20px 16px;
-            }
-
-            .overlay-sidebar {
-                display: none;
-                position: absolute;
-                inset: 0;
-                background: rgba(0, 0, 0, .2);
-                z-index: 49;
-            }
-
-            .overlay-sidebar.open {
-                display: block;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Reading Journal</title>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<style>
+  :root {
+    --bg:#faf9f6; --sidebar-bg:#f0ede8; --border:#e0dbd3; --text:#2c2c2c; --text-muted:#888;
+    --accent:#c97d4e; --accent-light:#f5ebe0;
+    --badge-toread:#e8e0d5; --badge-reading:#d4e8f5; --badge-finished:#d5e8d5;
+    --badge-toread-text:#7a6a5a; --badge-reading-text:#2a6a9a; --badge-finished-text:#2a7a2a;
+    --sidebar-w:300px; --radius:10px; --shadow:0 2px 12px rgba(0,0,0,0.07);
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:var(--bg); color:var(--text); height:100vh; overflow:hidden; display:flex; flex-direction:column; }
+
+  .topbar { display:flex; align-items:center; justify-content:space-between; padding:0 18px; height:56px; background:var(--bg); border-bottom:1px solid var(--border); flex-shrink:0; gap:12px; }
+  .topbar-left { display:flex; align-items:center; gap:10px; }
+  .topbar h1 { font-size:17px; font-weight:700; font-family:Georgia,serif; letter-spacing:-0.3px; white-space:nowrap; }
+  .topbar h1 span { color:var(--accent); }
+  .hamburger { display:none; background:none; border:none; cursor:pointer; padding:4px; color:var(--text); }
+  .hamburger svg { display:block; }
+  .nav-tabs { display:flex; gap:2px; }
+  .nav-tabs button { background:none; border:none; font-size:14px; font-weight:600; color:var(--text-muted); padding:7px 12px; border-radius:8px; cursor:pointer; }
+  .nav-tabs button:hover { background:var(--sidebar-bg); }
+  .nav-tabs button.active { color:var(--accent); background:var(--accent-light); }
+  .topbar-actions { display:flex; gap:8px; }
+  .btn { background:var(--accent); color:#fff; border:none; padding:8px 14px; border-radius:8px; font-size:14px; font-weight:600; cursor:pointer; white-space:nowrap; transition:opacity .15s; }
+  .btn:hover { opacity:.85; }
+  .btn-ghost { background:none; color:var(--text-muted); border:1px solid var(--border); }
+  .btn-ghost:hover { background:var(--sidebar-bg); opacity:1; }
+  .btn-sm { padding:6px 11px; font-size:13px; }
+
+  #content { flex:1; overflow:hidden; position:relative; }
+  .page { position:absolute; inset:0; overflow-y:auto; display:none; }
+  .page.show { display:block; }
+  #viewLibrary.show { display:flex; overflow:hidden; padding:0; }
+  .wrap { max-width:760px; margin:0 auto; padding:30px 24px 70px; }
+  .eyebrow { font-size:12px; font-weight:700; letter-spacing:1.2px; text-transform:uppercase; color:var(--accent); }
+  .page-head { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:16px; }
+  .search-bar { width:100%; padding:11px 14px; border:1px solid var(--border); border-radius:10px; background:#fff; font-size:14px; color:var(--text); outline:none; margin-bottom:18px; }
+  .search-bar:focus { border-color:var(--accent); }
+
+  .home-title { font-family:Georgia,serif; font-size:30px; line-height:1.2; margin-top:8px; }
+  .home-author { color:var(--text-muted); margin:6px 0 14px; font-size:15px; }
+  .reading-pills { display:flex; gap:8px; flex-wrap:wrap; margin-top:10px; }
+  .pill { border:1px solid var(--border); background:var(--bg); color:var(--text); border-radius:20px; padding:5px 12px; font-size:13px; cursor:pointer; font-family:Georgia,serif; }
+  .pill.active { background:var(--accent-light); border-color:var(--accent); color:var(--accent); }
+  .status-row { display:flex; align-items:center; gap:12px; margin-bottom:16px; }
+  .status-select { padding:6px 10px; border-radius:8px; border:1px solid var(--border); background:var(--bg); font-size:13px; font-weight:600; color:var(--text); cursor:pointer; outline:none; }
+  .status-select:focus { border-color:var(--accent); }
+  .home-foot { margin-top:22px; display:flex; gap:20px; flex-wrap:wrap; }
+  .home-foot a { color:var(--accent); cursor:pointer; font-weight:600; font-size:14px; }
+  .home-foot a:hover { text-decoration:underline; }
+  .save-status { font-size:13px; color:var(--text-muted); }
+  .save-status.saved { color:#4caf7d; }
+
+  .notes-editor { width:100%; min-height:44vh; padding:18px; border:1px solid var(--border); border-radius:14px; font-size:16px; line-height:1.8; background:#fff; font-family:inherit; outline:none; resize:vertical; color:var(--text); }
+  .notes-editor:focus { border-color:var(--accent); }
+  .syntax-hint { font-size:13px; color:var(--text-muted); margin-top:10px; line-height:1.7; }
+  .syntax-hint code { background:var(--sidebar-bg); padding:1px 6px; border-radius:5px; font-size:12px; }
+
+  .suggest-grid { display:flex; flex-direction:column; gap:16px; }
+  .suggest-card { display:flex; gap:16px; background:#fff; border:1px solid var(--border); border-radius:14px; padding:16px; box-shadow:var(--shadow); cursor:pointer; transition:transform .12s; }
+  .suggest-card:hover { transform:translateY(-2px); }
+  .suggest-cover { width:74px; height:108px; flex-shrink:0; border-radius:6px; background-size:cover; background-position:center; background-color:var(--sidebar-bg); display:flex; align-items:center; justify-content:center; color:var(--text-muted); font-family:Georgia,serif; font-size:26px; }
+  .suggest-body { min-width:0; }
+  .suggest-body h3 { font-family:Georgia,serif; font-size:18px; line-height:1.25; }
+  .suggest-body .meta { font-size:13px; color:var(--text-muted); margin:4px 0 8px; }
+  .suggest-summary { font-size:13px; color:var(--text); line-height:1.6; display:-webkit-box; -webkit-line-clamp:4; -webkit-box-orient:vertical; overflow:hidden; }
+
+  .feed { display:flex; flex-direction:column; gap:22px; }
+  .feed-card { background:#fff; border:1px solid var(--border); border-radius:14px; padding:22px 24px; box-shadow:var(--shadow); }
+  .feed-top { display:flex; gap:14px; margin-bottom:14px; }
+  .feed-cover { width:54px; height:80px; flex-shrink:0; border-radius:5px; background-size:cover; background-position:center; background-color:var(--sidebar-bg); display:flex; align-items:center; justify-content:center; color:var(--text-muted); font-family:Georgia,serif; }
+  .feed-card h3 { font-family:Georgia,serif; font-size:20px; line-height:1.25; }
+  .feed-card .meta { font-size:13px; color:var(--text-muted); margin-top:4px; }
+  .feed-actions { margin-top:16px; }
+  .feed-none { color:var(--text-muted); font-style:italic; font-size:14px; }
+  .feed-empty { text-align:center; color:var(--text-muted); padding:60px 20px; font-size:15px; }
+
+  .notes-view { display:flex; flex-direction:column; gap:14px; }
+  .nv-empty { color:var(--text-muted); font-style:italic; }
+  .nv-note { font-size:15px; line-height:1.8; white-space:pre-wrap; word-wrap:break-word; overflow-wrap:anywhere; }
+  .nv-note a { color:var(--accent); }
+  .nv-list { list-style:none; display:flex; flex-direction:column; gap:8px; }
+  .nv-list li { position:relative; padding-left:22px; font-size:15px; line-height:1.7; word-wrap:break-word; overflow-wrap:anywhere; }
+  .nv-list li::before { content:'›'; position:absolute; left:5px; top:-1px; color:var(--accent); font-weight:700; font-size:16px; }
+  .nv-list li a { color:var(--accent); }
+  .nv-quote { font-family:Georgia,serif; font-style:italic; font-size:16px; line-height:1.7; padding:10px 18px; border-left:3px solid var(--accent); background:var(--accent-light); border-radius:0 10px 10px 0; white-space:pre-wrap; }
+  .nv-quote::before { content:'"'; color:var(--accent); margin-right:3px; }
+  .nv-link { display:flex; align-items:center; gap:10px; padding:9px 12px; border:1px solid var(--border); border-radius:10px; text-decoration:none; color:var(--text); background:var(--bg); transition:background .12s; }
+  .nv-link:hover { background:var(--accent-light); }
+  .nv-fav { width:18px; height:18px; flex-shrink:0; border-radius:3px; }
+  .nv-link-label { flex:1; font-size:14px; min-width:0; }
+  .nv-link-dom { font-size:12px; color:var(--text-muted); flex-shrink:0; white-space:nowrap; }
+
+  .about-box { display:flex; gap:16px; background:var(--sidebar-bg); border:1px solid var(--border); border-radius:12px; padding:16px; }
+  .about-cover { width:72px; height:104px; flex-shrink:0; border-radius:6px; background-size:cover; background-position:center; background-color:var(--border); display:flex; align-items:center; justify-content:center; color:var(--text-muted); font-family:Georgia,serif; font-size:24px; }
+  .about-body { min-width:0; }
+  .about-label { font-size:11px; font-weight:700; letter-spacing:.6px; text-transform:uppercase; color:var(--text-muted); margin-bottom:6px; }
+  .about-summary { font-size:13px; line-height:1.65; color:var(--text); display:-webkit-box; -webkit-line-clamp:5; -webkit-box-orient:vertical; overflow:hidden; }
+
+  .sidebar { width:var(--sidebar-w); background:var(--sidebar-bg); border-right:1px solid var(--border); display:flex; flex-direction:column; flex-shrink:0; overflow:hidden; transition:transform .25s ease; }
+  .sidebar-search { padding:12px; border-bottom:1px solid var(--border); }
+  .sidebar-search input { width:100%; padding:8px 12px; border-radius:8px; border:1px solid var(--border); background:var(--bg); font-size:14px; color:var(--text); outline:none; }
+  .sidebar-search input:focus { border-color:var(--accent); }
+  .sidebar-list { flex:1; overflow-y:auto; padding:8px 0; }
+  .status-group { margin-bottom:4px; }
+  .status-label { font-size:11px; font-weight:700; letter-spacing:.8px; text-transform:uppercase; color:var(--text-muted); padding:8px 16px 4px; }
+  .book-item { padding:10px 16px; cursor:pointer; border-radius:8px; margin:1px 8px; transition:background .1s; display:flex; align-items:flex-start; gap:10px; }
+  .book-item:hover { background:var(--border); }
+  .book-item.active { background:var(--accent-light); }
+  .book-item-info { flex:1; min-width:0; }
+  .book-item-title { font-size:14px; font-weight:600; font-family:Georgia,serif; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .book-item-author { font-size:12px; color:var(--text-muted); margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .note-dot { color:var(--accent); font-size:11px; }
+  .badge { font-size:10px; font-weight:700; padding:2px 7px; border-radius:20px; white-space:nowrap; flex-shrink:0; margin-top:2px; }
+  .badge-toread { background:var(--badge-toread); color:var(--badge-toread-text); }
+  .badge-reading { background:var(--badge-reading); color:var(--badge-reading-text); }
+  .badge-finished { background:var(--badge-finished); color:var(--badge-finished-text); }
+  .main { flex:1; overflow-y:auto; padding:32px; display:flex; flex-direction:column; gap:20px; }
+  .empty-state { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; color:var(--text-muted); gap:12px; text-align:center; }
+  .empty-state .icon { font-size:48px; }
+  .book-header { display:flex; align-items:flex-start; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+  .book-title-area h2 { font-size:26px; font-family:Georgia,serif; font-weight:700; line-height:1.2; }
+  .book-title-area .author { font-size:15px; color:var(--text-muted); margin-top:4px; }
+  .book-actions { display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
+  .divider { border:none; border-top:1px solid var(--border); }
+  .note-section { display:flex; flex-direction:column; gap:10px; }
+  .note-section > label { font-size:13px; font-weight:700; letter-spacing:.4px; color:var(--text-muted); text-transform:uppercase; }
+
+  .overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.35); z-index:100; align-items:center; justify-content:center; padding:20px; }
+  .overlay.open { display:flex; }
+  .modal { background:var(--bg); border-radius:14px; padding:28px; width:100%; max-width:480px; box-shadow:0 8px 40px rgba(0,0,0,.15); display:flex; flex-direction:column; gap:16px; max-height:88vh; overflow-y:auto; }
+  .modal h3 { font-size:18px; font-family:Georgia,serif; }
+  .modal-field { display:flex; flex-direction:column; gap:6px; }
+  .modal-field label { font-size:13px; font-weight:600; color:var(--text-muted); }
+  .modal-field input, .modal-field select { padding:10px 12px; border:1px solid var(--border); border-radius:8px; font-size:14px; background:#fff; color:var(--text); outline:none; }
+  .modal-field input:focus, .modal-field select:focus { border-color:var(--accent); }
+  .modal-actions { display:flex; justify-content:flex-end; gap:8px; margin-top:4px; flex-wrap:wrap; }
+  .modal-tools { display:flex; gap:8px; flex-wrap:wrap; border-top:1px solid var(--border); padding-top:14px; }
+  .conn-status { font-size:13px; font-weight:600; padding:8px 12px; border-radius:8px; background:var(--sidebar-bg); }
+  .conn-ok { color:#4caf7d; }
+  .conn-err { color:#e05555; }
+
+  @media (max-width:720px) {
+    .topbar h1 { display:none; }
+    .nav-tabs button { padding:7px 9px; font-size:13px; }
+    .btn { padding:7px 11px; }
+    .wrap { padding:22px 16px 60px; }
+    .home-title { font-size:24px; }
+    .book-title-area h2 { font-size:21px; }
+    .sidebar { position:absolute; top:0; left:0; bottom:0; z-index:50; transform:translateX(-100%); width:80vw; max-width:300px; }
+    .sidebar.open { transform:translateX(0); box-shadow:4px 0 20px rgba(0,0,0,.12); }
+    body.in-library .hamburger { display:block; }
+    .main { padding:20px 16px; }
+    .overlay-sidebar { display:none; position:absolute; inset:0; background:rgba(0,0,0,.2); z-index:49; }
+    .overlay-sidebar.open { display:block; }
+  }
+</style>
 </head>
-
 <body>
 
-    <div class="topbar">
-        <div class="topbar-left">
-            <button class="hamburger" onclick="toggleSidebar()" aria-label="Menu">
-                <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-                    <rect y="4" width="22" height="2" rx="1" fill="currentColor" />
-                    <rect y="10" width="22" height="2" rx="1" fill="currentColor" />
-                    <rect y="16" width="22" height="2" rx="1" fill="currentColor" />
-                </svg>
-            </button>
-            <h1>My <span>Reading</span> Journal</h1>
-        </div>
-        <nav class="nav-tabs">
-            <button data-view="home" onclick="setView('home')">Home</button>
-            <button data-view="feed" onclick="setView('feed')">Notes</button>
-            <button data-view="library" onclick="setView('library')">Library</button>
-        </nav>
-        <div class="topbar-actions">
-            <button class="btn btn-ghost btn-sm" onclick="openSetup()">⚙</button>
-            <button class="btn btn-sm" onclick="openAddBook()">+ Add</button>
-        </div>
+<div class="topbar">
+  <div class="topbar-left">
+    <button class="hamburger" onclick="toggleSidebar()" aria-label="Menu">
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect y="4" width="22" height="2" rx="1" fill="currentColor"/><rect y="10" width="22" height="2" rx="1" fill="currentColor"/><rect y="16" width="22" height="2" rx="1" fill="currentColor"/></svg>
+    </button>
+    <h1>My <span>Reading</span> Journal</h1>
+  </div>
+  <nav class="nav-tabs">
+    <button data-view="home" onclick="setView('home')">Home</button>
+    <button data-view="feed" onclick="setView('feed')">Notes</button>
+    <button data-view="library" onclick="setView('library')">Library</button>
+  </nav>
+  <div class="topbar-actions">
+    <button class="btn btn-ghost btn-sm" onclick="openSetup()">⚙</button>
+    <button class="btn btn-sm" onclick="openAddBook()">+ Add</button>
+  </div>
+</div>
+
+<div id="content">
+  <div id="viewHome" class="page"></div>
+  <div id="viewFeed" class="page"></div>
+  <div id="viewLibrary" class="page">
+    <div class="overlay-sidebar" id="sidebarOverlay" onclick="closeSidebar()"></div>
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-search"><input type="text" id="searchInput" placeholder="Search books..." oninput="renderSidebar()"></div>
+      <div class="sidebar-list" id="sidebarList"></div>
+    </aside>
+    <main class="main">
+      <div class="empty-state" id="libEmpty"><div class="icon">📚</div><p>Select a book to view or edit,<br>or add a new one.</p></div>
+      <div id="bookDetail" style="display:none;"></div>
+    </main>
+  </div>
+</div>
+
+<!-- ADD BOOK MODAL -->
+<div class="overlay" id="addModal">
+  <div class="modal">
+    <h3>Add a Book</h3>
+    <div class="modal-field"><label>Title *</label><input type="text" id="newTitle" placeholder="Book title"></div>
+    <div class="modal-field"><label>Author</label><input type="text" id="newAuthor" placeholder="Author name"></div>
+    <div class="modal-field"><label>Language</label><select id="newLang"><option value="English">English</option><option value="Burmese">Burmese</option><option value="Other">Other</option></select></div>
+    <div class="modal-field"><label>Status</label><select id="newStatus"><option value="toread">To Read</option><option value="reading">Currently Reading</option><option value="finished">Finished</option></select></div>
+    <div class="modal-actions"><button class="btn btn-ghost" onclick="closeAddBook()">Cancel</button><button class="btn" onclick="addBook()">Add Book</button></div>
+  </div>
+</div>
+
+<!-- DATA MODAL -->
+<div class="overlay" id="setupModal">
+  <div class="modal">
+    <h3>⚙ Data</h3>
+    <p style="font-size:14px;color:var(--text-muted);line-height:1.6;">Your books sync automatically to Firebase Firestore. Download a backup or import a previous one at any time.</p>
+    <div class="conn-status" id="connStatus">Checking connection…</div>
+    <div class="modal-tools">
+      <button class="btn btn-ghost btn-sm" onclick="exportJson()">⬇ Download backup</button>
+      <button class="btn btn-ghost btn-sm" onclick="document.getElementById('importFile').click()">⬆ Import backup</button>
+      <input type="file" id="importFile" accept="application/json" style="display:none" onchange="importJson(event)">
     </div>
+    <div class="modal-actions"><button class="btn btn-ghost" onclick="closeSetup()">Close</button></div>
+  </div>
+</div>
 
-    <div id="content">
-        <div id="viewHome" class="page"></div>
-        <div id="viewFeed" class="page"></div>
-        <div id="viewLibrary" class="page">
-            <div class="overlay-sidebar" id="sidebarOverlay" onclick="closeSidebar()"></div>
-            <aside class="sidebar" id="sidebar">
-                <div class="sidebar-search"><input type="text" id="searchInput" placeholder="Search books..."
-                        oninput="renderSidebar()"></div>
-                <div class="sidebar-list" id="sidebarList"></div>
-            </aside>
-            <main class="main">
-                <div class="empty-state" id="libEmpty">
-                    <div class="icon">📚</div>
-                    <p>Select a book to view or edit,<br>or add a new one.</p>
-                </div>
-                <div id="bookDetail" style="display:none;"></div>
-            </main>
-        </div>
-    </div>
+<script>
+// ─── FIREBASE ─────────────────────────────────────────────
+const firebaseConfig = {
+  apiKey: "AIzaSyAu8sfOZQNbbzvuSDCGZ3vg1Ne919wm-v8",
+  authDomain: "reading-journal-d4839.firebaseapp.com",
+  projectId: "reading-journal-d4839",
+  storageBucket: "reading-journal-d4839.firebasestorage.app",
+  messagingSenderId: "806612897171",
+  appId: "1:806612897171:web:8e1efa2d49fd41dc73ac66"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+const DOC = db.collection('journal').doc('main');
 
-    <div class="overlay" id="addModal">
-        <div class="modal">
-            <h3>Add a Book</h3>
-            <div class="modal-field"><label>Title *</label><input type="text" id="newTitle" placeholder="Book title">
-            </div>
-            <div class="modal-field"><label>Author</label><input type="text" id="newAuthor" placeholder="Author name">
-            </div>
-            <div class="modal-field"><label>Language</label><select id="newLang">
-                    <option value="English">English</option>
-                    <option value="Burmese">Burmese</option>
-                    <option value="Other">Other</option>
-                </select></div>
-            <div class="modal-field"><label>Status</label><select id="newStatus">
-                    <option value="toread">To Read</option>
-                    <option value="reading">Currently Reading</option>
-                    <option value="finished">Finished</option>
-                </select></div>
-            <div class="modal-actions"><button class="btn btn-ghost" onclick="closeAddBook()">Cancel</button><button
-                    class="btn" onclick="addBook()">Add Book</button></div>
-        </div>
-    </div>
+// ─── STATE ────────────────────────────────────────────────
+let books=[], currentView='home', activeId=null, editMode=false, homeReadingId=null, localSaveTimer=null;
+const STORAGE_KEY='reading_journal_books';
+const INFO_PREFIX='bk_info_v2_';
 
-    <div class="overlay" id="setupModal">
-        <div class="modal">
-            <h3>⚙ Sync & Data</h3>
-            <p style="font-size:14px;color:var(--text-muted);line-height:1.6;">Saved to <strong>books.json</strong> in
-                your repo. Viewing works without a token once hosted; editing/sync needs a token with
-                <code>Contents: Read and write</code> on the repo.
-            </p>
-            <div class="modal-field"><label>GitHub Username</label><input type="text" id="ghUser"
-                    placeholder="your-username"></div>
-            <div class="modal-field"><label>Repository Name</label><input type="text" id="ghRepo" placeholder="books">
-            </div>
-            <div class="modal-field"><label>Personal Access Token</label><input type="password" id="ghToken"
-                    placeholder="github_pat_... or ghp_..."></div>
-            <p style="font-size:12px;color:var(--text-muted);">Token is stored only in your browser. Never shared, never
-                in the code.</p>
-            <div class="modal-actions"><button class="btn btn-ghost" onclick="closeSetup()">Cancel</button><button
-                    class="btn" onclick="saveSetup()">Save & Connect</button></div>
-            <div class="modal-tools">
-                <button class="btn btn-ghost btn-sm" onclick="exportJson()">⬇ Download books.json</button>
-                <button class="btn btn-ghost btn-sm" onclick="document.getElementById('importFile').click()">⬆ Import
-                    books.json</button>
-                <input type="file" id="importFile" accept="application/json" style="display:none"
-                    onchange="importJson(event)">
-            </div>
-        </div>
-    </div>
+// ─── SEED ─────────────────────────────────────────────────
+const seedBooks = [
+  { id:uid(), title:"အိမ်မပြန်ဖြစ်တဲ့အကြောင်းတွေ", author:"လူခါး", lang:"Burmese", status:"finished", notes:"ဂျပန်ရောက်မြန်မာနိုင်ငံသားတစ်ဦးရဲ့ အတွေ့အကြုံများ\nဇာတ်ကားတစ်ပုဒ်လိုရေးထား\nPlot တင်ပြပုံကောင်း" },
+  { id:uid(), title:"အနတ္တအင်နားရှား", author:"အေးမင်းစော", lang:"Burmese", status:"finished", notes:"မိဘတွေခေတ် ၁၉၅၀-၁၉၆၀ ဖွားတွေရဲ့ ဖြတ်သန်းမှုကိုလေ့လာနိုင်\nမြန်မာနိုင်ငံရဲ့ နေဝင်းအာဏာသိမ်းပြီး ဖြတ်သန်းမှု ခေတ်အဆက်ဆက်ကိုလေ့လာနိုင်" },
+  { id:uid(), title:"တိမ်ပုခက်လွှဲတဲ့ အိပ်မက်ကလေးတွေ အက်ဆေးစုစည်းမှု", author:"မောင်သာချို", lang:"Burmese", status:"finished", notes:"အက်ဆေးတွေရဲ့အရေးပါပုံကို သိရ\nအက်ဆေးတွေဖတ်ချင်စိတ်ဖြစ်ပေါ်လာအောင်ပေးနိုင်" },
+  { id:uid(), title:"မျှော်လင့်ချက်နှင့် အခြားမျက်နှာဖုံးဆောင်းပါးများ", author:"ဂျူး", lang:"Burmese", status:"finished", notes:"မိဘတစ်ယောက်အနေဖြင့်၊ လူကြီးတစ်ယောက်အနေဖြင့် ပြုသင့်တဲ့၊ စဉ်းစားတွေးခေါ်သင့်တဲ့ အတွေးအခေါ်များရ" },
+  { id:uid(), title:"Doublespeak", author:"William D. Lutz", lang:"English", status:"finished", notes:"ကြော်ငြာတွေရဲ့ စကားလုံးအသုံးချပုံ အလိမ်အငြာများ\nနိုင်ငံရေးသမားတွေရဲ့ စကားလုံးရွေးခြယ်မှု ပရိယာလ်များ စသည်ဖြင့်" },
+  { id:uid(), title:"Why Nations Fail", author:"Daron Acemoglu & James A. Robinson", lang:"English", status:"finished", notes:"နိုင်ငံတွေဘာကြောင့်ကျဆုံးရလဲ\nသီအိုရီနှစ်ခုထုတ် (လွတ်လပ်တဲ့ နိုင်ငံရေးစနစ်ရှိရင် လွတ်လပ်တဲ့ စီးပွားရေးဖြစ်ထွန်း၊ အပိတ်နိုင်ငံရေးစနစ်ရှိရင် အပိတ်စီးပွားရေးဖြစ်)" },
+  { id:uid(), title:"မြန်မာ့သမိုင်းထဲက ပါးစပ်ရာဇဝင်အလွဲများ", author:"မောင်သာ(ရှေးဟောင်းသုတေသန)", lang:"Burmese", status:"finished", notes:"သမိုင်းတွင် မအိုဇာမရှိ\nဦးပေါ်ဦး မရှိ\nမယ်နုအုတ်ကျောင်း အမှား\nကနောင်မင်းသားရေမြုပ်ဗုံးအမှား" },
+  { id:uid(), title:"Factfulness", author:"Hans Rosling, Ola Rosling & Anna Rosling Rönnlund", lang:"English", status:"finished", notes:"ဘာလို့ဒီကမ္ဘာကြီးကပိုကောင်းလဲ၊ data တွေကို ဘယ်လိုမှန်ကုန်စွာကြည့်ရမလဲ" },
+  { id:uid(), title:"The Bottom Billion", author:"Paul Collier", lang:"English", status:"finished", notes:"အောက်ခြေသန်းထစ်ထောင်ဘာလို့ဖြစ်နေ\nဆင်းရဲပြီးသားနိုင်ငံတွေဘာလို့ဆက်ဆင်းရဲနေလဲ အချက်ငါးချက်ဖြင့်တင်ပြ" },
+  { id:uid(), title:"လိပ်ပြာတောင်ပံနဲ့ လက်ဝါးဒဿန", author:"လူသာမန်", lang:"Burmese", status:"finished", notes:"သတ်ပုံပြင်သူများ၊ စာတတ်ပေတတ်လူပေါ\n> A spoon does not know the taste of soup, nor a learned fool the taste of wisdom\nလူဆိုတာ သဘာဝတရားက ခြယ်မှုန်းရေးသားထားတဲ့ နောက်ကြောင်းခံပုံဝတ္ထုလေးတွေရှိစမြဲ မဟုတ်လား\nမောင်ဝံသ၊ ဆရာကြီးမင်းသိင်္ခ\nရုပ်ရှင်ရဲ့ရနံ့ - ရှိန်ဝါ\nManchester by the Sea\nဝါရိတ္တသီလ\nရှေးကဝိပါက် ခုနစ်ရက်၊ ကာလဝိပါက် နောက်ပိုးတက်" },
+  { id:uid(), title:"ရုပ်ပုံလွှာ", author:"ဒဂုန်တာရာ", lang:"Burmese", status:"finished", notes:"၁၉၃၆-၁၉၅၀ ဝန်းကျင် မြန်မာနိုင်ငံ၏နာမည်ကျော် စာရေးဆရာအချို့၊ ပုဂ္ဂိုလ်အချို့တို့၏ နေထိုင်မှုဘဝပုံရိပ်များကို စာရေးဆရာဒဂုန်ဆရာမြင်ကွင်းမှလေ့လာနိုင်၊ ၎င်းလူများ၏လူသားဆန်မှုများကိုမြင်ရ\nမောင်သာဆွေ၊ မင်းသုဝဏ်" },
+  { id:uid(), title:"သူငယ်ချင်းလို့ဘဲဆက်၍ခေါ်မည်ခိုင်", author:"တက္ကသိုလ်ဘုန်းနိုင်", lang:"Burmese", status:"finished", notes:"ဇာတ်လမ်း ဇာတ်သွားကောင်း\nလွတ်လပ်ရေးမရခင်နှင့် လွတ်လပ်ရေးရပြီးစ မြန်မာပြည်၌နေထိုင်သောမိသားစုတို့၏ လှုပ်ရှားပုံ၊ နေထိုင်ပုံတို့အားလေ့လာနိုင်။\nစာရေးသူ၏ စာရေးရခြင်းရည်ရွယ်ချက် အထူးကောင်းမွန်၊ မွန်မြတ်၏။\nစာအုပ်ဖတ်ပြီး ရင်၌ လေးလေးပင်ပင်ခံစားချက်မျိုးကျန်။\nဇာတ်ကောင်များ၏ သရုပ်များကို အသေးစိတ်ရေးသားဖော်ပြထား၍ စိတ်ထဲ၌ပုံဖော်ရာတွင် လွယ်ကူ။ သရုပ်များကို ပိုင်နိုင်စွာလည်းပုံဖော်ထား၏။" },
+  { id:uid(), title:"ကျွန်မဘဝခရီးမှ စာအုပ်များ", author:"ဂျူး", lang:"Burmese", status:"finished", notes:"ဤစာအုပ်ထဲတွင် ဖော်ပြထားသော စာအုပ်များ —\n@ https://archive.org/details/dli.pahar.2892/page/166/mode/2up Burma's Icy Mountains — Kingdon-Ward\n@ https://archive.org/details/narrativeofmissi00yulerich A Narrative of the Mission to the Court of Ava in 1855 — Sir Henry Yule (1820-1889)\nမယ်နုနှင့်ကုန်းဘောင်ရှာပုံတော်\n@ https://archive.org/details/mandalayandothe02ocogoog/mode/2up မန္တလေးနှင့်အခြားမြို့ဟောင်းများ\n@ https://archive.org/details/fp_Silent_Spring-Rachel_Carson-1962/mode/2up တိတ်ဆိတ်သောနွေဦးရာသီ / Silent Spring — Rachel Carson" },
+  { id:uid(), title:"Leadership: Six Studies in World Strategy", author:"Henry Kissinger", lang:"English", status:"finished", notes:"" },
+  { id:uid(), title:"Steal Like an Artist", author:"Austin Kleon", lang:"English", status:"finished", notes:"" },
+  { id:uid(), title:"Becoming", author:"Michelle Obama", lang:"English", status:"toread", notes:"" },
+  { id:uid(), title:"Kane and Abel", author:"Jeffrey Archer", lang:"English", status:"toread", notes:"" },
+  { id:uid(), title:"The World Is Flat", author:"Thomas L. Friedman", lang:"English", status:"toread", notes:"" },
+  { id:uid(), title:"Age of Revolutions", author:"Fareed Zakaria", lang:"English", status:"toread", notes:"" },
+  { id:uid(), title:"1984", author:"George Orwell", lang:"English", status:"toread", notes:"" },
+  { id:uid(), title:"Animal Farm", author:"George Orwell", lang:"English", status:"toread", notes:"" },
+  { id:uid(), title:"A Promised Land", author:"Barack Obama", lang:"English", status:"toread", notes:"" },
+  { id:uid(), title:"The 7 Habits of Highly Effective People", author:"Stephen Covey", lang:"English", status:"toread", notes:"" },
+  { id:uid(), title:"The Age of the Economist", author:"Daniel Fusfeld", lang:"English", status:"toread", notes:"" },
+  { id:uid(), title:"Ideas of the Great Economists", author:"George Henry Soule", lang:"English", status:"toread", notes:"" },
+  { id:uid(), title:"The Worldly Philosophers", author:"Robert Heilbroner", lang:"English", status:"toread", notes:"" },
+  { id:uid(), title:"101 Ways to Be Less Stressed", author:"Caroline Leaf", lang:"English", status:"toread", notes:"" },
+  { id:uid(), title:"The End of Poverty", author:"Jeffrey Sachs", lang:"English", status:"toread", notes:"" },
+  { id:uid(), title:"The White Man's Burden", author:"William Easterly", lang:"English", status:"toread", notes:"" },
+  { id:uid(), title:"The Plundered Planet", author:"Paul Collier", lang:"English", status:"toread", notes:"" },
+  { id:uid(), title:"Exodus: How Migration Is Changing Our World", author:"Paul Collier", lang:"English", status:"toread", notes:"" },
+  { id:uid(), title:"The Future of Capitalism", author:"Paul Collier", lang:"English", status:"toread", notes:"" },
+  { id:uid(), title:"What It Is", author:"Lynda Barry", lang:"English", status:"toread", notes:"" },
+  { id:uid(), title:"Ignore Everybody", author:"Hugh MacLeod", lang:"English", status:"toread", notes:"" },
+  { id:uid(), title:"Rework", author:"Jason Fried & David Heinemeier Hansson", lang:"English", status:"toread", notes:"" },
+  { id:uid(), title:"The Gift", author:"Lewis Hyde", lang:"English", status:"toread", notes:"" },
+  { id:uid(), title:"The Ecstasy of Influence", author:"Jonathan Lethem", lang:"English", status:"toread", notes:"" },
+  { id:uid(), title:"Reality Hunger", author:"David Shields", lang:"English", status:"toread", notes:"" },
+  { id:uid(), title:"Understanding Comics", author:"Scott McCloud", lang:"English", status:"toread", notes:"" },
+  { id:uid(), title:"Bird by Bird", author:"Anne Lamott", lang:"English", status:"toread", notes:"" },
+  { id:uid(), title:"Flow", author:"Mihaly Csikszentmihalyi", lang:"English", status:"toread", notes:"" },
+  { id:uid(), title:"Make a World", author:"Ed Emberley", lang:"English", status:"toread", notes:"" },
+  { id:uid(), title:"Show Your Work", author:"Austin Kleon", lang:"English", status:"toread", notes:"" },
+  { id:uid(), title:"Keep Going", author:"Austin Kleon", lang:"English", status:"toread", notes:"" },
+  { id:uid(), title:"Walt Whitman: Poetry", author:"Walt Whitman", lang:"English", status:"toread", notes:"" },
+  { id:uid(), title:"The Mammoth Book of Jokes", author:"Geoff Tibbals", lang:"English", status:"toread", notes:"" },
+  { id:uid(), title:"The Seven Husbands of Evelyn Hugo", author:"Taylor Jenkins Reid", lang:"English", status:"toread", notes:"" },
+  { id:uid(), title:"One, Two, Three… Infinity", author:"George Gamow", lang:"English", status:"toread", notes:"" },
+  { id:uid(), title:"The Road to Reality", author:"Roger Penrose", lang:"English", status:"toread", notes:"" },
+  { id:uid(), title:"10 Rules for Raising Kids in a High-Tech World", author:"Jean Twenge", lang:"English", status:"toread", notes:"" },
+  { id:uid(), title:"Burmese Days", author:"George Orwell", lang:"English", status:"toread", notes:"" },
+  { id:uid(), title:"Shooting an Elephant", author:"George Orwell", lang:"English", status:"toread", notes:"" },
+  { id:uid(), title:"A Hanging", author:"George Orwell", lang:"English", status:"toread", notes:"" },
+  { id:uid(), title:"The Vegetarian", author:"Han Kang", lang:"English", status:"toread", notes:"" },
+  { id:uid(), title:"Human Acts", author:"Han Kang", lang:"English", status:"toread", notes:"" },
+  { id:uid(), title:"The White Book", author:"Han Kang", lang:"English", status:"toread", notes:"" },
+  { id:uid(), title:"Diary of a Taxi Driver", author:"Cai Mingjie", lang:"English", status:"toread", notes:"" },
+  { id:uid(), title:"Atheism: A Very Short Introduction", author:"Julian Baggini", lang:"English", status:"toread", notes:"" },
+  { id:uid(), title:"The Visual Miscellaneum", author:"David McCandless", lang:"English", status:"toread", notes:"" },
+  { id:uid(), title:"Knowledge is Beautiful", author:"David McCandless", lang:"English", status:"toread", notes:"" },
+  { id:uid(), title:"Remembrance", author:"Danielle Steel", lang:"English", status:"toread", notes:"" },
+  { id:uid(), title:"The Language Instinct", author:"Steven Pinker", lang:"English", status:"toread", notes:"" },
+  { id:uid(), title:"How the Mind Works", author:"Steven Pinker", lang:"English", status:"toread", notes:"" },
+  { id:uid(), title:"The Blank Slate", author:"Steven Pinker", lang:"English", status:"toread", notes:"" },
+  { id:uid(), title:"Brave New World", author:"Aldous Huxley", lang:"English", status:"toread", notes:"" },
+  { id:uid(), title:"မီ", author:"ဆရာမကြည်အေး", lang:"Burmese", status:"toread", notes:"" },
+  { id:uid(), title:"စိတ္တရလေခါ", author:"ပါရဂူ", lang:"Burmese", status:"toread", notes:"" },
+  { id:uid(), title:"ဗုဒ္ဓနှင့် ဗုဒ္ဓဝါဒ", author:"ဦးအေးမောင်", lang:"Burmese", status:"toread", notes:"" },
+  { id:uid(), title:"သေသည်၏အခြားမဲ့၌", author:"ဦးအေးမောင်၊ ဦးဝင်းမောင်", lang:"Burmese", status:"toread", notes:"" },
+  { id:uid(), title:"စိတ်ပညာနှင့်ကိုယ်ကျင့်တရား", author:"ဦးအေးမောင်", lang:"Burmese", status:"toread", notes:"" },
+  { id:uid(), title:"ရယ်မောခြင်းသက္ကရာဇ်များ", author:"ဗြိတိသျှကိုကိုမောင်", lang:"Burmese", status:"toread", notes:"" },
+  { id:uid(), title:"ကွန်မန်ဒိုဘချို", author:"ဗြိတိသျှကိုကိုမောင်", lang:"Burmese", status:"toread", notes:"" },
+  { id:uid(), title:"သမိုင်းဝင်သောည", author:"ဗြိတိသျှကိုကိုမောင်", lang:"Burmese", status:"toread", notes:"" },
+  { id:uid(), title:"ငါးပိကြော်ရနံ့ သရော်စာများ", author:"ဗြိတိသျှကိုကိုမောင်", lang:"Burmese", status:"toread", notes:"" },
+  { id:uid(), title:"တော်လှန်သော သရော်စာများ", author:"ဗြိတိသျှကိုကိုမောင်", lang:"Burmese", status:"toread", notes:"" },
+  { id:uid(), title:"၆၆(ဃ) ရှောင်နည်းနှင့် နိုင်ငံရေးသရော်စာများ", author:"ဗြိတိသျှကိုကိုမောင်", lang:"Burmese", status:"toread", notes:"" },
+  { id:uid(), title:"ခေတ်ဆိုးအိပ်ကပ်ထဲက လူငယ်ဘဝ", author:"ဗြိတိသျှကိုကိုမောင်", lang:"Burmese", status:"toread", notes:"" },
+  { id:uid(), title:"ဘောနက်ကြီးရဲဘက်စခန်းမှ လူမိုက်ကြီးများ", author:"ဗြိတိသျှကိုကိုမောင်", lang:"Burmese", status:"toread", notes:"" },
+  { id:uid(), title:"နေထွက်ဘုရင် (ငါတို့စာပေ)", author:"ဗြိတိသျှကိုကိုမောင်", lang:"Burmese", status:"toread", notes:"" },
+  { id:uid(), title:"Gender Line (2081)", author:"ဗြိတိသျှကိုကိုမောင်", lang:"Burmese", status:"toread", notes:"" },
+  { id:uid(), title:"ပေါ့ပေါ့ပါးပါးဒုက္ခများ", author:"ဗြိတိသျှကိုကိုမောင်", lang:"Burmese", status:"toread", notes:"" },
+  { id:uid(), title:"The Guys of Rangoon 1930s", author:"ခက်ဇော်", lang:"Burmese", status:"toread", notes:"" },
+  { id:uid(), title:"The Guys from Mandalay 1950s", author:"ခက်ဇော်", lang:"Burmese", status:"toread", notes:"" },
+  { id:uid(), title:"AVA 1750s Season 1", author:"ခက်ဇော်", lang:"Burmese", status:"toread", notes:"" },
+  { id:uid(), title:"AVA 1750s Season 2", author:"ခက်ဇော်", lang:"Burmese", status:"toread", notes:"" },
+  { id:uid(), title:"Beyond Ava 1750s", author:"ခက်ဇော်", lang:"Burmese", status:"toread", notes:"" },
+  { id:uid(), title:"The Fall of Hantharwaddy", author:"ခက်ဇော်", lang:"Burmese", status:"toread", notes:"" },
+  { id:uid(), title:"Lady Shoes", author:"ခက်ဇော်", lang:"Burmese", status:"toread", notes:"" },
+  { id:uid(), title:"Princes in the Darkness", author:"ခက်ဇော်", lang:"Burmese", status:"toread", notes:"" },
+  { id:uid(), title:"ရုပ်ရှင်ရဲ့ရနံ့", author:"ရှိန်ဝါ", lang:"Burmese", status:"toread", notes:"" },
+  { id:uid(), title:"ကဖိုးဉာဏ် (မဂ္ဂဇင်းဝတ္ထုတိုများ)", author:"", lang:"Burmese", status:"toread", notes:"" },
+  { id:uid(), title:"မဟာရာဇဝင်ကြီး", author:"ဦးကုလား", lang:"Burmese", status:"toread", notes:"" },
+];
 
-    <script>
-        let books = [], currentView = 'home', activeId = null, editMode = false, homeReadingId = null, localSaveTimer = null;
-        const STORAGE_KEY = 'reading_journal_books', GH_KEY = 'reading_journal_gh';
-        const INFO_PREFIX = 'bk_info_v2_', GH_PATH = 'books.json';
+// ─── UTILS ────────────────────────────────────────────────
+function uid(){ return '_'+Math.random().toString(36).substr(2,9); }
+function cap(s){ return s.charAt(0).toUpperCase()+s.slice(1); }
+function esc(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function linkify(t){ return esc(t).replace(/(https?:\/\/[^\s<]+)/g,'<a href="$1" target="_blank" rel="noopener">$1</a>'); }
+function domainOf(u){ try{ return new URL(u).hostname.replace(/^www\./,''); }catch(e){ return u; } }
+function shuffle(a){ for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+function hasNotes(b){ return b.notes && b.notes.trim(); }
 
-        const seedBooks = [
-            {
-                id: uid(), title: "အိမ်မပြန်ဖြစ်တဲ့အကြောင်းတွေ", author: "လူခါး", lang: "Burmese", status: "finished",
-                notes: "ဂျပန်ရောက်မြန်မာနိုင်ငံသားတစ်ဦးရဲ့ အတွေ့အကြုံများ\nဇာတ်ကားတစ်ပုဒ်လိုရေးထား\nPlot တင်ပြပုံကောင်း"
-            },
-            {
-                id: uid(), title: "အနတ္တအင်နားရှား", author: "အေးမင်းစော", lang: "Burmese", status: "finished",
-                notes: "မိဘတွေခေတ် ၁၉၅၀-၁၉၆၀ ဖွားတွေရဲ့ ဖြတ်သန်းမှုကိုလေ့လာနိုင်\nမြန်မာနိုင်ငံရဲ့ နေဝင်းအာဏာသိမ်းပြီး ဖြတ်သန်းမှု ခေတ်အဆက်ဆက်ကိုလေ့လာနိုင်"
-            },
-            {
-                id: uid(), title: "တိမ်ပုခက်လွှဲတဲ့ အိပ်မက်ကလေးတွေ အက်ဆေးစုစည်းမှု", author: "မောင်သာချို", lang: "Burmese", status: "finished",
-                notes: "အက်ဆေးတွေရဲ့အရေးပါပုံကို သိရ\nအက်ဆေးတွေဖတ်ချင်စိတ်ဖြစ်ပေါ်လာအောင်ပေးနိုင်"
-            },
-            {
-                id: uid(), title: "မျှော်လင့်ချက်နှင့် အခြားမျက်နှာဖုံးဆောင်းပါးများ", author: "ဂျူး", lang: "Burmese", status: "finished",
-                notes: "မိဘတစ်ယောက်အနေဖြင့်၊ လူကြီးတစ်ယောက်အနေဖြင့် ပြုသင့်တဲ့၊ စဉ်းစားတွေးခေါ်သင့်တဲ့ အတွေးအခေါ်များရ"
-            },
-            {
-                id: uid(), title: "Doublespeak", author: "William D. Lutz", lang: "English", status: "finished",
-                notes: "ကြော်ငြာတွေရဲ့ စကားလုံးအသုံးချပုံ အလိမ်အငြာများ\nနိုင်ငံရေးသမားတွေရဲ့ စကားလုံးရွေးခြယ်မှု ပရိယာလ်များ စသည်ဖြင့်"
-            },
-            {
-                id: uid(), title: "Why Nations Fail", author: "Daron Acemoglu & James A. Robinson", lang: "English", status: "finished",
-                notes: "နိုင်ငံတွေဘာကြောင့်ကျဆုံးရလဲ\nသီအိုရီနှစ်ခုထုတ် (လွတ်လပ်တဲ့ နိုင်ငံရေးစနစ်ရှိရင် လွတ်လပ်တဲ့ စီးပွားရေးဖြစ်ထွန်း၊ အပိတ်နိုင်ငံရေးစနစ်ရှိရင် အပိတ်စီးပွားရေးဖြစ်)"
-            },
-            {
-                id: uid(), title: "မြန်မာ့သမိုင်းထဲက ပါးစပ်ရာဇဝင်အလွဲများ", author: "မောင်သာ(ရှေးဟောင်းသုတေသန)", lang: "Burmese", status: "finished",
-                notes: "သမိုင်းတွင် မအိုဇာမရှိ\nဦးပေါ်ဦး မရှိ\nမယ်နုအုတ်ကျောင်း အမှား\nကနောင်မင်းသားရေမြုပ်ဗုံးအမှား"
-            },
-            {
-                id: uid(), title: "Factfulness", author: "Hans Rosling, Ola Rosling & Anna Rosling Rönnlund", lang: "English", status: "finished",
-                notes: "ဘာလို့ဒီကမ္ဘာကြီးကပိုကောင်းလဲ၊ data တွေကို ဘယ်လိုမှန်ကုန်စွာကြည့်ရမလဲ"
-            },
-            {
-                id: uid(), title: "The Bottom Billion", author: "Paul Collier", lang: "English", status: "finished",
-                notes: "အောက်ခြေသန်းထစ်ထောင်ဘာလို့ဖြစ်နေ\nဆင်းရဲပြီးသားနိုင်ငံတွေဘာလို့ဆက်ဆင်းရဲနေလဲ အချက်ငါးချက်ဖြင့်တင်ပြ"
-            },
-            {
-                id: uid(), title: "လိပ်ပြာတောင်ပံနဲ့ လက်ဝါးဒဿန", author: "လူသာမန်", lang: "Burmese", status: "finished",
-                notes: "သတ်ပုံပြင်သူများ၊ စာတတ်ပေတတ်လူပေါ\n> A spoon does not know the taste of soup, nor a learned fool the taste of wisdom\nလူဆိုတာ သဘာဝတရားက ခြယ်မှုန်းရေးသားထားတဲ့ နောက်ကြောင်းခံပုံဝတ္ထုလေးတွေရှိစမြဲ မဟုတ်လား\nမောင်ဝံသ၊ ဆရာကြီးမင်းသိင်္ခ\nရုပ်ရှင်ရဲ့ရနံ့ - ရှိန်ဝါ\nManchester by the Sea\nဝါရိတ္တသီလ\nရှေးကဝိပါက် ခုနစ်ရက်၊ ကာလဝိပါက် နောက်ပိုးတက်"
-            },
-            {
-                id: uid(), title: "ရုပ်ပုံလွှာ", author: "ဒဂုန်တာရာ", lang: "Burmese", status: "finished",
-                notes: "၁၉၃၆-၁၉၅၀ ဝန်းကျင် မြန်မာနိုင်ငံ၏နာမည်ကျော် စာရေးဆရာအချို့၊ ပုဂ္ဂိုလ်အချို့တို့၏ နေထိုင်မှုဘဝပုံရိပ်များကို စာရေးဆရာဒဂုန်ဆရာမြင်ကွင်းမှလေ့လာနိုင်၊ ၎င်းလူများ၏လူသားဆန်မှုများကိုမြင်ရ\nမောင်သာဆွေ၊ မင်းသုဝဏ်"
-            },
-            {
-                id: uid(), title: "သူငယ်ချင်းလို့ဘဲဆက်၍ခေါ်မည်ခိုင်", author: "တက္ကသိုလ်ဘုန်းနိုင်", lang: "Burmese", status: "finished",
-                notes: "ဇာတ်လမ်း ဇာတ်သွားကောင်း\nလွတ်လပ်ရေးမရခင်နှင့် လွတ်လပ်ရေးရပြီးစ မြန်မာပြည်၌နေထိုင်သောမိသားစုတို့၏ လှုပ်ရှားပုံ၊ နေထိုင်ပုံတို့အားလေ့လာနိုင်။\nစာရေးသူ၏ စာရေးရခြင်းရည်ရွယ်ချက် အထူးကောင်းမွန်၊ မွန်မြတ်၏။\nစာအုပ်ဖတ်ပြီး ရင်၌ လေးလေးပင်ပင်ခံစားချက်မျိုးကျန်။\nဇာတ်ကောင်များ၏ သရုပ်များကို အသေးစိတ်ရေးသားဖော်ပြထား၍ စိတ်ထဲ၌ပုံဖော်ရာတွင် လွယ်ကူ။ သရုပ်များကို ပိုင်နိုင်စွာလည်းပုံဖော်ထား၏။"
-            },
-            {
-                id: uid(), title: "ကျွန်မဘဝခရီးမှ စာအုပ်များ", author: "ဂျူး", lang: "Burmese", status: "finished",
-                notes: "ဤစာအုပ်ထဲတွင် ဖော်ပြထားသော စာအုပ်များ —\n@ https://archive.org/details/dli.pahar.2892/page/166/mode/2up Burma's Icy Mountains — Kingdon-Ward\n@ https://archive.org/details/narrativeofmissi00yulerich A Narrative of the Mission to the Court of Ava in 1855 — Sir Henry Yule (1820-1889)\nမယ်နုနှင့်ကုန်းဘောင်ရှာပုံတော်\n@ https://archive.org/details/mandalayandothe02ocogoog/mode/2up မန္တလေးနှင့်အခြားမြို့ဟောင်းများ\n@ https://archive.org/details/fp_Silent_Spring-Rachel_Carson-1962/mode/2up တိတ်ဆိတ်သောနွေဦးရာသီ / Silent Spring — Rachel Carson"
-            },
-            { id: uid(), title: "Leadership: Six Studies in World Strategy", author: "Henry Kissinger", lang: "English", status: "finished", notes: "" },
-            { id: uid(), title: "Steal Like an Artist", author: "Austin Kleon", lang: "English", status: "finished", notes: "" },
+function normalize(b){
+  if(Array.isArray(b.entries)){
+    b.notes=b.entries.map(e=>{
+      if(e.type==='quote') return (e.text||'').split('\n').map(x=>'> '+x).join('\n');
+      if(e.type==='link') return '@ '+(e.url||'')+(e.text?' '+e.text:'');
+      return e.text||'';
+    }).filter(x=>x).join('\n');
+    delete b.entries; return true;
+  }
+  if(b.notes===undefined){ b.notes=''; return true; }
+  return false;
+}
+function normalizeAll(){ let ch=false; books.forEach(b=>{ if(normalize(b)) ch=true; }); if(ch) saveLocal(); return ch; }
 
-            { id: uid(), title: "Becoming", author: "Michelle Obama", lang: "English", status: "toread", notes: "" },
-            { id: uid(), title: "Kane and Abel", author: "Jeffrey Archer", lang: "English", status: "toread", notes: "" },
-            { id: uid(), title: "The World Is Flat", author: "Thomas L. Friedman", lang: "English", status: "toread", notes: "" },
-            { id: uid(), title: "Age of Revolutions", author: "Fareed Zakaria", lang: "English", status: "toread", notes: "" },
-            { id: uid(), title: "1984", author: "George Orwell", lang: "English", status: "toread", notes: "" },
-            { id: uid(), title: "Animal Farm", author: "George Orwell", lang: "English", status: "toread", notes: "" },
-            { id: uid(), title: "A Promised Land", author: "Barack Obama", lang: "English", status: "toread", notes: "" },
-            { id: uid(), title: "The 7 Habits of Highly Effective People", author: "Stephen Covey", lang: "English", status: "toread", notes: "" },
-            { id: uid(), title: "The Age of the Economist", author: "Daniel Fusfeld", lang: "English", status: "toread", notes: "" },
-            { id: uid(), title: "Ideas of the Great Economists", author: "George Henry Soule", lang: "English", status: "toread", notes: "" },
-            { id: uid(), title: "The Worldly Philosophers", author: "Robert Heilbroner", lang: "English", status: "toread", notes: "" },
-            { id: uid(), title: "101 Ways to Be Less Stressed", author: "Caroline Leaf", lang: "English", status: "toread", notes: "" },
-            { id: uid(), title: "The End of Poverty", author: "Jeffrey Sachs", lang: "English", status: "toread", notes: "" },
-            { id: uid(), title: "The White Man's Burden", author: "William Easterly", lang: "English", status: "toread", notes: "" },
-            { id: uid(), title: "The Plundered Planet", author: "Paul Collier", lang: "English", status: "toread", notes: "" },
-            { id: uid(), title: "Exodus: How Migration Is Changing Our World", author: "Paul Collier", lang: "English", status: "toread", notes: "" },
-            { id: uid(), title: "The Future of Capitalism", author: "Paul Collier", lang: "English", status: "toread", notes: "" },
-            { id: uid(), title: "What It Is", author: "Lynda Barry", lang: "English", status: "toread", notes: "" },
-            { id: uid(), title: "Ignore Everybody", author: "Hugh MacLeod", lang: "English", status: "toread", notes: "" },
-            { id: uid(), title: "Rework", author: "Jason Fried & David Heinemeier Hansson", lang: "English", status: "toread", notes: "" },
-            { id: uid(), title: "The Gift", author: "Lewis Hyde", lang: "English", status: "toread", notes: "" },
-            { id: uid(), title: "The Ecstasy of Influence", author: "Jonathan Lethem", lang: "English", status: "toread", notes: "" },
-            { id: uid(), title: "Reality Hunger", author: "David Shields", lang: "English", status: "toread", notes: "" },
-            { id: uid(), title: "Understanding Comics", author: "Scott McCloud", lang: "English", status: "toread", notes: "" },
-            { id: uid(), title: "Bird by Bird", author: "Anne Lamott", lang: "English", status: "toread", notes: "" },
-            { id: uid(), title: "Flow", author: "Mihaly Csikszentmihalyi", lang: "English", status: "toread", notes: "" },
-            { id: uid(), title: "Make a World", author: "Ed Emberley", lang: "English", status: "toread", notes: "" },
-            { id: uid(), title: "Show Your Work", author: "Austin Kleon", lang: "English", status: "toread", notes: "" },
-            { id: uid(), title: "Keep Going", author: "Austin Kleon", lang: "English", status: "toread", notes: "" },
-            { id: uid(), title: "Walt Whitman: Poetry", author: "Walt Whitman", lang: "English", status: "toread", notes: "" },
-            { id: uid(), title: "The Mammoth Book of Jokes", author: "Geoff Tibbals", lang: "English", status: "toread", notes: "" },
-            { id: uid(), title: "The Seven Husbands of Evelyn Hugo", author: "Taylor Jenkins Reid", lang: "English", status: "toread", notes: "" },
-            { id: uid(), title: "One, Two, Three… Infinity", author: "George Gamow", lang: "English", status: "toread", notes: "" },
-            { id: uid(), title: "The Road to Reality", author: "Roger Penrose", lang: "English", status: "toread", notes: "" },
-            { id: uid(), title: "10 Rules for Raising Kids in a High-Tech World", author: "Jean Twenge", lang: "English", status: "toread", notes: "" },
-            { id: uid(), title: "Burmese Days", author: "George Orwell", lang: "English", status: "toread", notes: "" },
-            { id: uid(), title: "Shooting an Elephant", author: "George Orwell", lang: "English", status: "toread", notes: "" },
-            { id: uid(), title: "A Hanging", author: "George Orwell", lang: "English", status: "toread", notes: "" },
-            { id: uid(), title: "The Vegetarian", author: "Han Kang", lang: "English", status: "toread", notes: "" },
-            { id: uid(), title: "Human Acts", author: "Han Kang", lang: "English", status: "toread", notes: "" },
-            { id: uid(), title: "The White Book", author: "Han Kang", lang: "English", status: "toread", notes: "" },
-            { id: uid(), title: "Diary of a Taxi Driver", author: "Cai Mingjie", lang: "English", status: "toread", notes: "" },
-            { id: uid(), title: "Atheism: A Very Short Introduction", author: "Julian Baggini", lang: "English", status: "toread", notes: "" },
-            { id: uid(), title: "The Visual Miscellaneum", author: "David McCandless", lang: "English", status: "toread", notes: "" },
-            { id: uid(), title: "Knowledge is Beautiful", author: "David McCandless", lang: "English", status: "toread", notes: "" },
-            { id: uid(), title: "Remembrance", author: "Danielle Steel", lang: "English", status: "toread", notes: "" },
-            { id: uid(), title: "The Language Instinct", author: "Steven Pinker", lang: "English", status: "toread", notes: "" },
-            { id: uid(), title: "How the Mind Works", author: "Steven Pinker", lang: "English", status: "toread", notes: "" },
-            { id: uid(), title: "The Blank Slate", author: "Steven Pinker", lang: "English", status: "toread", notes: "" },
-            { id: uid(), title: "Brave New World", author: "Aldous Huxley", lang: "English", status: "toread", notes: "" },
+// ─── NOTE DISPLAY ─────────────────────────────────────────
+function renderNotes(text){
+  if(!text||!text.trim()) return '<div class="nv-empty">No notes yet.</div>';
+  const lines=text.split('\n');
+  const isQuote=l=>/^\s*>\s?/.test(l);
+  const isLink=l=>/^\s*@\s+/.test(l);
+  const isItem=l=>/^\s*-\s+/.test(l);
+  let html='', i=0;
+  while(i<lines.length){
+    if(lines[i].trim()===''){ i++; continue; }
+    if(isQuote(lines[i])){
+      const buf=[];
+      while(i<lines.length && isQuote(lines[i])){ buf.push(lines[i].replace(/^\s*>\s?/,'')); i++; }
+      html+=`<blockquote class="nv-quote">${linkify(buf.join('\n'))}</blockquote>`;
+    } else if(isLink(lines[i])){
+      const rest=lines[i].replace(/^\s*@\s+/,''); i++;
+      const m=rest.match(/(https?:\/\/[^\s]+)/);
+      const url=m?m[1]:'';
+      let label=rest.replace(url,'').replace(/^[\s|—–\-:]+|[\s|—–\-:]+$/g,'').trim();
+      if(url){
+        const dom=domainOf(url); if(!label) label=dom;
+        html+=`<a class="nv-link" href="${esc(url)}" target="_blank" rel="noopener"><img class="nv-fav" src="https://www.google.com/s2/favicons?domain=${encodeURIComponent(dom)}&sz=64" alt=""><span class="nv-link-label">${esc(label)}</span><span class="nv-link-dom">${esc(dom)}</span></a>`;
+      } else { html+=`<div class="nv-note">${linkify(rest)}</div>`; }
+    } else if(isItem(lines[i])){
+      const items=[];
+      while(i<lines.length && isItem(lines[i])){ items.push(lines[i].replace(/^\s*-\s+/,'')); i++; }
+      html+=`<ul class="nv-list">${items.map(t=>`<li>${linkify(t)}</li>`).join('')}</ul>`;
+    } else {
+      const buf=[];
+      while(i<lines.length && lines[i].trim()!=='' && !isQuote(lines[i]) && !isLink(lines[i]) && !isItem(lines[i])){ buf.push(lines[i].replace(/^\s*[•\*▪◦·]\s*/,'')); i++; }
+      html+=`<div class="nv-note">${linkify(buf.join('\n'))}</div>`;
+    }
+  }
+  return `<div class="notes-view">${html}</div>`;
+}
 
-            { id: uid(), title: "မီ", author: "ဆရာမကြည်အေး", lang: "Burmese", status: "toread", notes: "" },
-            { id: uid(), title: "စိတ္တရလေခါ", author: "ပါရဂူ", lang: "Burmese", status: "toread", notes: "" },
-            { id: uid(), title: "ဗုဒ္ဓနှင့် ဗုဒ္ဓဝါဒ", author: "ဦးအေးမောင်", lang: "Burmese", status: "toread", notes: "" },
-            { id: uid(), title: "သေသည်၏အခြားမဲ့၌", author: "ဦးအေးမောင်၊ ဦးဝင်းမောင်", lang: "Burmese", status: "toread", notes: "" },
-            { id: uid(), title: "စိတ်ပညာနှင့်ကိုယ်ကျင့်တရား", author: "ဦးအေးမောင်", lang: "Burmese", status: "toread", notes: "" },
-            { id: uid(), title: "ရယ်မောခြင်းသက္ကရာဇ်များ", author: "ဗြိတိသျှကိုကိုမောင်", lang: "Burmese", status: "toread", notes: "" },
-            { id: uid(), title: "ကွန်မန်ဒိုဘချို", author: "ဗြိတိသျှကိုကိုမောင်", lang: "Burmese", status: "toread", notes: "" },
-            { id: uid(), title: "သမိုင်းဝင်သောည", author: "ဗြိတိသျှကိုကိုမောင်", lang: "Burmese", status: "toread", notes: "" },
-            { id: uid(), title: "ငါးပိကြော်ရနံ့ သရော်စာများ", author: "ဗြိတိသျှကိုကိုမောင်", lang: "Burmese", status: "toread", notes: "" },
-            { id: uid(), title: "တော်လှန်သော သရော်စာများ", author: "ဗြိတိသျှကိုကိုမောင်", lang: "Burmese", status: "toread", notes: "" },
-            { id: uid(), title: "၆၆(ဃ) ရှောင်နည်းနှင့် နိုင်ငံရေးသရော်စာများ", author: "ဗြိတိသျှကိုကိုမောင်", lang: "Burmese", status: "toread", notes: "" },
-            { id: uid(), title: "ခေတ်ဆိုးအိပ်ကပ်ထဲက လူငယ်ဘဝ", author: "ဗြိတိသျှကိုကိုမောင်", lang: "Burmese", status: "toread", notes: "" },
-            { id: uid(), title: "ဘောနက်ကြီးရဲဘက်စခန်းမှ လူမိုက်ကြီးများ", author: "ဗြိတိသျှကိုကိုမောင်", lang: "Burmese", status: "toread", notes: "" },
-            { id: uid(), title: "နေထွက်ဘုရင် (ငါတို့စာပေ)", author: "ဗြိတိသျှကိုကိုမောင်", lang: "Burmese", status: "toread", notes: "" },
-            { id: uid(), title: "Gender Line (2081)", author: "ဗြိတိသျှကိုကိုမောင်", lang: "Burmese", status: "toread", notes: "" },
-            { id: uid(), title: "ပေါ့ပေါ့ပါးပါးဒုက္ခများ", author: "ဗြိတိသျှကိုကိုမောင်", lang: "Burmese", status: "toread", notes: "" },
-            { id: uid(), title: "The Guys of Rangoon 1930s", author: "ခက်ဇော်", lang: "Burmese", status: "toread", notes: "" },
-            { id: uid(), title: "The Guys from Mandalay 1950s", author: "ခက်ဇော်", lang: "Burmese", status: "toread", notes: "" },
-            { id: uid(), title: "AVA 1750s Season 1", author: "ခက်ဇော်", lang: "Burmese", status: "toread", notes: "" },
-            { id: uid(), title: "AVA 1750s Season 2", author: "ခက်ဇော်", lang: "Burmese", status: "toread", notes: "" },
-            { id: uid(), title: "Beyond Ava 1750s", author: "ခက်ဇော်", lang: "Burmese", status: "toread", notes: "" },
-            { id: uid(), title: "The Fall of Hantharwaddy", author: "ခက်ဇော်", lang: "Burmese", status: "toread", notes: "" },
-            { id: uid(), title: "Lady Shoes", author: "ခက်ဇော်", lang: "Burmese", status: "toread", notes: "" },
-            { id: uid(), title: "Princes in the Darkness", author: "ခက်ဇော်", lang: "Burmese", status: "toread", notes: "" },
-            { id: uid(), title: "ရုပ်ရှင်ရဲ့ရနံ့", author: "ရှိန်ဝါ", lang: "Burmese", status: "toread", notes: "" },
-            { id: uid(), title: "ကဖိုးဉာဏ် (မဂ္ဂဇင်းဝတ္ထုတိုများ)", author: "", lang: "Burmese", status: "toread", notes: "" },
-            { id: uid(), title: "မဟာရာဇဝင်ကြီး", author: "ဦးကုလား", lang: "Burmese", status: "toread", notes: "" },
-        ];
+const SYNTAX_HINT='Start a line with <code>-</code> for a point, <code>&gt;</code> for a quote, <code>@ https://… description</code> for a link, or just type a note.';
 
-        // ─── UTILS ────────────────────────────────────────────────
-        function uid() { return '_' + Math.random().toString(36).substr(2, 9); }
-        function cap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
-        function esc(s) { return (s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
-        function linkify(t) { return esc(t).replace(/(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank" rel="noopener">$1</a>'); }
-        function domainOf(u) { try { return new URL(u).hostname.replace(/^www\./, ''); } catch (e) { return u; } }
-        function shuffle(a) { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1));[a[i], a[j]] = [a[j], a[i]]; } return a; }
-        function hasNotes(b) { return b.notes && b.notes.trim(); }
+// ─── BOOK INFO (Open Library) ─────────────────────────────
+async function fetchBookInfo(b){
+  const key=INFO_PREFIX+(b.title||'')+'|'+(b.author||'');
+  try{ const c=localStorage.getItem(key); if(c) return JSON.parse(c); }catch(e){}
+  const res={cover:'',summary:''};
+  try{
+    const q=`title=${encodeURIComponent(b.title)}${b.author?`&author=${encodeURIComponent(b.author)}`:''}`;
+    const r=await fetch(`https://openlibrary.org/search.json?${q}&limit=1&fields=cover_i,isbn,key,first_sentence`);
+    const d=await r.json(); const doc=d.docs&&d.docs[0];
+    if(doc){
+      if(doc.cover_i) res.cover=`https://covers.openlibrary.org/b/id/${doc.cover_i}-M.jpg`;
+      else if(doc.isbn&&doc.isbn[0]) res.cover=`https://covers.openlibrary.org/b/isbn/${doc.isbn[0]}-M.jpg`;
+      if(doc.first_sentence&&doc.first_sentence[0]) res.summary=doc.first_sentence[0];
+      if(doc.key){ try{ const wr=await fetch(`https://openlibrary.org${doc.key}.json`); const wd=await wr.json(); let desc=wd.description; if(desc&&typeof desc==='object') desc=desc.value; if(desc) res.summary=desc; }catch(e){} }
+    }
+    try{ localStorage.setItem(key,JSON.stringify(res)); }catch(e){}
+  }catch(e){}
+  return res;
+}
+async function hydrateBookInfo(items){
+  for(const it of items){
+    const info=await fetchBookInfo(it.book);
+    if(it.coverId){ const el=document.getElementById(it.coverId); if(el){ if(info.cover){ el.style.backgroundImage=`url("${info.cover}")`; el.textContent=''; } else el.textContent=(it.book.title||'?').charAt(0); } }
+    if(it.summaryId){ const el=document.getElementById(it.summaryId); if(el) el.textContent=info.summary||'No summary found on Open Library.'; }
+  }
+}
 
-        // Convert any old entries[] arrays into the inline-tag notes string
-        function normalize(b) {
-            if (Array.isArray(b.entries)) {
-                b.notes = b.entries.map(e => {
-                    if (e.type === 'quote') return (e.text || '').split('\n').map(x => '> ' + x).join('\n');
-                    if (e.type === 'link') return '@ ' + (e.url || '') + (e.text ? (' ' + e.text) : '');
-                    return e.text || '';
-                }).filter(x => x !== '').join('\n');
-                delete b.entries; return true;
-            }
-            if (b.notes === undefined) { b.notes = ''; return true; }
-            return false;
-        }
-        function normalizeAll() { let ch = false; books.forEach(b => { if (normalize(b)) ch = true; }); if (ch) saveLocal(); return ch; }
+// ─── FIRESTORE SYNC ───────────────────────────────────────
+async function syncToFirestore(){
+  try{ await DOC.set({ books }); }
+  catch(e){ console.error('Firestore sync failed',e); }
+}
 
-        // ─── NOTE DISPLAY (parse inline tags) ─────────────────────
-        function renderNotes(text) {
-            if (!text || !text.trim()) return '<div class="nv-empty">No notes yet.</div>';
-            const lines = text.split('\n');
-            const isQuote = l => /^\s*>\s?/.test(l);
-            const isLink = l => /^\s*@\s+/.test(l);
-            const isItem = l => /^\s*-\s+/.test(l);
-            let html = '', i = 0;
-            while (i < lines.length) {
-                if (lines[i].trim() === '') { i++; continue; }
-                if (isQuote(lines[i])) {
-                    const buf = [];
-                    while (i < lines.length && isQuote(lines[i])) { buf.push(lines[i].replace(/^\s*>\s?/, '')); i++; }
-                    html += `<blockquote class="nv-quote">${linkify(buf.join('\n'))}</blockquote>`;
-                } else if (isLink(lines[i])) {
-                    const rest = lines[i].replace(/^\s*@\s+/, ''); i++;
-                    const m = rest.match(/(https?:\/\/[^\s]+)/);
-                    const url = m ? m[1] : '';
-                    let label = rest.replace(url, '').replace(/^[\s|—–\-:]+|[\s|—–\-:]+$/g, '').trim();
-                    if (url) {
-                        const dom = domainOf(url);
-                        if (!label) label = dom;
-                        html += `<a class="nv-link" href="${esc(url)}" target="_blank" rel="noopener"><img class="nv-fav" src="https://www.google.com/s2/favicons?domain=${encodeURIComponent(dom)}&sz=64" alt=""><span class="nv-link-label">${esc(label)}</span><span class="nv-link-dom">${esc(dom)}</span></a>`;
-                    } else {
-                        html += `<div class="nv-note">${linkify(rest)}</div>`;
-                    }
-                } else if (isItem(lines[i])) {
-                    const items = [];
-                    while (i < lines.length && isItem(lines[i])) { items.push(lines[i].replace(/^\s*-\s+/, '')); i++; }
-                    html += `<ul class="nv-list">${items.map(t => `<li>${linkify(t)}</li>`).join('')}</ul>`;
-                } else {
-                    const buf = [];
-                    while (i < lines.length && lines[i].trim() !== '' && !isQuote(lines[i]) && !isLink(lines[i]) && !isItem(lines[i])) { buf.push(lines[i].replace(/^\s*[•\*▪◦·]\s*/, '')); i++; }
-                    html += `<div class="nv-note">${linkify(buf.join('\n'))}</div>`;
-                }
-            }
-            return `<div class="notes-view">${html}</div>`;
-        }
+function setConnStatus(ok){
+  const el=document.getElementById('connStatus'); if(!el) return;
+  el.textContent=ok?'Connected to Firestore ✓':'Offline — changes saved locally only';
+  el.className='conn-status '+(ok?'conn-ok':'conn-err');
+}
 
-        // ─── BOOK INFO (Open Library: cover via ISBN/cover_i + description) ──
-        async function fetchBookInfo(b) {
-            const key = INFO_PREFIX + (b.title || '') + '|' + (b.author || '');
-            try { const c = localStorage.getItem(key); if (c) return JSON.parse(c); } catch (e) { }
-            const res = { cover: '', summary: '' };
-            try {
-                const params = `title=${encodeURIComponent(b.title)}${b.author ? `&author=${encodeURIComponent(b.author)}` : ''}`;
-                const r = await fetch(`https://openlibrary.org/search.json?${params}&limit=1&fields=cover_i,isbn,key,first_sentence`);
-                const d = await r.json();
-                const doc = d.docs && d.docs[0];
-                if (doc) {
-                    if (doc.cover_i) res.cover = `https://covers.openlibrary.org/b/id/${doc.cover_i}-M.jpg`;
-                    else if (doc.isbn && doc.isbn[0]) res.cover = `https://covers.openlibrary.org/b/isbn/${doc.isbn[0]}-M.jpg`;
-                    if (doc.first_sentence && doc.first_sentence[0]) res.summary = doc.first_sentence[0];
-                    if (doc.key) {
-                        try {
-                            const wr = await fetch(`https://openlibrary.org${doc.key}.json`);
-                            const wd = await wr.json();
-                            let desc = wd.description;
-                            if (desc && typeof desc === 'object') desc = desc.value;
-                            if (desc) res.summary = desc;
-                        } catch (e) { }
-                    }
-                }
-                try { localStorage.setItem(key, JSON.stringify(res)); } catch (e) { }
-            } catch (e) { }
-            return res;
-        }
-        async function hydrateBookInfo(items) {
-            for (const it of items) {
-                const info = await fetchBookInfo(it.book);
-                if (it.coverId) { const el = document.getElementById(it.coverId); if (el) { if (info.cover) { el.style.backgroundImage = `url("${info.cover}")`; el.textContent = ''; } else { el.textContent = (it.book.title || '?').charAt(0); } } }
-                if (it.summaryId) { const el = document.getElementById(it.summaryId); if (el) el.textContent = info.summary || 'No summary found on Open Library.'; }
-            }
-        }
+// ─── INIT ─────────────────────────────────────────────────
+async function init(){
+  const stored=localStorage.getItem(STORAGE_KEY);
+  if(stored) books=JSON.parse(stored);
+  else books=seedBooks.map(b=>({...b}));
+  normalizeAll();
+  setView('home');
+  try{
+    const snap=await DOC.get();
+    if(snap.exists){
+      const data=snap.data();
+      if(data.books&&data.books.length){ books=data.books; normalizeAll(); saveLocal(); setView(currentView); }
+    } else {
+      await syncToFirestore(); // first run: push seed to Firestore
+    }
+    setConnStatus(true);
+  } catch(e){
+    console.error('Firestore init failed',e);
+    setConnStatus(false);
+  }
+}
+function saveLocal(){ localStorage.setItem(STORAGE_KEY,JSON.stringify(books)); }
 
-        // ─── INIT ─────────────────────────────────────────────────
-        async function init() {
-            loadGhConfig();
-            const stored = localStorage.getItem(STORAGE_KEY);
-            if (stored) { books = JSON.parse(stored); }
-            else {
-                let loaded = false;
-                try { const r = await fetch('books.json', { cache: 'no-store' }); if (r.ok) { const d = await r.json(); if (Array.isArray(d) && d.length) { books = d; loaded = true; } } } catch (e) { }
-                if (!loaded) books = seedBooks.map(b => ({ ...b }));
-                saveLocal();
-            }
-            normalizeAll();
-            setView('home');
-            await loadFromGitHub();
-            normalizeAll();
-            setView(currentView);
-        }
-        function saveLocal() { localStorage.setItem(STORAGE_KEY, JSON.stringify(books)); }
+function scheduleSave(){
+  const ind=document.getElementById('saveInd')||document.getElementById('saveStatus');
+  if(ind){ ind.textContent='Saving…'; ind.className='save-status'; }
+  clearTimeout(localSaveTimer);
+  localSaveTimer=setTimeout(async()=>{
+    saveLocal(); await syncToFirestore();
+    const i2=document.getElementById('saveInd')||document.getElementById('saveStatus');
+    if(i2){ i2.textContent='Saved ✓'; i2.className='save-status saved'; }
+  },600);
+}
 
-        // ─── VIEW SWITCHING ───────────────────────────────────────
-        function setView(v) {
-            currentView = v;
-            ['home', 'feed', 'library'].forEach(n => document.getElementById('view' + cap(n)).classList.toggle('show', n === v));
-            document.querySelectorAll('.nav-tabs button').forEach(btn => btn.classList.toggle('active', btn.dataset.view === v));
-            document.body.classList.toggle('in-library', v === 'library');
-            closeSidebar();
-            if (v === 'home') renderHome(); else if (v === 'feed') renderFeed(); else renderLibrary();
-        }
+// ─── VIEW SWITCHING ───────────────────────────────────────
+function setView(v){
+  currentView=v;
+  ['home','feed','library'].forEach(n=>document.getElementById('view'+cap(n)).classList.toggle('show',n===v));
+  document.querySelectorAll('.nav-tabs button').forEach(btn=>btn.classList.toggle('active',btn.dataset.view===v));
+  document.body.classList.toggle('in-library',v==='library');
+  closeSidebar();
+  if(v==='home') renderHome(); else if(v==='feed') renderFeed(); else renderLibrary();
+}
 
-        // editing context
-        function editingBook() { const id = currentView === 'home' ? homeReadingId : activeId; return books.find(b => b.id === id); }
-        function notesInput() { const b = editingBook(); if (!b) return; const ta = document.getElementById('notesArea'); if (ta) b.notes = ta.value; scheduleSave(); }
-        function scheduleSave() {
-            const ind = document.getElementById('saveInd') || document.getElementById('saveStatus');
-            if (ind) { ind.textContent = 'Saving…'; ind.className = 'save-status'; }
-            clearTimeout(localSaveTimer);
-            localSaveTimer = setTimeout(() => { saveLocal(); syncToGitHub(); const i2 = document.getElementById('saveInd') || document.getElementById('saveStatus'); if (i2) { i2.textContent = 'Saved'; i2.className = 'save-status saved'; } }, 600);
-        }
-        const SYNTAX_HINT = 'Write freely. Start a line with <code>-</code> for a point, <code>&gt;</code> for a quote, <code>@ https://… description</code> for a link, or just type a note.';
+function editingBook(){ const id=currentView==='home'?homeReadingId:activeId; return books.find(b=>b.id===id); }
+function notesInput(){ const b=editingBook(); if(!b) return; const ta=document.getElementById('notesArea'); if(ta) b.notes=ta.value; scheduleSave(); }
 
-        // ─── HOME ─────────────────────────────────────────────────
-        function renderHome() {
-            const el = document.getElementById('viewHome');
-            const reading = books.filter(b => b.status === 'reading');
-            if (reading.length) {
-                if (!homeReadingId || !reading.find(b => b.id === homeReadingId)) homeReadingId = reading[0].id;
-                const b = reading.find(x => x.id === homeReadingId);
-                const pills = reading.length > 1 ? `<div class="reading-pills">${reading.map(r => `<button class="pill ${r.id === homeReadingId ? 'active' : ''}" onclick="homeSwitch('${r.id}')">${esc(r.title)}</button>`).join('')}</div>` : '';
-                el.innerHTML = `<div class="wrap">
-      <span class="eyebrow">Currently reading</span>${pills}
+// ─── HOME ─────────────────────────────────────────────────
+function renderHome(){
+  const el=document.getElementById('viewHome');
+  const reading=books.filter(b=>b.status==='reading');
+  if(reading.length){
+    if(!homeReadingId||!reading.find(b=>b.id===homeReadingId)) homeReadingId=reading[0].id;
+    const b=reading.find(x=>x.id===homeReadingId);
+    const pills=reading.length>1?`<div class="reading-pills">${reading.map(r=>`<button class="pill ${r.id===homeReadingId?'active':''}" onclick="homeSwitch('${r.id}')">${esc(r.title)}</button>`).join('')}</div>`:'';
+    el.innerHTML=`<div class="wrap"><span class="eyebrow">Currently reading</span>${pills}
       <h2 class="home-title">${esc(b.title)}</h2>
-      <div class="home-author">${esc(b.author) || 'Unknown author'} &nbsp;·&nbsp; ${esc(b.lang)}</div>
+      <div class="home-author">${esc(b.author)||'Unknown author'} &nbsp;·&nbsp; ${esc(b.lang)}</div>
       <div class="status-row">
         <select class="status-select" onchange="homeStatus('${b.id}',this.value)">
-          <option value="toread" ${b.status === 'toread' ? 'selected' : ''}>To Read</option>
-          <option value="reading" ${b.status === 'reading' ? 'selected' : ''}>Currently Reading</option>
-          <option value="finished" ${b.status === 'finished' ? 'selected' : ''}>Finished</option>
+          <option value="toread" ${b.status==='toread'?'selected':''}>To Read</option>
+          <option value="reading" ${b.status==='reading'?'selected':''}>Currently Reading</option>
+          <option value="finished" ${b.status==='finished'?'selected':''}>Finished</option>
         </select>
         <span class="save-status" id="saveInd"></span>
       </div>
-      <textarea id="notesArea" class="notes-editor" oninput="notesInput()" placeholder="Jot quotes, notes, and links as you read...">${esc(b.notes)}</textarea>
+      <textarea id="notesArea" class="notes-editor" oninput="notesInput()" placeholder="Jot notes as you read…">${esc(b.notes)}</textarea>
       <div class="syntax-hint">${SYNTAX_HINT}</div>
       <div class="home-foot"><a onclick="setView('feed')">Read your finished notes →</a><a onclick="setView('library')">Manage library →</a></div>
     </div>`;
-            } else {
-                el.innerHTML = `<div class="wrap">
-      <div class="page-head"><span class="eyebrow">Your next read?</span><button class="btn btn-ghost btn-sm" onclick="renderSuggest(true)">↻ Shuffle</button></div>
-      <input class="search-bar" id="suggestSearch" placeholder="Search your to-read list..." oninput="renderSuggest(false)">
+  } else {
+    el.innerHTML=`<div class="wrap">
+      <div class="page-head"><span class="eyebrow">Your next read?</span><button class="btn btn-ghost btn-sm" onclick="renderSuggest()">↻ Shuffle</button></div>
+      <input class="search-bar" id="suggestSearch" placeholder="Search your to-read list…" oninput="renderSuggest()">
       <div id="suggestList" class="suggest-grid"></div>
     </div>`;
-                renderSuggest(true);
-            }
-        }
-        function homeSwitch(id) { homeReadingId = id; renderHome(); }
-        function homeStatus(id, val) { const b = books.find(x => x.id === id); if (!b) return; b.status = val; saveLocal(); syncToGitHub(); homeReadingId = null; renderHome(); }
+    renderSuggest();
+  }
+}
+function homeSwitch(id){ homeReadingId=id; renderHome(); }
+function homeStatus(id,val){ const b=books.find(x=>x.id===id); if(!b) return; b.status=val; saveLocal(); syncToFirestore(); homeReadingId=null; renderHome(); }
 
-        function renderSuggest() {
-            const cont = document.getElementById('suggestList'); if (!cont) return;
-            const q = (document.getElementById('suggestSearch').value || '').toLowerCase();
-            let pool = books.filter(b => b.status === 'toread' && (!q || b.title.toLowerCase().includes(q) || (b.author || '').toLowerCase().includes(q)));
-            if (!q) pool = shuffle(pool).slice(0, 8);
-            if (!pool.length) { cont.innerHTML = '<div class="feed-empty">No matching books in your to-read list.</div>'; return; }
-            let html = '', info = [];
-            pool.forEach(b => {
-                const cid = 'cv_' + b.id, sid = 'sm_' + b.id;
-                info.push({ coverId: cid, summaryId: b.lang === 'English' ? sid : null, book: b });
-                html += `<article class="suggest-card" onclick="openInLibrary('${b.id}')">
-      <div class="suggest-cover" id="${cid}">${esc((b.title || '?').charAt(0))}</div>
-      <div class="suggest-body"><h3>${esc(b.title)}</h3><div class="meta">${esc(b.author) || 'Unknown author'} &nbsp;·&nbsp; ${esc(b.lang)}</div>
-      <div class="suggest-summary" id="${sid}">${b.lang === 'English' ? 'Loading summary…' : ''}</div></div></article>`;
-            });
-            cont.innerHTML = html;
-            hydrateBookInfo(info);
-        }
+function renderSuggest(){
+  const cont=document.getElementById('suggestList'); if(!cont) return;
+  const q=(document.getElementById('suggestSearch').value||'').toLowerCase();
+  let pool=books.filter(b=>b.status==='toread'&&(!q||b.title.toLowerCase().includes(q)||(b.author||'').toLowerCase().includes(q)));
+  if(!q) pool=shuffle(pool).slice(0,8);
+  if(!pool.length){ cont.innerHTML='<div class="feed-empty">No matching books in your to-read list.</div>'; return; }
+  let html='', info=[];
+  pool.forEach(b=>{
+    const cid='cv_'+b.id, sid='sm_'+b.id;
+    info.push({coverId:cid, summaryId:b.lang==='English'?sid:null, book:b});
+    html+=`<article class="suggest-card" onclick="openInLibrary('${b.id}')">
+      <div class="suggest-cover" id="${cid}">${esc((b.title||'?').charAt(0))}</div>
+      <div class="suggest-body"><h3>${esc(b.title)}</h3><div class="meta">${esc(b.author)||'Unknown author'} &nbsp;·&nbsp; ${esc(b.lang)}</div>
+      <div class="suggest-summary" id="${sid}">${b.lang==='English'?'Loading summary…':''}</div></div></article>`;
+  });
+  cont.innerHTML=html; hydrateBookInfo(info);
+}
 
-        // ─── FEED ─────────────────────────────────────────────────
-        function renderFeed() {
-            document.getElementById('viewFeed').innerHTML = `<div class="wrap">
+// ─── FEED ─────────────────────────────────────────────────
+function renderFeed(){
+  document.getElementById('viewFeed').innerHTML=`<div class="wrap">
     <div class="page-head"><span class="eyebrow">Notes from finished books</span><button class="btn btn-ghost btn-sm" onclick="renderFeedInto('feedList')">↻ Shuffle</button></div>
-    <input class="search-bar" id="feedSearch" placeholder="Search your notes and finished books..." oninput="renderFeedInto('feedList')">
+    <input class="search-bar" id="feedSearch" placeholder="Search your notes and finished books…" oninput="renderFeedInto('feedList')">
     <div id="feedList" class="feed"></div>
   </div>`;
-            renderFeedInto('feedList');
-        }
-        function renderFeedInto(containerId) {
-            const cont = document.getElementById(containerId); if (!cont) return;
-            const q = ((document.getElementById('feedSearch') || {}).value || '').toLowerCase();
-            let list = books.filter(b => b.status === 'finished' && (!q || b.title.toLowerCase().includes(q) || (b.author || '').toLowerCase().includes(q) || (b.notes || '').toLowerCase().includes(q)));
-            list = shuffle(list);
-            if (!list.length) { cont.innerHTML = `<div class="feed-empty">No finished books match.<br>Mark a book Finished and its notes will show here.</div>`; return; }
-            let html = '', covers = [];
-            list.forEach(b => {
-                const cid = 'ff_' + b.id; covers.push({ coverId: cid, book: b });
-                const body = hasNotes(b) ? renderNotes(b.notes) : '<div class="feed-none">No notes yet — open to add some.</div>';
-                html += `<article class="feed-card">
-      <div class="feed-top"><div class="feed-cover" id="${cid}">${esc((b.title || '?').charAt(0))}</div><div><h3>${esc(b.title)}</h3><div class="meta">${esc(b.author) || 'Unknown author'} &nbsp;·&nbsp; ${esc(b.lang)}</div></div></div>
-      ${body}
+  renderFeedInto('feedList');
+}
+function renderFeedInto(cid){
+  const cont=document.getElementById(cid); if(!cont) return;
+  const q=((document.getElementById('feedSearch')||{}).value||'').toLowerCase();
+  let list=books.filter(b=>b.status==='finished'&&(!q||b.title.toLowerCase().includes(q)||(b.author||'').toLowerCase().includes(q)||(b.notes||'').toLowerCase().includes(q)));
+  list=shuffle(list);
+  if(!list.length){ cont.innerHTML=`<div class="feed-empty">No finished books match.</div>`; return; }
+  let html='', covers=[];
+  list.forEach(b=>{
+    const fc='ff_'+b.id; covers.push({coverId:fc,book:b});
+    html+=`<article class="feed-card">
+      <div class="feed-top"><div class="feed-cover" id="${fc}">${esc((b.title||'?').charAt(0))}</div><div><h3>${esc(b.title)}</h3><div class="meta">${esc(b.author)||'Unknown author'} &nbsp;·&nbsp; ${esc(b.lang)}</div></div></div>
+      ${hasNotes(b)?renderNotes(b.notes):'<div class="feed-none">No notes yet — open to add some.</div>'}
       <div class="feed-actions"><button class="btn btn-ghost btn-sm" onclick="openInLibrary('${b.id}')">Open / edit</button></div>
     </article>`;
-            });
-            cont.innerHTML = html;
-            hydrateBookInfo(covers);
-        }
-        function openInLibrary(id) { setView('library'); selectBook(id, true); }
+  });
+  cont.innerHTML=html; hydrateBookInfo(covers);
+}
+function openInLibrary(id){ setView('library'); selectBook(id,true); }
 
-        // ─── LIBRARY ──────────────────────────────────────────────
-        function renderLibrary() { renderSidebar(); if (activeId && books.find(b => b.id === activeId)) renderBookDetail(); else libraryEmpty(); }
-        function libraryEmpty() { document.getElementById('libEmpty').style.display = 'flex'; document.getElementById('bookDetail').style.display = 'none'; }
-        function renderSidebar() {
-            const q = (document.getElementById('searchInput').value || '').toLowerCase();
-            const groups = { reading: [], toread: [], finished: [] }, labels = { reading: 'Currently Reading', toread: 'To Read', finished: 'Finished' };
-            books.forEach(b => { if (!q || b.title.toLowerCase().includes(q) || (b.author || '').toLowerCase().includes(q)) { if (groups[b.status]) groups[b.status].push(b); } });
-            let html = '';
-            ['reading', 'toread', 'finished'].forEach(s => {
-                if (!groups[s].length) return;
-                html += `<div class="status-group"><div class="status-label">${labels[s]} (${groups[s].length})</div>`;
-                groups[s].forEach(b => { const active = b.id === activeId ? ' active' : ''; html += `<div class="book-item${active}" onclick="selectBook('${b.id}')"><div class="book-item-info"><div class="book-item-title">${esc(b.title)}</div><div class="book-item-author">${esc(b.author) || 'Unknown author'} ${hasNotes(b) ? '<span class="note-dot">●</span>' : ''}</div></div><span class="badge badge-${b.status}">${s === 'toread' ? 'To Read' : s === 'reading' ? 'Reading' : 'Done'}</span></div>`; });
-                html += '</div>';
-            });
-            document.getElementById('sidebarList').innerHTML = html || '<div style="padding:20px;text-align:center;color:var(--text-muted);font-size:14px;">No books found</div>';
-        }
-        function selectBook(id, forceEdit) { activeId = id; const b = books.find(x => x.id === id); if (!b) return; editMode = forceEdit ? true : (b.status !== 'finished'); closeSidebar(); renderSidebar(); renderBookDetail(); }
-        function renderBookDetail() {
-            const b = books.find(x => x.id === activeId); if (!b) { libraryEmpty(); return; }
-            document.getElementById('libEmpty').style.display = 'none';
-            const detail = document.getElementById('bookDetail');
-            detail.style.display = 'flex'; detail.style.flexDirection = 'column'; detail.style.gap = '20px';
-            const cid = 'cvD_' + b.id, sid = 'smD_' + b.id, showAbout = b.lang === 'English';
-            const header = `<div class="book-header"><div class="book-title-area"><h2>${esc(b.title)}</h2><div class="author">${esc(b.author) || 'Unknown author'} &nbsp;·&nbsp; ${esc(b.lang)}</div></div>
+// ─── LIBRARY ──────────────────────────────────────────────
+function renderLibrary(){ renderSidebar(); if(activeId&&books.find(b=>b.id===activeId)) renderBookDetail(); else libraryEmpty(); }
+function libraryEmpty(){ document.getElementById('libEmpty').style.display='flex'; document.getElementById('bookDetail').style.display='none'; }
+
+function renderSidebar(){
+  const q=(document.getElementById('searchInput').value||'').toLowerCase();
+  const grps={reading:[],toread:[],finished:[]}, labs={reading:'Currently Reading',toread:'To Read',finished:'Finished'};
+  books.forEach(b=>{ if(!q||b.title.toLowerCase().includes(q)||(b.author||'').toLowerCase().includes(q)){ if(grps[b.status]) grps[b.status].push(b); } });
+  let html='';
+  ['reading','toread','finished'].forEach(s=>{
+    if(!grps[s].length) return;
+    html+=`<div class="status-group"><div class="status-label">${labs[s]} (${grps[s].length})</div>`;
+    grps[s].forEach(b=>{ html+=`<div class="book-item${b.id===activeId?' active':''}" onclick="selectBook('${b.id}')"><div class="book-item-info"><div class="book-item-title">${esc(b.title)}</div><div class="book-item-author">${esc(b.author)||'Unknown author'} ${hasNotes(b)?'<span class="note-dot">●</span>':''}</div></div><span class="badge badge-${b.status}">${s==='toread'?'To Read':s==='reading'?'Reading':'Done'}</span></div>`; });
+    html+='</div>';
+  });
+  document.getElementById('sidebarList').innerHTML=html||'<div style="padding:20px;text-align:center;color:var(--text-muted);font-size:14px;">No books found</div>';
+}
+
+function selectBook(id,forceEdit){ activeId=id; const b=books.find(x=>x.id===id); if(!b) return; editMode=forceEdit?true:(b.status!=='finished'); closeSidebar(); renderSidebar(); renderBookDetail(); }
+
+function renderBookDetail(){
+  const b=books.find(x=>x.id===activeId); if(!b){ libraryEmpty(); return; }
+  document.getElementById('libEmpty').style.display='none';
+  const detail=document.getElementById('bookDetail');
+  detail.style.display='flex'; detail.style.flexDirection='column'; detail.style.gap='20px';
+  const cid='cvD_'+b.id, sid='smD_'+b.id, showAbout=b.lang==='English';
+  const hdr=`<div class="book-header"><div class="book-title-area"><h2>${esc(b.title)}</h2><div class="author">${esc(b.author)||'Unknown author'} &nbsp;·&nbsp; ${esc(b.lang)}</div></div>
     <div class="book-actions">
       <select class="status-select" onchange="changeStatus('${b.id}',this.value)">
-        <option value="toread" ${b.status === 'toread' ? 'selected' : ''}>To Read</option>
-        <option value="reading" ${b.status === 'reading' ? 'selected' : ''}>Currently Reading</option>
-        <option value="finished" ${b.status === 'finished' ? 'selected' : ''}>Finished</option>
+        <option value="toread" ${b.status==='toread'?'selected':''}>To Read</option>
+        <option value="reading" ${b.status==='reading'?'selected':''}>Currently Reading</option>
+        <option value="finished" ${b.status==='finished'?'selected':''}>Finished</option>
       </select>
-      ${editMode ? `<button class="btn btn-ghost btn-sm" onclick="exitEdit()">Done</button>` : `<button class="btn btn-sm" onclick="enterEdit()">Edit</button>`}
+      ${editMode?`<button class="btn btn-ghost btn-sm" onclick="exitEdit()">Done</button>`:`<button class="btn btn-sm" onclick="enterEdit()">Edit</button>`}
       <button class="btn btn-ghost btn-sm" onclick="confirmDelete('${b.id}')">Delete</button>
     </div></div>`;
-            const about = showAbout ? `<div class="about-box"><div class="about-cover" id="${cid}">${esc((b.title || '?').charAt(0))}</div><div class="about-body"><div class="about-label">About this book</div><div class="about-summary" id="${sid}">Loading…</div></div></div>` : '';
-            let body;
-            if (editMode) {
-                body = `<div class="note-section"><label>📝 Notes</label><textarea id="notesArea" class="notes-editor" oninput="notesInput()" placeholder="Write freely. > for a quote, @ for a link...">${esc(b.notes)}</textarea><div class="syntax-hint">${SYNTAX_HINT} <span class="save-status" id="saveStatus">Saves automatically</span></div></div>`;
-            } else {
-                body = `<div class="note-section"><label>📝 Notes</label>${renderNotes(b.notes)}</div>`;
-            }
-            detail.innerHTML = header + about + '<hr class="divider">' + body;
-            if (showAbout) hydrateBookInfo([{ coverId: cid, summaryId: sid, book: b }]);
-        }
-        function enterEdit() { editMode = true; renderBookDetail(); }
-        function exitEdit() { saveLocal(); syncToGitHub(); editMode = false; renderBookDetail(); renderSidebar(); }
-        function changeStatus(id, val) { const b = books.find(x => x.id === id); if (!b) return; b.status = val; saveLocal(); editMode = val !== 'finished'; renderBookDetail(); renderSidebar(); syncToGitHub(); }
-        function confirmDelete(id) { const b = books.find(x => x.id === id); if (!b) return; if (!confirm(`Delete "${b.title}"? This cannot be undone.`)) return; books = books.filter(x => x.id !== id); activeId = null; saveLocal(); renderSidebar(); libraryEmpty(); syncToGitHub(); }
+  const about=showAbout?`<div class="about-box"><div class="about-cover" id="${cid}">${esc((b.title||'?').charAt(0))}</div><div class="about-body"><div class="about-label">About this book</div><div class="about-summary" id="${sid}">Loading…</div></div></div>`:'';
+  const body=editMode
+    ?`<div class="note-section"><label>📝 Notes</label><textarea id="notesArea" class="notes-editor" oninput="notesInput()" placeholder="Write freely…">${esc(b.notes)}</textarea><div class="syntax-hint">${SYNTAX_HINT} <span class="save-status" id="saveStatus">Saves automatically</span></div></div>`
+    :`<div class="note-section"><label>📝 Notes</label>${renderNotes(b.notes)}</div>`;
+  detail.innerHTML=hdr+about+'<hr class="divider">'+body;
+  if(showAbout) hydrateBookInfo([{coverId:cid,summaryId:sid,book:b}]);
+}
 
-        // ─── ADD BOOK ─────────────────────────────────────────────
-        function openAddBook() { document.getElementById('addModal').classList.add('open'); }
-        function closeAddBook() { document.getElementById('addModal').classList.remove('open'); }
-        function addBook() {
-            const title = document.getElementById('newTitle').value.trim(); if (!title) { alert('Please enter a title.'); return; }
-            const b = { id: uid(), title, author: document.getElementById('newAuthor').value.trim(), lang: document.getElementById('newLang').value, status: document.getElementById('newStatus').value, notes: '' };
-            books.unshift(b); saveLocal(); closeAddBook();
-            document.getElementById('newTitle').value = ''; document.getElementById('newAuthor').value = '';
-            syncToGitHub(); setView('library'); selectBook(b.id, true);
-        }
+function enterEdit(){ editMode=true; renderBookDetail(); }
+function exitEdit(){ saveLocal(); syncToFirestore(); editMode=false; renderBookDetail(); renderSidebar(); }
+function changeStatus(id,val){ const b=books.find(x=>x.id===id); if(!b) return; b.status=val; saveLocal(); editMode=val!=='finished'; renderBookDetail(); renderSidebar(); syncToFirestore(); }
+function confirmDelete(id){ const b=books.find(x=>x.id===id); if(!b) return; if(!confirm(`Delete "${b.title}"? This cannot be undone.`)) return; books=books.filter(x=>x.id!==id); activeId=null; saveLocal(); renderSidebar(); libraryEmpty(); syncToFirestore(); }
 
-        // ─── EXPORT / IMPORT ──────────────────────────────────────
-        function exportJson() { const blob = new Blob([JSON.stringify(books, null, 2)], { type: 'application/json' }); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'books.json'; a.click(); URL.revokeObjectURL(a.href); }
-        function importJson(ev) { const f = ev.target.files[0]; if (!f) return; const r = new FileReader(); r.onload = () => { try { const d = JSON.parse(r.result); if (Array.isArray(d)) { books = d; normalizeAll(); saveLocal(); syncToGitHub(); closeSetup(); setView(currentView); alert('Imported ' + d.length + ' books.'); } else alert('Invalid file.'); } catch (e) { alert('Could not parse JSON.'); } }; r.readAsText(f); }
+// ─── ADD BOOK ─────────────────────────────────────────────
+function openAddBook(){ document.getElementById('addModal').classList.add('open'); }
+function closeAddBook(){ document.getElementById('addModal').classList.remove('open'); }
+function addBook(){
+  const title=document.getElementById('newTitle').value.trim(); if(!title){ alert('Please enter a title.'); return; }
+  const b={id:uid(),title,author:document.getElementById('newAuthor').value.trim(),lang:document.getElementById('newLang').value,status:document.getElementById('newStatus').value,notes:''};
+  books.unshift(b); saveLocal(); closeAddBook();
+  document.getElementById('newTitle').value=''; document.getElementById('newAuthor').value='';
+  syncToFirestore(); setView('library'); selectBook(b.id,true);
+}
 
-        // ─── GITHUB SYNC ──────────────────────────────────────────
-        let ghConfig = null;
-        function loadGhConfig() { const s = localStorage.getItem(GH_KEY); if (s) ghConfig = JSON.parse(s); }
-        function openSetup() { if (ghConfig) { document.getElementById('ghUser').value = ghConfig.user || ''; document.getElementById('ghRepo').value = ghConfig.repo || ''; document.getElementById('ghToken').value = ghConfig.token || ''; } document.getElementById('setupModal').classList.add('open'); }
-        function closeSetup() { document.getElementById('setupModal').classList.remove('open'); }
-        async function saveSetup() {
-            const user = document.getElementById('ghUser').value.trim(), repo = document.getElementById('ghRepo').value.trim(), token = document.getElementById('ghToken').value.trim();
-            if (!user || !repo || !token) { alert('Please fill all fields.'); return; }
-            ghConfig = { user, repo, token }; localStorage.setItem(GH_KEY, JSON.stringify(ghConfig)); closeSetup();
-            await loadFromGitHub(); normalizeAll(); setView(currentView);
-        }
-        async function loadFromGitHub() {
-            if (!ghConfig) return;
-            const { user, repo, token } = ghConfig;
-            try {
-                const r = await fetch(`https://api.github.com/repos/${user}/${repo}/contents/${GH_PATH}`, { headers: { Authorization: `token ${token}` } });
-                if (!r.ok) return;
-                const d = await r.json();
-                const remote = JSON.parse(decodeURIComponent(escape(atob((d.content || '').replace(/\s/g, '')))));
-                if (Array.isArray(remote) && remote.length) { books = remote; saveLocal(); if (activeId && !books.find(b => b.id === activeId)) activeId = null; }
-            } catch (e) { console.error('GitHub load failed', e); }
-        }
-        async function syncToGitHub() {
-            if (!ghConfig) return;
-            const { user, repo, token } = ghConfig;
-            const content = btoa(unescape(encodeURIComponent(JSON.stringify(books, null, 2))));
-            let sha = null;
-            try { const r = await fetch(`https://api.github.com/repos/${user}/${repo}/contents/${GH_PATH}`, { headers: { Authorization: `token ${token}` } }); if (r.ok) { const d = await r.json(); sha = d.sha; } } catch (e) { }
-            const body = { message: 'Update reading journal', content }; if (sha) body.sha = sha;
-            try { await fetch(`https://api.github.com/repos/${user}/${repo}/contents/${GH_PATH}`, { method: 'PUT', headers: { Authorization: `token ${token}`, 'Content-Type': 'application/json' }, body: JSON.stringify(body) }); } catch (e) { console.error('GitHub sync failed', e); }
-        }
+// ─── EXPORT / IMPORT ──────────────────────────────────────
+function exportJson(){ const bl=new Blob([JSON.stringify(books,null,2)],{type:'application/json'}); const a=document.createElement('a'); a.href=URL.createObjectURL(bl); a.download='books-backup.json'; a.click(); URL.revokeObjectURL(a.href); }
+function importJson(ev){ const f=ev.target.files[0]; if(!f) return; const r=new FileReader(); r.onload=()=>{ try{ const d=JSON.parse(r.result); if(Array.isArray(d)){ books=d; normalizeAll(); saveLocal(); syncToFirestore(); closeSetup(); setView(currentView); alert('Imported '+d.length+' books.'); } else alert('Invalid file.'); }catch(e){ alert('Could not parse JSON.'); } }; r.readAsText(f); }
 
-        // ─── MOBILE SIDEBAR ───────────────────────────────────────
-        function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); document.getElementById('sidebarOverlay').classList.toggle('open'); }
-        function closeSidebar() { const sb = document.getElementById('sidebar'), ov = document.getElementById('sidebarOverlay'); if (sb) sb.classList.remove('open'); if (ov) ov.classList.remove('open'); }
+// ─── DATA MODAL ───────────────────────────────────────────
+function openSetup(){ setConnStatus(true); document.getElementById('setupModal').classList.add('open'); }
+function closeSetup(){ document.getElementById('setupModal').classList.remove('open'); }
 
-        init();
-    </script>
+// ─── MOBILE SIDEBAR ───────────────────────────────────────
+function toggleSidebar(){ document.getElementById('sidebar').classList.toggle('open'); document.getElementById('sidebarOverlay').classList.toggle('open'); }
+function closeSidebar(){ const sb=document.getElementById('sidebar'),ov=document.getElementById('sidebarOverlay'); if(sb) sb.classList.remove('open'); if(ov) ov.classList.remove('open'); }
+
+init();
+</script>
 </body>
-
 </html>
