@@ -10,10 +10,9 @@
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 <style>
 :root{
-  --bg:#fff; --surface:#f5f5f3; --border:#e8e8e8;
-  --text:#111; --text-2:#444; --text-muted:#888;
-  --accent-bg:#f0f0ee; --radius:4px;
-  --shadow:0 1px 4px rgba(0,0,0,0.06); --max:1100px;
+  --bg:#fff;--surface:#f5f5f3;--border:#e8e8e8;
+  --text:#111;--text-2:#444;--text-muted:#888;
+  --accent-bg:#f0f0ee;--radius:4px;--max:1100px;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);height:100vh;overflow:hidden;display:flex;flex-direction:column;}
@@ -39,23 +38,19 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 .container{max-width:var(--max);margin:0 auto;padding:0 32px;}
 
 /* ── HOME: READING ── */
-.home-reading{max-width:680px;margin:0 auto;padding:52px 32px 80px;}
-.home-eyebrow{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-muted);margin-bottom:22px;}
-.home-pills{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px;}
+.home-reading{max-width:680px;margin:0 auto;padding:48px 32px 80px;}
+.home-eyebrow{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-muted);margin-bottom:20px;}
+.home-pills{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;}
 .home-pill{border:1px solid var(--border);background:none;color:var(--text-muted);border-radius:100px;padding:5px 14px;font-size:12px;font-weight:500;cursor:pointer;font-family:inherit;transition:all .12s;}
 .home-pill.active{border-color:var(--text);background:var(--text);color:#fff;}
 .home-display-title{font-size:clamp(26px,4.5vw,52px);font-weight:700;letter-spacing:-1.5px;line-height:1.05;margin-bottom:10px;word-break:break-word;}
-.home-display-author{font-size:16px;color:var(--text-muted);margin-bottom:24px;}
+.home-display-author{font-size:16px;color:var(--text-muted);margin-bottom:22px;}
 .home-status-row{display:flex;align-items:center;gap:16px;margin-bottom:28px;}
 .bare-select{background:none;border:none;border-bottom:1px solid var(--border);padding:4px 0;font-size:14px;font-weight:500;color:var(--text);cursor:pointer;font-family:inherit;outline:none;}
 .bare-select:focus{border-bottom-color:var(--text);}
 .save-ind{font-size:12px;color:var(--text-muted);}
 .save-ind.saved{color:#2a7a4a;}
-.home-notes-area{width:100%;border:none;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:transparent;padding:20px 0;font-size:16px;line-height:2.0;font-family:inherit;color:var(--text);outline:none;resize:none;min-height:40vh;}
-.home-notes-area::placeholder{color:#ccc;}
-.syntax-hint{font-size:12px;color:var(--text-muted);margin-top:14px;line-height:1.7;}
-.syntax-hint code{background:var(--surface);padding:1px 5px;border-radius:3px;font-size:11px;}
-.home-foot{margin-top:20px;display:flex;gap:24px;}
+.home-foot{margin-top:24px;display:flex;gap:24px;}
 .home-foot a{font-size:13px;font-weight:500;color:var(--text-muted);cursor:pointer;transition:color .12s;}
 .home-foot a:hover{color:var(--text);}
 
@@ -67,13 +62,11 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 .shuffle-btn:hover{background:var(--surface);}
 .bare-search{width:100%;border:none;border-bottom:1px solid var(--border);background:transparent;padding:10px 0;font-size:14px;font-family:inherit;color:var(--text);outline:none;margin-bottom:28px;}
 .bare-search:focus{border-bottom-color:var(--text);}
-.empty-msg{color:var(--text-muted);font-size:14px;padding:40px 0;}
 
 /* ── FEED ── */
 .feed-header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:36px 0 0;}
 .feed-eyebrow{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-muted);}
 .feed-entry{padding:36px 0;border-top:1px solid var(--border);}
-.feed-entry:first-of-type{border-top:none;}
 .entry-label{font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-bottom:10px;}
 .entry-title{font-size:28px;font-weight:700;letter-spacing:-.5px;line-height:1.15;margin-bottom:6px;}
 .entry-author{font-size:14px;color:var(--text-muted);margin-bottom:20px;}
@@ -86,7 +79,7 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 /* ── LIBRARY: GRID ── */
 .lib-top{padding:36px 0 0;}
 .lib-eyebrow{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-muted);margin-bottom:20px;}
-.lib-toolbar{display:flex;align-items:center;gap:0;border-bottom:1px solid var(--border);margin-bottom:28px;flex-wrap:wrap;}
+.lib-toolbar{display:flex;align-items:center;border-bottom:1px solid var(--border);margin-bottom:28px;flex-wrap:wrap;}
 .filter-btn{background:none;border:none;border-bottom:2px solid transparent;font-size:13px;font-weight:500;color:var(--text-muted);cursor:pointer;padding:10px 14px;margin-bottom:-1px;font-family:inherit;white-space:nowrap;transition:color .15s,border-color .15s;}
 .filter-btn:hover{color:var(--text);}
 .filter-btn.active{color:var(--text);border-bottom-color:var(--text);}
@@ -128,15 +121,56 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 .detail-about-label{font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-bottom:7px;}
 .detail-about-text{font-size:13px;line-height:1.7;color:var(--text-2);}
 .detail-divider{border:none;border-top:1px solid var(--border);margin-bottom:22px;}
-.detail-notes-label{font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-bottom:14px;}
-.detail-textarea{width:100%;border:none;border-top:1px solid var(--border);background:transparent;padding:18px 0;font-size:15px;line-height:1.9;font-family:inherit;color:var(--text);outline:none;resize:none;min-height:200px;}
-.detail-hint-row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:10px;flex-wrap:wrap;}
 
-/* ── NOTE DISPLAY ── */
+/* ── NOTES SECTION ── */
+.notes-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+.notes-label{font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);}
+.notes-section{display:flex;flex-direction:column;gap:8px;}
+
+/* ── NOTE CARDS (view) ── */
+.note-card{border:1px solid var(--border);border-radius:6px;background:#fff;overflow:hidden;}
+.note-card-view{display:flex;align-items:flex-start;padding:12px 14px;gap:10px;}
+.nc-main{flex:1;min-width:0;}
+.nc-controls{display:flex;gap:2px;flex-shrink:0;opacity:0;transition:opacity .15s;}
+.notes-section.editable .note-card:hover .nc-controls{opacity:1;}
+@media(hover:none){.notes-section.editable .nc-controls{opacity:1;}}
+.nc-btn{background:none;border:none;padding:3px 7px;font-size:12px;color:var(--text-muted);cursor:pointer;border-radius:3px;font-family:inherit;transition:background .12s;}
+.nc-btn:hover{background:var(--accent-bg);}
+/* Note type styles */
+.nc-point{font-size:14px;line-height:1.75;color:var(--text);}
+.nc-point::before{content:'›';margin-right:7px;font-weight:700;}
+.nc-quote{font-size:15px;line-height:1.75;color:var(--text-2);font-style:italic;padding-left:14px;border-left:2px solid var(--text);}
+.nc-note{font-size:14px;line-height:1.8;color:var(--text);white-space:pre-wrap;word-wrap:break-word;}
+.nc-link{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--text);}
+.nc-link:hover{opacity:.8;}
+.nc-fav{width:15px;height:15px;border-radius:2px;flex-shrink:0;}
+.nc-link-label{font-size:14px;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.nc-link-dom{font-size:11px;color:var(--text-muted);flex-shrink:0;}
+
+/* ── NOTE CARD (editing) ── */
+.note-card.editing{border-color:var(--text);}
+.card-type-bar{display:flex;border-bottom:1px solid var(--border);}
+.ctype-btn{flex:1;background:none;border:none;border-bottom:2px solid transparent;padding:9px 4px;font-size:12px;font-weight:500;color:var(--text-muted);cursor:pointer;font-family:inherit;white-space:nowrap;margin-bottom:-1px;transition:color .12s,border-color .12s;}
+.ctype-btn.active{color:var(--text);border-bottom-color:var(--text);}
+.card-inputs{padding:12px 14px;display:flex;flex-direction:column;gap:8px;}
+.card-field{background:none;border:none;border-bottom:1px solid var(--border);padding:6px 0;font-size:14px;line-height:1.7;font-family:inherit;color:var(--text);outline:none;width:100%;resize:none;overflow:hidden;}
+.card-field:focus{border-bottom-color:var(--text);}
+.card-field::placeholder{color:#bbb;}
+.card-foot{display:flex;align-items:center;justify-content:space-between;padding:4px 14px 12px;}
+.card-hint{font-size:11px;color:var(--text-muted);}
+.card-btns{display:flex;gap:8px;}
+.card-save{background:var(--text);color:#fff;border:none;padding:5px 16px;border-radius:3px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;transition:opacity .15s;}
+.card-save:hover{opacity:.8;}
+.card-cancel{background:none;border:none;font-size:12px;color:var(--text-muted);cursor:pointer;font-family:inherit;}
+
+/* ── ADD NOTE BUTTON ── */
+.add-note-btn{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;padding:11px 14px;background:none;border:1px dashed var(--border);border-radius:6px;font-size:13px;color:var(--text-muted);cursor:pointer;font-family:inherit;transition:all .15s;}
+.add-note-btn:hover{border-color:var(--text);color:var(--text);}
+
+/* ── FEED NOTE DISPLAY ── */
 .notes-view{display:flex;flex-direction:column;gap:14px;}
 .nv-empty{color:var(--text-muted);font-style:italic;font-size:15px;}
 .nv-note{font-size:15px;line-height:1.85;color:var(--text);white-space:pre-wrap;word-wrap:break-word;overflow-wrap:anywhere;}
-.nv-note a{color:var(--text);text-decoration:underline;}
 .nv-quote{font-size:15px;line-height:1.75;color:var(--text-2);padding:4px 0 4px 18px;border-left:2px solid var(--text);font-style:italic;white-space:pre-wrap;}
 .nv-list{list-style:none;display:flex;flex-direction:column;gap:7px;}
 .nv-list li{position:relative;padding-left:18px;font-size:15px;line-height:1.7;color:var(--text);word-wrap:break-word;overflow-wrap:anywhere;}
@@ -146,6 +180,11 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 .nv-fav{width:16px;height:16px;flex-shrink:0;border-radius:2px;}
 .nv-link-label{flex:1;font-size:13px;min-width:0;}
 .nv-link-dom{font-size:11px;color:var(--text-muted);}
+
+/* ── ABOUT BOX ── */
+.detail-about{margin-bottom:24px;padding:14px;background:var(--surface);border-radius:var(--radius);}
+.detail-about-label{font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-bottom:7px;}
+.detail-about-text{font-size:13px;line-height:1.7;color:var(--text-2);}
 
 /* ── MODALS ── */
 .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.3);z-index:100;align-items:center;justify-content:center;padding:20px;}
@@ -157,37 +196,37 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 .modal-field label{font-size:11px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.6px;}
 .modal-field input,.modal-field select{background:none;border:none;border-bottom:1px solid var(--border);padding:8px 0;font-size:14px;font-family:inherit;color:var(--text);outline:none;}
 .modal-field input:focus,.modal-field select:focus{border-bottom-color:var(--text);}
-.modal-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:4px;flex-wrap:wrap;}
+.modal-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:4px;}
 .modal-tools{display:flex;gap:8px;flex-wrap:wrap;border-top:1px solid var(--border);padding-top:14px;}
 .m-btn{background:var(--text);color:#fff;border:none;padding:8px 16px;border-radius:var(--radius);font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:opacity .15s;}
 .m-btn:hover{opacity:.8;}
 .m-btn.ghost{background:none;color:var(--text-muted);border:1px solid var(--border);}
 .m-btn.sm{padding:6px 12px;font-size:12px;}
 .conn-status{font-size:13px;font-weight:500;padding:8px 12px;border-radius:var(--radius);background:var(--surface);}
-.conn-ok{color:#2a7a4a;} .conn-err{color:#d44;}
+.conn-ok{color:#2a7a4a;}.conn-err{color:#d44;}
+
+/* ── ANIMATION ── */
+@keyframes cardIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+.card-enter{animation:cardIn .18s ease forwards;}
 
 /* ── MOBILE ── */
 @media(max-width:720px){
   .topbar{padding:0 16px;gap:10px;}
-  .brand{font-size:13px;}
-  .nav{gap:16px;}
-  .nav-btn{font-size:12px;}
-  .add-btn{padding:6px 10px;font-size:12px;}
-  .icon-btn{width:28px;height:28px;}
+  .brand{font-size:13px;}.nav{gap:16px;}.nav-btn{font-size:12px;}
+  .add-btn{padding:6px 10px;font-size:12px;}.icon-btn{width:28px;height:28px;}
   .container{padding:0 16px;}
-  .home-reading{padding:36px 16px 60px;}
+  .home-reading{padding:32px 16px 60px;}
   .home-suggest{padding:24px 0 60px;}
   .book-grid{grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:20px 14px;}
-  .detail-wrap{padding:20px 16px 60px;}
-  .detail-title{font-size:18px;}
+  .detail-wrap{padding:20px 16px 60px;}.detail-title{font-size:18px;}
   .entry-title{font-size:22px;}
   .filter-btn{padding:10px 10px;font-size:12px;}
   .modal{padding:20px 16px;gap:12px;}
   input,select,textarea{font-size:16px !important;}
+  .ctype-btn{font-size:11px;padding:9px 3px;}
 }
 @media(max-width:380px){
-  .nav-btn{font-size:11px;}
-  .nav{gap:12px;}
+  .nav-btn{font-size:11px;}.nav{gap:12px;}
   .book-grid{grid-template-columns:repeat(2,1fr);}
 }
 </style>
@@ -202,7 +241,7 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
     <button class="nav-btn" data-view="library" onclick="setView('library')">Library</button>
   </nav>
   <div class="topbar-right">
-    <button class="icon-btn" onclick="openSetup()" title="Data">⚙</button>
+    <button class="icon-btn" onclick="openSetup()">⚙</button>
     <button class="add-btn" onclick="openAddBook()">+ Add</button>
   </div>
 </div>
@@ -240,22 +279,18 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 
 <script>
 // ─── FIREBASE ─────────────────────────────────────────────
-const firebaseConfig = {
-  apiKey:"AIzaSyAu8sfOZQNbbzvuSDCGZ3vg1Ne919wm-v8",
-  authDomain:"reading-journal-d4839.firebaseapp.com",
-  projectId:"reading-journal-d4839",
-  storageBucket:"reading-journal-d4839.firebasestorage.app",
-  messagingSenderId:"806612897171",
-  appId:"1:806612897171:web:8e1efa2d49fd41dc73ac66"
-};
+const firebaseConfig={apiKey:"AIzaSyAu8sfOZQNbbzvuSDCGZ3vg1Ne919wm-v8",authDomain:"reading-journal-d4839.firebaseapp.com",projectId:"reading-journal-d4839",storageBucket:"reading-journal-d4839.firebasestorage.app",messagingSenderId:"806612897171",appId:"1:806612897171:web:8e1efa2d49fd41dc73ac66"};
 firebase.initializeApp(firebaseConfig);
 const db=firebase.firestore();
 const DOC=db.collection('journal').doc('main');
 
 // ─── STATE ────────────────────────────────────────────────
-let books=[],currentView='home',activeId=null,editMode=false,homeReadingId=null,localSaveTimer=null;
+let books=[],currentView='home',activeId=null,editMode=false,homeReadingId=null;
 let libMode='grid',libFilter='all';
-const STORAGE_KEY='reading_journal_books', INFO_PREFIX='bk_info_v2_';
+// Note card editing state
+let noteEditIdx=null,noteEditType='point',noteEditBookId=null;
+let noteEditTempText='',noteEditTempUrl='',noteJustStarted=false;
+const STORAGE_KEY='reading_journal_books',INFO_PREFIX='bk_info_v2_';
 
 // ─── SEED ─────────────────────────────────────────────────
 const seedBooks=[
@@ -270,8 +305,8 @@ const seedBooks=[
   {id:uid(),title:"The Bottom Billion",author:"Paul Collier",lang:"English",status:"finished",notes:"အောက်ခြေသန်းထစ်ထောင်ဘာလို့ဖြစ်နေ\nဆင်းရဲပြီးသားနိုင်ငံတွေဘာလို့ဆက်ဆင်းရဲနေလဲ အချက်ငါးချက်ဖြင့်တင်ပြ"},
   {id:uid(),title:"လိပ်ပြာတောင်ပံနဲ့ လက်ဝါးဒဿန",author:"လူသာမန်",lang:"Burmese",status:"finished",notes:"သတ်ပုံပြင်သူများ၊ စာတတ်ပေတတ်လူပေါ\n> A spoon does not know the taste of soup, nor a learned fool the taste of wisdom\nလူဆိုတာ သဘာဝတရားက ခြယ်မှုန်းရေးသားထားတဲ့ နောက်ကြောင်းခံပုံဝတ္ထုလေးတွေရှိစမြဲ မဟုတ်လား"},
   {id:uid(),title:"ရုပ်ပုံလွှာ",author:"ဒဂုန်တာရာ",lang:"Burmese",status:"finished",notes:"၁၉၃၆-၁၉၅၀ ဝန်းကျင် မြန်မာနိုင်ငံ၏ နာမည်ကျော်စာရေးဆရာများ၏ နေထိုင်မှုဘဝပုံရိပ်ကိုလေ့လာနိုင်\nမောင်သာဆွေ၊ မင်းသုဝဏ်"},
-  {id:uid(),title:"သူငယ်ချင်းလို့ဘဲဆက်၍ခေါ်မည်ခိုင်",author:"တက္ကသိုလ်ဘုန်းနိုင်",lang:"Burmese",status:"finished",notes:"ဇာတ်လမ်း ဇာတ်သွားကောင်း\nလွတ်လပ်ရေးမရခင်နှင့် ရပြီးစ မြန်မာပြည်မိသားစုများ၏ ဘဝကိုလေ့လာနိုင်\nစာအုပ်ဖတ်ပြီး ရင်၌ လေးလေးပင်ပင်ခံစားချက်မျိုးကျန်"},
-  {id:uid(),title:"ကျွန်မဘဝခရီးမှ စာအုပ်များ",author:"ဂျူး",lang:"Burmese",status:"finished",notes:"ဤစာအုပ်ထဲတွင် ဖော်ပြထားသော စာအုပ်များ —\n@ https://archive.org/details/dli.pahar.2892/page/166/mode/2up Burma's Icy Mountains — Kingdon-Ward\n@ https://archive.org/details/narrativeofmissi00yulerich A Narrative of the Mission to the Court of Ava in 1855 — Sir Henry Yule\nမယ်နုနှင့်ကုန်းဘောင်ရှာပုံတော်\n@ https://archive.org/details/mandalayandothe02ocogoog/mode/2up မန္တလေးနှင့်အခြားမြို့ဟောင်းများ\n@ https://archive.org/details/fp_Silent_Spring-Rachel_Carson-1962/mode/2up Silent Spring — Rachel Carson"},
+  {id:uid(),title:"သူငယ်ချင်းလို့ဘဲဆက်၍ခေါ်မည်ခိုင်",author:"တက္ကသိုလ်ဘုန်းနိုင်",lang:"Burmese",status:"finished",notes:"ဇာတ်လမ်း ဇာတ်သွားကောင်း\nစာအုပ်ဖတ်ပြီး ရင်၌ လေးလေးပင်ပင်ခံစားချက်မျိုးကျန်"},
+  {id:uid(),title:"ကျွန်မဘဝခရီးမှ စာအုပ်များ",author:"ဂျူး",lang:"Burmese",status:"finished",notes:"ဤစာအုပ်ထဲတွင် ဖော်ပြထားသော စာအုပ်များ —\n@ https://archive.org/details/dli.pahar.2892/page/166/mode/2up Burma's Icy Mountains — Kingdon-Ward\n@ https://archive.org/details/narrativeofmissi00yulerich A Narrative of the Mission to the Court of Ava in 1855 — Sir Henry Yule\nမယ်နုနှင့်ကုန်းဘောင်ရှာပုံတော်\n@ https://archive.org/details/fp_Silent_Spring-Rachel_Carson-1962/mode/2up Silent Spring — Rachel Carson"},
   {id:uid(),title:"Leadership: Six Studies in World Strategy",author:"Henry Kissinger",lang:"English",status:"finished",notes:""},
   {id:uid(),title:"Steal Like an Artist",author:"Austin Kleon",lang:"English",status:"finished",notes:""},
   {id:uid(),title:"Becoming",author:"Michelle Obama",lang:"English",status:"toread",notes:""},
@@ -282,12 +317,9 @@ const seedBooks=[
   {id:uid(),title:"Animal Farm",author:"George Orwell",lang:"English",status:"toread",notes:""},
   {id:uid(),title:"A Promised Land",author:"Barack Obama",lang:"English",status:"toread",notes:""},
   {id:uid(),title:"The 7 Habits of Highly Effective People",author:"Stephen Covey",lang:"English",status:"toread",notes:""},
-  {id:uid(),title:"The Age of the Economist",author:"Daniel Fusfeld",lang:"English",status:"toread",notes:""},
-  {id:uid(),title:"The Worldly Philosophers",author:"Robert Heilbroner",lang:"English",status:"toread",notes:""},
   {id:uid(),title:"The End of Poverty",author:"Jeffrey Sachs",lang:"English",status:"toread",notes:""},
   {id:uid(),title:"The White Man's Burden",author:"William Easterly",lang:"English",status:"toread",notes:""},
   {id:uid(),title:"The Plundered Planet",author:"Paul Collier",lang:"English",status:"toread",notes:""},
-  {id:uid(),title:"Exodus: How Migration Is Changing Our World",author:"Paul Collier",lang:"English",status:"toread",notes:""},
   {id:uid(),title:"The Future of Capitalism",author:"Paul Collier",lang:"English",status:"toread",notes:""},
   {id:uid(),title:"Understanding Comics",author:"Scott McCloud",lang:"English",status:"toread",notes:""},
   {id:uid(),title:"Bird by Bird",author:"Anne Lamott",lang:"English",status:"toread",notes:""},
@@ -306,16 +338,10 @@ const seedBooks=[
   {id:uid(),title:"မီ",author:"ဆရာမကြည်အေး",lang:"Burmese",status:"toread",notes:""},
   {id:uid(),title:"စိတ္တရလေခါ",author:"ပါရဂူ",lang:"Burmese",status:"toread",notes:""},
   {id:uid(),title:"ဗုဒ္ဓနှင့် ဗုဒ္ဓဝါဒ",author:"ဦးအေးမောင်",lang:"Burmese",status:"toread",notes:""},
-  {id:uid(),title:"သေသည်၏အခြားမဲ့၌",author:"ဦးအေးမောင်၊ ဦးဝင်းမောင်",lang:"Burmese",status:"toread",notes:""},
   {id:uid(),title:"ရယ်မောခြင်းသက္ကရာဇ်များ",author:"ဗြိတိသျှကိုကိုမောင်",lang:"Burmese",status:"toread",notes:""},
   {id:uid(),title:"ကွန်မန်ဒိုဘချို",author:"ဗြိတိသျှကိုကိုမောင်",lang:"Burmese",status:"toread",notes:""},
-  {id:uid(),title:"သမိုင်းဝင်သောည",author:"ဗြိတိသျှကိုကိုမောင်",lang:"Burmese",status:"toread",notes:""},
-  {id:uid(),title:"ခေတ်ဆိုးအိပ်ကပ်ထဲက လူငယ်ဘဝ",author:"ဗြိတိသျှကိုကိုမောင်",lang:"Burmese",status:"toread",notes:""},
-  {id:uid(),title:"The Guys of Rangoon 1930s",author:"ခက်ဇော်",lang:"Burmese",status:"toread",notes:""},
-  {id:uid(),title:"The Guys from Mandalay 1950s",author:"ခက်ဇော်",lang:"Burmese",status:"toread",notes:""},
   {id:uid(),title:"AVA 1750s Season 1",author:"ခက်ဇော်",lang:"Burmese",status:"toread",notes:""},
   {id:uid(),title:"AVA 1750s Season 2",author:"ခက်ဇော်",lang:"Burmese",status:"toread",notes:""},
-  {id:uid(),title:"Beyond Ava 1750s",author:"ခက်ဇော်",lang:"Burmese",status:"toread",notes:""},
   {id:uid(),title:"The Fall of Hantharwaddy",author:"ခက်ဇော်",lang:"Burmese",status:"toread",notes:""},
   {id:uid(),title:"ရုပ်ရှင်ရဲ့ရနံ့",author:"ရှိန်ဝါ",lang:"Burmese",status:"toread",notes:""},
   {id:uid(),title:"မဟာရာဇဝင်ကြီး",author:"ဦးကုလား",lang:"Burmese",status:"toread",notes:""},
@@ -331,52 +357,192 @@ function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random
 function hasNotes(b){return b.notes&&b.notes.trim();}
 
 function normalize(b){
-  if(Array.isArray(b.entries)){
-    b.notes=b.entries.map(e=>{
-      if(e.type==='quote') return(e.text||'').split('\n').map(x=>'> '+x).join('\n');
-      if(e.type==='link') return'@ '+(e.url||'')+(e.text?' '+e.text:'');
-      return e.text||'';
-    }).filter(x=>x).join('\n');
-    delete b.entries;return true;
-  }
+  if(Array.isArray(b.entries)){b.notes=b.entries.map(e=>{if(e.type==='quote')return(e.text||'').split('\n').map(x=>'> '+x).join('\n');if(e.type==='link')return'@ '+(e.url||'')+(e.text?' '+e.text:'');return e.text||'';}).filter(x=>x).join('\n');delete b.entries;return true;}
   if(b.notes===undefined){b.notes='';return true;}
   return false;
 }
 function normalizeAll(){let ch=false;books.forEach(b=>{if(normalize(b))ch=true;});if(ch)saveLocal();return ch;}
 
-// ─── NOTE DISPLAY ─────────────────────────────────────────
-const SYNTAX_HINT='<code>-</code> point &nbsp; <code>&gt;</code> quote &nbsp; <code>@ url description</code> link &nbsp; or just write';
+// ─── NOTE CARD PARSE / SERIALIZE ──────────────────────────
+function parseNotes(text){
+  if(!text||!text.trim())return[];
+  const lines=text.split('\n'),notes=[];
+  let i=0;
+  while(i<lines.length){
+    const l=lines[i];
+    if(!l.trim()){i++;continue;}
+    if(/^\s*>\s?/.test(l)){
+      const buf=[];
+      while(i<lines.length&&/^\s*>\s?/.test(lines[i])){buf.push(lines[i].replace(/^\s*>\s?/,''));i++;}
+      notes.push({type:'quote',text:buf.join('\n')});
+    }else if(/^\s*@\s+/.test(l)){
+      const rest=l.replace(/^\s*@\s+/,'');
+      const m=rest.match(/(https?:\/\/[^\s]+)/);
+      const url=m?m[1]:'';
+      const label=rest.replace(url,'').replace(/^[\s|—–\-:]+|[\s|—–\-:]+$/g,'').trim();
+      notes.push({type:'link',url,text:label});i++;
+    }else if(/^\s*-\s+/.test(l)){
+      while(i<lines.length&&/^\s*-\s+/.test(lines[i])){notes.push({type:'point',text:lines[i].replace(/^\s*-\s+/,'')});i++;}
+    }else{
+      const buf=[];
+      while(i<lines.length&&lines[i].trim()!==''&&!/^\s*[>@-]\s/.test(lines[i])){buf.push(lines[i].replace(/^\s*[•\*▪◦·]\s*/,''));i++;}
+      notes.push({type:'note',text:buf.join('\n')});
+    }
+  }
+  return notes;
+}
 
+function serializeNotes(notes){
+  return notes.map(n=>{
+    if(n.type==='point')return`- ${n.text}`;
+    if(n.type==='quote')return n.text.split('\n').map(l=>`> ${l}`).join('\n');
+    if(n.type==='link')return`@ ${n.url||''}${n.text?' '+n.text:''}`;
+    return n.text||'';
+  }).filter(x=>x.trim()).join('\n');
+}
+
+// ─── NOTE CARD RENDERING ──────────────────────────────────
+function renderNoteCards(bookId,editable){
+  const b=books.find(x=>x.id===bookId);if(!b)return`<div id="notesSection" class="notes-section"></div>`;
+  const notes=parseNotes(b.notes);
+  let inner='';
+  if(!notes.length&&!editable){
+    inner='<div class="nv-empty">No notes yet.</div>';
+  }else{
+    notes.forEach((n,idx)=>{
+      if(editable&&noteEditIdx===idx&&noteEditBookId===bookId) inner+=renderCardEdit(bookId,idx);
+      else inner+=renderCardView(n,idx,bookId,editable);
+    });
+    if(editable){
+      if(noteEditIdx===-1&&noteEditBookId===bookId) inner+=renderCardEdit(bookId,-1);
+      else inner+=`<button class="add-note-btn" onclick="startAddNote('${bookId}')">+ Add note</button>`;
+    }
+  }
+  return`<div id="notesSection" class="notes-section${editable?' editable':''}">${inner}</div>`;
+}
+
+function renderCardView(n,idx,bookId,editable){
+  let content='';
+  if(n.type==='point') content=`<div class="nc-point">${linkify(n.text||'')}</div>`;
+  else if(n.type==='quote') content=`<div class="nc-quote">${linkify(n.text||'')}</div>`;
+  else if(n.type==='link'){
+    const dom=domainOf(n.url||''),lbl=n.text||dom;
+    content=`<a class="nc-link" href="${esc(n.url||'')}" target="_blank" rel="noopener"><img class="nc-fav" src="https://www.google.com/s2/favicons?domain=${encodeURIComponent(dom)}&sz=64" alt=""><span class="nc-link-label">${esc(lbl)}</span><span class="nc-link-dom">${esc(dom)}</span></a>`;
+  }else content=`<div class="nc-note">${linkify(n.text||'')}</div>`;
+  const ctrl=editable?`<div class="nc-controls"><button class="nc-btn" onclick="editNoteCard('${bookId}',${idx})" title="Edit">✎</button><button class="nc-btn" onclick="deleteNoteCard('${bookId}',${idx})" title="Delete">×</button></div>`:'';
+  return`<div class="note-card"><div class="note-card-view"><div class="nc-main">${content}</div>${ctrl}</div></div>`;
+}
+
+function renderCardEdit(bookId,idx){
+  const t=noteEditType,text=noteEditTempText,url=noteEditTempUrl;
+  const slideClass=(idx===-1&&noteJustStarted)?'card-enter':'';
+  const toolbar=`<div class="card-type-bar">
+    <button class="ctype-btn ${t==='point'?'active':''}" onclick="setNoteType('point')">— Point</button>
+    <button class="ctype-btn ${t==='quote'?'active':''}" onclick="setNoteType('quote')">" Quote</button>
+    <button class="ctype-btn ${t==='link'?'active':''}" onclick="setNoteType('link')">🔗 Link</button>
+    <button class="ctype-btn ${t==='note'?'active':''}" onclick="setNoteType('note')">¶ Note</button>
+  </div>`;
+  let inputs='';
+  if(t==='link'){
+    inputs=`<input class="card-field" id="cardUrl" type="url" placeholder="https://…" value="${esc(url)}" onkeydown="handleCardKey(event,'${bookId}',${idx})">
+    <textarea class="card-field" id="cardText" rows="1" placeholder="What is this link about?" oninput="autoResize(this)" onkeydown="handleCardKey(event,'${bookId}',${idx})">${esc(text)}</textarea>`;
+  }else{
+    const ph=t==='point'?'Write a point…':t==='quote'?'Paste or type a quote…':'Write a note…';
+    inputs=`<textarea class="card-field" id="cardText" rows="2" placeholder="${ph}" oninput="autoResize(this)" onkeydown="handleCardKey(event,'${bookId}',${idx})">${esc(text)}</textarea>`;
+  }
+  return`<div class="note-card editing ${slideClass}">
+    ${toolbar}
+    <div class="card-inputs">${inputs}</div>
+    <div class="card-foot">
+      <span class="card-hint">⌘↵ to save</span>
+      <div class="card-btns"><button class="card-cancel" onclick="cancelNoteEdit('${bookId}')">Cancel</button><button class="card-save" onclick="saveNoteCard('${bookId}',${idx})">Save</button></div>
+    </div>
+  </div>`;
+}
+
+function refreshNotes(bookId){
+  const cont=document.getElementById('notesSection');if(!cont)return;
+  const editable=currentView==='home'||(currentView==='library'&&editMode);
+  cont.outerHTML=renderNoteCards(bookId,editable);
+  noteJustStarted=false;
+}
+
+// ─── NOTE CARD ACTIONS ────────────────────────────────────
+function startAddNote(bookId){
+  noteJustStarted=true;noteEditIdx=-1;noteEditType='point';
+  noteEditBookId=bookId;noteEditTempText='';noteEditTempUrl='';
+  refreshNotes(bookId);
+  setTimeout(()=>{const el=document.getElementById('cardText')||document.getElementById('cardUrl');if(el){el.focus();autoResize(el);}},30);
+}
+
+function editNoteCard(bookId,idx){
+  const b=books.find(x=>x.id===bookId);if(!b)return;
+  const notes=parseNotes(b.notes),n=notes[idx];
+  noteEditIdx=idx;noteEditType=n?.type||'point';noteEditBookId=bookId;
+  noteEditTempText=n?.text||'';noteEditTempUrl=n?.url||'';
+  noteJustStarted=false;
+  refreshNotes(bookId);
+  setTimeout(()=>{const el=document.getElementById('cardText')||document.getElementById('cardUrl');if(el){el.focus();autoResize(el);}},30);
+}
+
+function deleteNoteCard(bookId,idx){
+  if(!confirm('Delete this note?'))return;
+  const b=books.find(x=>x.id===bookId);if(!b)return;
+  const notes=parseNotes(b.notes);notes.splice(idx,1);
+  b.notes=serializeNotes(notes);
+  noteEditIdx=null;noteEditBookId=null;
+  saveLocal();syncToFirestore();refreshNotes(bookId);
+}
+
+function setNoteType(type){
+  noteJustStarted=false;
+  const te=document.getElementById('cardText'),ue=document.getElementById('cardUrl');
+  if(te)noteEditTempText=te.value;if(ue)noteEditTempUrl=ue.value;
+  noteEditType=type;refreshNotes(noteEditBookId);
+  setTimeout(()=>{const el=document.getElementById('cardText')||document.getElementById('cardUrl');if(el){el.focus();autoResize(el);}},30);
+}
+
+function cancelNoteEdit(bookId){
+  noteEditIdx=null;noteEditBookId=null;noteJustStarted=false;
+  refreshNotes(bookId);
+}
+
+function saveNoteCard(bookId,idx){
+  const b=books.find(x=>x.id===bookId);if(!b)return;
+  const te=document.getElementById('cardText'),ue=document.getElementById('cardUrl');
+  if(te)noteEditTempText=te.value.trim();if(ue)noteEditTempUrl=ue.value.trim();
+  let newNote;
+  if(noteEditType==='link'){
+    if(!noteEditTempUrl){alert('Please enter a URL.');return;}
+    newNote={type:'link',url:noteEditTempUrl,text:noteEditTempText};
+  }else{
+    if(!noteEditTempText)return;
+    newNote={type:noteEditType,text:noteEditTempText};
+  }
+  const notes=parseNotes(b.notes);
+  if(idx===-1)notes.push(newNote);else notes[idx]=newNote;
+  b.notes=serializeNotes(notes);
+  noteEditIdx=null;noteEditBookId=null;noteEditTempText='';noteEditTempUrl='';noteJustStarted=false;
+  saveLocal();syncToFirestore();refreshNotes(bookId);
+  const st=document.getElementById('saveStatus')||document.getElementById('saveInd');
+  if(st){st.textContent='Saved ✓';st.className='save-ind saved';setTimeout(()=>{if(st){st.textContent='';st.className='save-ind';}},2000);}
+}
+
+function handleCardKey(e,bookId,idx){if((e.metaKey||e.ctrlKey)&&e.key==='Enter'){e.preventDefault();saveNoteCard(bookId,idx);}}
+function autoResize(el){el.style.height='auto';el.style.height=el.scrollHeight+'px';}
+
+// ─── FEED RENDER NOTES (editorial inline, unchanged) ──────
 function renderNotes(text){
-  if(!text||!text.trim())return '<div class="nv-empty">No notes yet.</div>';
+  if(!text||!text.trim())return'<div class="nv-empty">No notes yet.</div>';
   const lines=text.split('\n');
-  const isQ=l=>/^\s*>\s?/.test(l);
-  const isL=l=>/^\s*@\s+/.test(l);
-  const isI=l=>/^\s*-\s+/.test(l);
+  const isQ=l=>/^\s*>\s?/.test(l),isL=l=>/^\s*@\s+/.test(l),isI=l=>/^\s*-\s+/.test(l);
   let html='',i=0;
   while(i<lines.length){
     if(lines[i].trim()===''){ i++;continue;}
-    if(isQ(lines[i])){
-      const buf=[];
-      while(i<lines.length&&isQ(lines[i])){buf.push(lines[i].replace(/^\s*>\s?/,''));i++;}
-      html+=`<blockquote class="nv-quote">${linkify(buf.join('\n'))}</blockquote>`;
-    }else if(isL(lines[i])){
-      const rest=lines[i].replace(/^\s*@\s+/,'');i++;
-      const m=rest.match(/(https?:\/\/[^\s]+)/);
-      const url=m?m[1]:'';
-      let label=rest.replace(url,'').replace(/^[\s|—–\-:]+|[\s|—–\-:]+$/g,'').trim();
-      if(url){const dom=domainOf(url);if(!label)label=dom;
-        html+=`<a class="nv-link" href="${esc(url)}" target="_blank" rel="noopener"><img class="nv-fav" src="https://www.google.com/s2/favicons?domain=${encodeURIComponent(dom)}&sz=64" alt=""><span class="nv-link-label">${esc(label)}</span><span class="nv-link-dom">${esc(dom)}</span></a>`;
-      }else{html+=`<div class="nv-note">${linkify(rest)}</div>`;}
-    }else if(isI(lines[i])){
-      const items=[];
-      while(i<lines.length&&isI(lines[i])){items.push(lines[i].replace(/^\s*-\s+/,''));i++;}
-      html+=`<ul class="nv-list">${items.map(t=>`<li>${linkify(t)}</li>`).join('')}</ul>`;
-    }else{
-      const buf=[];
-      while(i<lines.length&&lines[i].trim()!==''&&!isQ(lines[i])&&!isL(lines[i])&&!isI(lines[i])){buf.push(lines[i].replace(/^\s*[•\*▪◦·]\s*/,''));i++;}
-      html+=`<div class="nv-note">${linkify(buf.join('\n'))}</div>`;
-    }
+    if(isQ(lines[i])){const buf=[];while(i<lines.length&&isQ(lines[i])){buf.push(lines[i].replace(/^\s*>\s?/,''));i++;}html+=`<blockquote class="nv-quote">${linkify(buf.join('\n'))}</blockquote>`;}
+    else if(isL(lines[i])){const rest=lines[i].replace(/^\s*@\s+/,'');i++;const m=rest.match(/(https?:\/\/[^\s]+)/);const url=m?m[1]:'';let lbl=rest.replace(url,'').replace(/^[\s|—–\-:]+|[\s|—–\-:]+$/g,'').trim();if(url){const dom=domainOf(url);if(!lbl)lbl=dom;html+=`<a class="nv-link" href="${esc(url)}" target="_blank" rel="noopener"><img class="nv-fav" src="https://www.google.com/s2/favicons?domain=${encodeURIComponent(dom)}&sz=64" alt=""><span class="nv-link-label">${esc(lbl)}</span><span class="nv-link-dom">${esc(dom)}</span></a>`;}else html+=`<div class="nv-note">${linkify(rest)}</div>`;}
+    else if(isI(lines[i])){const items=[];while(i<lines.length&&isI(lines[i])){items.push(lines[i].replace(/^\s*-\s+/,''));i++;}html+=`<ul class="nv-list">${items.map(t=>`<li>${linkify(t)}</li>`).join('')}</ul>`;}
+    else{const buf=[];while(i<lines.length&&lines[i].trim()!==''&&!isQ(lines[i])&&!isL(lines[i])&&!isI(lines[i])){buf.push(lines[i].replace(/^\s*[•\*▪◦·]\s*/,''));i++;}html+=`<div class="nv-note">${linkify(buf.join('\n'))}</div>`;}
   }
   return`<div class="notes-view">${html}</div>`;
 }
@@ -403,7 +569,7 @@ async function fetchBookInfo(b){
 async function hydrateBookInfo(items){
   for(const it of items){
     const info=await fetchBookInfo(it.book);
-    if(it.coverId){const el=document.getElementById(it.coverId);if(el){if(info.cover){el.style.backgroundImage=`url("${info.cover}")`;const l=el.querySelector('.card-letter,.card-cover-letter,.detail-cover-letter');if(l)l.style.display='none';}}}
+    if(it.coverId){const el=document.getElementById(it.coverId);if(el){if(info.cover){el.style.backgroundImage=`url("${info.cover}")`;const l=el.querySelector('.card-letter,.detail-cover-letter');if(l)l.style.display='none';}}}
     if(it.summaryId){const el=document.getElementById(it.summaryId);if(el)el.textContent=info.summary||'No summary found on Open Library.';}
   }
 }
@@ -420,18 +586,12 @@ async function init(){
   normalizeAll();setView('home');
   try{
     const snap=await DOC.get();
-    if(snap.exists){const data=snap.data();if(data.books&&data.books.length){books=data.books;normalizeAll();saveLocal();setView(currentView);}}
+    if(snap.exists){const d=snap.data();if(d.books&&d.books.length){books=d.books;normalizeAll();saveLocal();setView(currentView);}}
     else await syncToFirestore();
     setConnStatus(true);
   }catch(e){console.error('Firestore init failed',e);setConnStatus(false);}
 }
 function saveLocal(){localStorage.setItem(STORAGE_KEY,JSON.stringify(books));}
-function scheduleSave(){
-  const ind=document.getElementById('saveInd')||document.getElementById('saveStatus');
-  if(ind){ind.textContent='Saving…';ind.className='save-ind';}
-  clearTimeout(localSaveTimer);
-  localSaveTimer=setTimeout(async()=>{saveLocal();await syncToFirestore();const i2=document.getElementById('saveInd')||document.getElementById('saveStatus');if(i2){i2.textContent='Saved ✓';i2.className='save-ind saved';}},600);
-}
 
 // ─── VIEW SWITCHING ───────────────────────────────────────
 function setView(v){
@@ -440,8 +600,6 @@ function setView(v){
   document.querySelectorAll('.nav-btn').forEach(btn=>btn.classList.toggle('active',btn.dataset.view===v));
   if(v==='home')renderHome();else if(v==='feed')renderFeed();else renderLibrary();
 }
-function editingBook(){const id=currentView==='home'?homeReadingId:activeId;return books.find(b=>b.id===id);}
-function notesInput(){const b=editingBook();if(!b)return;const ta=document.getElementById('notesArea');if(ta)b.notes=ta.value;scheduleSave();}
 
 // ─── HOME ─────────────────────────────────────────────────
 function renderHome(){
@@ -463,8 +621,8 @@ function renderHome(){
         </select>
         <span class="save-ind" id="saveInd"></span>
       </div>
-      <textarea id="notesArea" class="home-notes-area" oninput="notesInput()" placeholder="Jot notes as you read…">${esc(b.notes)}</textarea>
-      <div class="syntax-hint">${SYNTAX_HINT}</div>
+      <div class="notes-header"><span class="notes-label">Notes</span></div>
+      ${renderNoteCards(b.id,true)}
       <div class="home-foot"><a onclick="setView('feed')">Finished notes →</a><a onclick="setView('library')">Library →</a></div>
     </div>`;
   }else{
@@ -476,15 +634,15 @@ function renderHome(){
     renderSuggest();
   }
 }
-function homeSwitch(id){homeReadingId=id;renderHome();}
-function homeStatus(id,val){const b=books.find(x=>x.id===id);if(!b)return;b.status=val;saveLocal();syncToFirestore();homeReadingId=null;renderHome();}
+function homeSwitch(id){homeReadingId=id;noteEditIdx=null;noteEditBookId=null;renderHome();}
+function homeStatus(id,val){const b=books.find(x=>x.id===id);if(!b)return;b.status=val;saveLocal();syncToFirestore();homeReadingId=null;noteEditIdx=null;noteEditBookId=null;renderHome();}
 
 function renderSuggest(){
   const cont=document.getElementById('suggestList');if(!cont)return;
   const q=(document.getElementById('suggestSearch').value||'').toLowerCase();
   let pool=books.filter(b=>b.status==='toread'&&(!q||b.title.toLowerCase().includes(q)||(b.author||'').toLowerCase().includes(q)));
   if(!q)pool=shuffle(pool).slice(0,10);
-  if(!pool.length){cont.innerHTML='<div class="empty-msg">No matching books in your to-read list.</div>';return;}
+  if(!pool.length){cont.innerHTML='<div style="color:var(--text-muted);font-size:14px;padding:20px 0;">No matching books.</div>';return;}
   let html='',info=[];
   pool.forEach(b=>{
     const cid='sv_'+b.id;info.push({coverId:cid,book:b});
@@ -532,58 +690,38 @@ function renderLibGrid(){
   </div>`;
   renderBookGrid();
 }
-
 function setLibFilter(f){libFilter=f;renderLibGrid();}
-
 function renderBookGrid(){
   const cont=document.getElementById('bookGrid');if(!cont)return;
   const q=((document.getElementById('libSearch')||{}).value||'').toLowerCase();
-  let list=books.filter(b=>{
-    if(libFilter!=='all'&&b.status!==libFilter)return false;
-    if(q&&!b.title.toLowerCase().includes(q)&&!(b.author||'').toLowerCase().includes(q))return false;
-    return true;
-  });
+  let list=books.filter(b=>{if(libFilter!=='all'&&b.status!==libFilter)return false;if(q&&!b.title.toLowerCase().includes(q)&&!(b.author||'').toLowerCase().includes(q))return false;return true;});
   const cnt=document.getElementById('libCount');if(cnt)cnt.textContent=`${list.length} book${list.length!==1?'s':''}`;
   if(!list.length){cont.innerHTML='<div class="grid-empty">No books match.</div>';return;}
   let html='',covers=[];
   list.forEach(b=>{
     const cid='gc_'+b.id;covers.push({coverId:cid,book:b});
     const badge=b.status==='reading'?`<div class="card-reading-badge">Reading</div>`:'';
-    const statusTxt=b.status==='toread'?'To read':b.status==='finished'?'Finished':'';
-    html+=`<div class="book-card" onclick="openBook('${b.id}')">
-      <div class="card-cover" id="${cid}">${badge}<div class="card-letter">${esc((b.title||'?').charAt(0))}</div></div>
-      <div class="card-body">
-        <div class="card-title">${esc(b.title)}</div>
-        <div class="card-author">${esc(b.author)||'Unknown'}</div>
-        <div class="card-foot"><span class="card-status">${statusTxt}</span>${hasNotes(b)?'<span class="card-dot"></span>':''}</div>
-      </div></div>`;
+    const stxt=b.status==='toread'?'To read':b.status==='finished'?'Finished':'';
+    html+=`<div class="book-card" onclick="openBook('${b.id}')"><div class="card-cover" id="${cid}">${badge}<div class="card-letter">${esc((b.title||'?').charAt(0))}</div></div><div class="card-body"><div class="card-title">${esc(b.title)}</div><div class="card-author">${esc(b.author)||'Unknown'}</div><div class="card-foot"><span class="card-status">${stxt}</span>${hasNotes(b)?'<span class="card-dot"></span>':''}</div></div></div>`;
   });
   cont.innerHTML=html;hydrateBookInfo(covers);
 }
 
-function openBook(id){
-  activeId=id;const b=books.find(x=>x.id===id);if(!b)return;
-  editMode=b.status!=='finished';libMode='detail';renderLibDetail();
-}
-function backToGrid(){libMode='grid';activeId=null;renderLibGrid();}
+function openBook(id){activeId=id;const b=books.find(x=>x.id===id);if(!b)return;editMode=b.status!=='finished';noteEditIdx=null;noteEditBookId=null;libMode='detail';renderLibDetail();}
+function backToGrid(){libMode='grid';activeId=null;noteEditIdx=null;noteEditBookId=null;renderLibGrid();}
 
 function renderLibDetail(){
   const b=books.find(x=>x.id===activeId);if(!b){libMode='grid';renderLibGrid();return;}
   const el=document.getElementById('viewLibrary');
   const cid='ld_'+b.id,sid='ls_'+b.id,showAbout=b.lang==='English';
   const about=showAbout?`<div class="detail-about"><div class="detail-about-label">About</div><div class="detail-about-text" id="${sid}">Loading…</div></div>`:'';
-  const body=editMode
-    ?`<div class="detail-notes-label">📝 Notes</div>
-      <textarea id="notesArea" class="detail-textarea" oninput="notesInput()" placeholder="Write freely…">${esc(b.notes)}</textarea>
-      <div class="detail-hint-row"><span class="syntax-hint">${SYNTAX_HINT}</span><span class="save-ind" id="saveStatus">Saves automatically</span></div>`
-    :`<div class="detail-notes-label">📝 Notes</div>${renderNotes(b.notes)}`;
   el.innerHTML=`<div class="detail-wrap">
     <button class="back-btn" onclick="backToGrid()">← All books</button>
     <div class="detail-meta">
       <div class="detail-cover" id="${cid}">${esc((b.title||'?').charAt(0))}</div>
       <div class="detail-info">
         <div class="detail-title">${esc(b.title)}</div>
-        <div class="detail-author">${esc(b.author)||'Unknown author'} &nbsp;·&nbsp; ${esc(b.lang)}</div>
+        <div class="detail-author">${esc(b.author)||'Unknown author'} · ${esc(b.lang)}</div>
         <div class="detail-actions">
           <select class="bare-select" onchange="changeStatus('${b.id}',this.value)">
             <option value="toread" ${b.status==='toread'?'selected':''}>To Read</option>
@@ -595,15 +733,17 @@ function renderLibDetail(){
         </div>
       </div>
     </div>
-    ${about}<hr class="detail-divider">${body}
+    ${about}<hr class="detail-divider">
+    <div class="notes-header"><span class="notes-label">📝 Notes</span><span class="save-ind" id="saveStatus"></span></div>
+    ${renderNoteCards(b.id,editMode)}
   </div>`;
   if(showAbout)hydrateBookInfo([{coverId:cid,summaryId:sid,book:b}]);
 }
 
-function openInLibrary(id){activeId=id;const b=books.find(x=>x.id===id);if(b)editMode=b.status!=='finished';libMode='detail';setView('library');}
-function enterEdit(){editMode=true;renderLibDetail();}
-function exitEdit(){saveLocal();syncToFirestore();editMode=false;renderLibDetail();}
-function changeStatus(id,val){const b=books.find(x=>x.id===id);if(!b)return;b.status=val;saveLocal();editMode=val!=='finished';renderLibDetail();syncToFirestore();}
+function openInLibrary(id){activeId=id;const b=books.find(x=>x.id===id);if(b)editMode=b.status!=='finished';noteEditIdx=null;noteEditBookId=null;libMode='detail';setView('library');}
+function enterEdit(){editMode=true;noteEditIdx=null;noteEditBookId=null;renderLibDetail();}
+function exitEdit(){editMode=false;noteEditIdx=null;noteEditBookId=null;saveLocal();syncToFirestore();renderLibDetail();}
+function changeStatus(id,val){const b=books.find(x=>x.id===id);if(!b)return;b.status=val;saveLocal();editMode=val!=='finished';noteEditIdx=null;noteEditBookId=null;renderLibDetail();syncToFirestore();}
 function confirmDelete(id){const b=books.find(x=>x.id===id);if(!b)return;if(!confirm(`Delete "${b.title}"?`))return;books=books.filter(x=>x.id!==id);activeId=null;libMode='grid';saveLocal();renderLibGrid();syncToFirestore();}
 
 // ─── ADD BOOK ─────────────────────────────────────────────
