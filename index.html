@@ -20,7 +20,7 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 
 /* TOPBAR */
 .topbar{display:flex;align-items:center;justify-content:space-between;padding:0 32px;height:52px;background:#fff;border-bottom:1px solid var(--border);flex-shrink:0;gap:20px;}
-.brand{font-size:14px;font-weight:700;letter-spacing:-.3px;color:var(--text);white-space:nowrap;}
+.brand{font-size:14px;font-weight:700;letter-spacing:-.3px;white-space:nowrap;}
 .nav{display:flex;gap:24px;}
 .nav-btn{background:none;border:none;border-bottom:2px solid transparent;font-size:13px;font-weight:500;color:var(--text-muted);cursor:pointer;padding:4px 0;margin-bottom:-1px;font-family:inherit;transition:color .15s,border-color .15s;}
 .nav-btn:hover{color:var(--text);}
@@ -38,21 +38,73 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 .container{max-width:var(--max);margin:0 auto;padding:0 32px;}
 
 /* HOME: READING */
-.home-reading{max-width:680px;margin:0 auto;padding:48px 32px 80px;}
-.home-eyebrow{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-muted);margin-bottom:20px;}
+.home-reading{max-width:680px;margin:0 auto;padding:44px 32px 80px;}
+.home-eyebrow{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-muted);margin-bottom:18px;}
 .home-pills{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;}
 .home-pill{border:1px solid var(--border);background:none;color:var(--text-muted);border-radius:100px;padding:5px 14px;font-size:12px;font-weight:500;cursor:pointer;font-family:inherit;transition:all .12s;}
 .home-pill.active{border-color:var(--text);background:var(--text);color:#fff;}
-.home-display-title{font-size:clamp(26px,4.5vw,52px);font-weight:700;letter-spacing:-1.5px;line-height:1.05;margin-bottom:10px;word-break:break-word;}
-.home-display-author{font-size:16px;color:var(--text-muted);margin-bottom:22px;}
-.home-status-row{display:flex;align-items:center;gap:16px;margin-bottom:28px;}
+.home-display-title{font-size:clamp(24px,4vw,44px);font-weight:700;letter-spacing:-1.2px;line-height:1.08;margin-bottom:8px;word-break:break-word;}
+.home-display-author{font-size:15px;color:var(--text-muted);margin-bottom:18px;}
+.home-status-row{display:flex;align-items:center;gap:16px;margin-bottom:26px;}
 .bare-select{background:none;border:none;border-bottom:1px solid var(--border);padding:4px 0;font-size:14px;font-weight:500;color:var(--text);cursor:pointer;font-family:inherit;outline:none;}
 .bare-select:focus{border-bottom-color:var(--text);}
 .save-ind{font-size:12px;color:var(--text-muted);}
 .save-ind.saved{color:#2a7a4a;}
-.home-foot{margin-top:24px;display:flex;gap:24px;}
+.home-foot{margin-top:28px;display:flex;gap:24px;}
 .home-foot a{font-size:13px;font-weight:500;color:var(--text-muted);cursor:pointer;transition:color .12s;}
 .home-foot a:hover{color:var(--text);}
+
+/* ══ NOTES LIST (shared view + edit) ══ */
+.notes-list{display:flex;flex-direction:column;}
+.nv-empty{color:var(--text-muted);font-style:italic;font-size:14px;padding:6px 0;}
+
+.n-item{position:relative;border-radius:6px;padding:7px 10px;margin:1px -10px;transition:background .12s;}
+.n-item.clickable{cursor:pointer;}
+.n-item.clickable:hover{background:var(--surface);}
+.n-item .n-x{position:absolute;top:6px;right:8px;background:none;border:none;font-size:15px;line-height:1;color:var(--text-muted);cursor:pointer;padding:2px 5px;border-radius:3px;opacity:0;transition:opacity .12s;}
+.n-item.clickable:hover .n-x{opacity:1;}
+.n-item .n-x:hover{color:#d44;background:var(--accent-bg);}
+@media(hover:none){.n-item.clickable .n-x{opacity:.55;}}
+
+/* Section */
+.n-section{font-size:14px;font-weight:700;padding-top:20px;margin-top:8px;border-top:1px solid var(--border);}
+.n-item:first-child .n-section{padding-top:2px;margin-top:0;border-top:none;}
+
+/* Note bullet */
+.n-note{font-size:14px;line-height:1.8;display:flex;gap:8px;align-items:flex-start;word-break:break-word;padding-right:22px;}
+.n-note::before{content:'›';font-weight:700;font-size:16px;flex-shrink:0;line-height:1.55;color:var(--text-muted);}
+
+/* Quote */
+.n-quote{font-size:15px;line-height:1.7;color:var(--text-2);font-style:italic;padding:4px 22px 4px 16px;border-left:2px solid var(--text);margin:4px 0;word-break:break-word;}
+
+/* Link chips */
+.n-chips{display:flex;gap:6px;flex-wrap:wrap;padding-left:24px;margin-top:5px;}
+.n-chip{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border:1px solid var(--border);border-radius:3px;text-decoration:none;color:var(--text);background:var(--surface);font-size:12px;transition:background .12s;max-width:100%;}
+.n-chip:hover{background:var(--accent-bg);}
+.n-chip img{width:14px;height:14px;flex-shrink:0;border-radius:2px;}
+.n-chip span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+
+/* ══ COMPOSER (capture bar) ══ */
+.composer{margin-top:14px;border:1px solid var(--border);border-radius:8px;background:#fff;transition:border-color .15s;}
+.composer:focus-within{border-color:var(--text);}
+.mode-chips{display:flex;gap:4px;padding:8px 10px 0;}
+.mode-chip{background:none;border:1px solid transparent;padding:4px 11px;border-radius:100px;font-size:12px;font-weight:500;color:var(--text-muted);cursor:pointer;font-family:inherit;transition:all .12s;white-space:nowrap;}
+.mode-chip:hover{color:var(--text);}
+.mode-chip.active{background:var(--text);color:#fff;}
+.composer-row{display:flex;align-items:flex-end;gap:8px;padding:6px 10px 10px;}
+.composer-input{flex:1;border:none;background:none;font-size:14px;line-height:1.7;font-family:inherit;color:var(--text);outline:none;resize:none;max-height:180px;overflow-y:auto;padding:6px 2px;}
+.composer-input::placeholder{color:#bbb;}
+.composer-send{background:var(--text);color:#fff;border:none;width:34px;height:34px;border-radius:6px;font-size:15px;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:opacity .15s;}
+.composer-send:hover{opacity:.8;}
+.composer-hint{font-size:11px;color:var(--text-muted);padding:0 12px 9px;}
+
+/* ══ INLINE EDITOR (edit an existing item) ══ */
+.n-editing{border:1px solid var(--text);border-radius:8px;background:#fff;margin:4px -10px;}
+.n-editing .mode-chips{padding:8px 10px 0;}
+.n-editing .composer-row{padding:4px 10px 8px;}
+.n-edit-actions{display:flex;justify-content:flex-end;gap:10px;padding:0 12px 10px;}
+.n-edit-cancel{background:none;border:none;font-size:12px;color:var(--text-muted);cursor:pointer;font-family:inherit;}
+.n-edit-save{background:var(--text);color:#fff;border:none;padding:5px 16px;border-radius:4px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;}
 
 /* HOME: SUGGESTIONS */
 .home-suggest{padding:36px 0 80px;}
@@ -69,7 +121,7 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 .feed-entry{padding:36px 0;border-top:1px solid var(--border);}
 .entry-label{font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-bottom:10px;}
 .entry-title{font-size:28px;font-weight:700;letter-spacing:-.5px;line-height:1.15;margin-bottom:6px;}
-.entry-author{font-size:14px;color:var(--text-muted);margin-bottom:20px;}
+.entry-author{font-size:14px;color:var(--text-muted);margin-bottom:18px;}
 .entry-none{font-size:14px;color:var(--text-muted);font-style:italic;}
 .entry-action{margin-top:18px;}
 .text-link{background:none;border:none;font-size:13px;font-weight:500;color:var(--text-muted);cursor:pointer;padding:0;font-family:inherit;transition:color .12s;}
@@ -96,7 +148,7 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 .card-letter{font-size:26px;font-weight:300;color:var(--text-muted);}
 .card-reading-badge{position:absolute;top:8px;left:8px;background:#111;color:#fff;font-size:9px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;padding:3px 7px;border-radius:2px;}
 .card-body{display:flex;flex-direction:column;gap:3px;}
-.card-title{font-size:13px;font-weight:600;line-height:1.3;color:var(--text);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.card-title{font-size:13px;font-weight:600;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
 .card-author{font-size:12px;color:var(--text-muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .card-foot{display:flex;align-items:center;gap:5px;margin-top:2px;}
 .card-status{font-size:11px;color:var(--text-muted);}
@@ -112,58 +164,14 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 .detail-title{font-size:22px;font-weight:700;letter-spacing:-.3px;line-height:1.2;margin-bottom:6px;}
 .detail-author{font-size:14px;color:var(--text-muted);margin-bottom:16px;}
 .detail-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
-.detail-edit-btn{background:var(--text);color:#fff;border:none;padding:7px 14px;border-radius:var(--radius);font-size:13px;font-weight:500;cursor:pointer;font-family:inherit;transition:opacity .15s;}
-.detail-edit-btn:hover{opacity:.8;}
-.detail-edit-btn.ghost{background:none;color:var(--text-muted);border:1px solid var(--border);}
 .detail-del{background:none;border:none;font-size:13px;color:var(--text-muted);cursor:pointer;font-family:inherit;padding:0;transition:color .12s;}
 .detail-del:hover{color:#d44;}
 .detail-about{margin-bottom:24px;padding:14px;background:var(--surface);border-radius:var(--radius);}
 .detail-about-label{font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-bottom:7px;}
 .detail-about-text{font-size:13px;line-height:1.7;color:var(--text-2);}
 .detail-divider{border:none;border-top:1px solid var(--border);margin-bottom:22px;}
-
-/* NOTES HEADER */
-.notes-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+.notes-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
 .notes-label{font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);}
-
-/* NOTES EDITOR */
-.notes-toolbar{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;}
-.ntool-btn{background:none;border:1px solid var(--border);padding:5px 12px;border-radius:3px;font-size:12px;font-weight:500;color:var(--text-muted);cursor:pointer;font-family:inherit;transition:all .15s;white-space:nowrap;}
-.ntool-btn:hover{border-color:var(--text);color:var(--text);background:var(--surface);}
-.ntool-btn:active{background:var(--accent-bg);}
-.notes-textarea{width:100%;min-height:260px;padding:16px;border:1px solid var(--border);border-radius:6px;background:#fff;font-size:14px;line-height:1.9;font-family:inherit;color:var(--text);outline:none;resize:vertical;transition:border-color .15s;}
-.notes-textarea:focus{border-color:var(--text);}
-.notes-textarea::placeholder{color:#ccc;font-style:italic;}
-.notes-save-row{margin-top:8px;}
-.ntool-hint{font-size:11px;color:var(--text-muted);margin-top:10px;line-height:1.8;}
-.ntool-hint code{background:var(--surface);padding:1px 5px;border-radius:3px;font-size:11px;font-style:normal;}
-
-/* NOTES DISPLAY */
-.notes-view{display:flex;flex-direction:column;gap:10px;}
-.nv-empty{color:var(--text-muted);font-style:italic;font-size:15px;}
-
-/* Section heading */
-.nv-section{font-size:14px;font-weight:700;color:var(--text);padding:18px 0 8px;border-bottom:1px solid var(--border);}
-.nv-section:first-child{padding-top:2px;}
-
-/* Plain bullet */
-.nv-point{font-size:14px;line-height:1.8;color:var(--text);display:flex;gap:8px;align-items:flex-start;word-break:break-word;}
-.nv-point::before{content:'›';font-weight:700;font-size:16px;flex-shrink:0;line-height:1.55;}
-.nv-point a{color:var(--text);text-decoration:underline;}
-
-/* Quote */
-.nv-quote{font-size:15px;line-height:1.7;color:var(--text-2);font-style:italic;padding:6px 0 6px 16px;border-left:2px solid var(--text);}
-.nv-quote-bullet{font-size:15px;line-height:1.7;color:var(--text-2);font-style:italic;padding:6px 0 6px 16px;border-left:2px solid var(--text);}
-
-/* Bullet with link chips */
-.nv-point-with-links{display:flex;flex-direction:column;gap:7px;}
-.nv-point-label{font-size:14px;line-height:1.75;color:var(--text);display:flex;gap:8px;align-items:flex-start;word-break:break-word;}
-.nv-point-label::before{content:'›';font-weight:700;font-size:16px;flex-shrink:0;line-height:1.55;}
-.nv-chips{display:flex;gap:6px;flex-wrap:wrap;padding-left:24px;}
-.nv-chip{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border:1px solid var(--border);border-radius:3px;text-decoration:none;color:var(--text);background:var(--surface);font-size:12px;transition:background .12s;max-width:100%;}
-.nv-chip:hover{background:var(--accent-bg);}
-.nv-chip-icon{width:14px;height:14px;flex-shrink:0;border-radius:2px;}
-.nv-chip-label{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 
 /* MODALS */
 .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.3);z-index:100;align-items:center;justify-content:center;padding:20px;}
@@ -190,15 +198,15 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
   .brand{font-size:13px;}.nav{gap:16px;}.nav-btn{font-size:12px;}
   .add-btn{padding:6px 10px;font-size:12px;}.icon-btn{width:28px;height:28px;}
   .container{padding:0 16px;}
-  .home-reading{padding:32px 16px 60px;}
+  .home-reading{padding:28px 16px 60px;}
   .home-suggest{padding:24px 0 60px;}
   .book-grid{grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:20px 14px;}
   .detail-wrap{padding:20px 16px 60px;}.detail-title{font-size:18px;}
   .entry-title{font-size:22px;}
   .filter-btn{padding:10px 10px;font-size:12px;}
   .modal{padding:20px 16px;gap:12px;}
-  .notes-textarea{min-height:200px;}
   input,select,textarea{font-size:16px !important;}
+  .mode-chip{padding:4px 9px;}
 }
 @media(max-width:380px){
   .nav-btn{font-size:11px;}.nav{gap:12px;}
@@ -260,8 +268,10 @@ const db=firebase.firestore();
 const DOC=db.collection('journal').doc('main');
 
 // ─── STATE ────────────────────────────────────────────────
-let books=[],currentView='home',activeId=null,editMode=false,homeReadingId=null,saveTimer=null;
+let books=[],currentView='home',activeId=null,homeReadingId=null,saveTimer=null;
 let libMode='grid',libFilter='all';
+let composerMode='note';      // note | quote | section
+let editIdx=null,editMode='note';  // inline edit of an existing item
 const STORAGE_KEY='reading_journal_books',INFO_PREFIX='bk_info_v2_';
 
 // ─── SEED ─────────────────────────────────────────────────
@@ -291,7 +301,7 @@ const seedBooks=[
   {id:uid(),title:"သူငယ်ချင်းလို့ဘဲဆက်၍ခေါ်မည်ခိုင်",author:"တက္ကသိုလ်ဘုန်းနိုင်",lang:"Burmese",status:"finished",
    notes:"* ဇာတ်လမ်း ဇာတ်သွားကောင်း\n* လွတ်လပ်ရေးရပြီးစ မြန်မာပြည်မိသားစုများ၏ ဘဝကိုလေ့လာနိုင်\n* စာအုပ်ဖတ်ပြီး ရင်၌ လေးလေးပင်ပင်ခံစားချက်မျိုးကျန်"},
   {id:uid(),title:"ကျွန်မဘဝခရီးမှ စာအုပ်များ",author:"ဂျူး",lang:"Burmese",status:"finished",
-   notes:"မယ်နုနှင့်ကုန်းဘောင်ရှာပုံတော်\n\n* Burma's Icy Mountains by Kingdon-Ward <https://archive.org/details/dli.pahar.2892/page/166/mode/2up>\n* A Narrative of the Mission to the Court of Ava in 1855 — Sir Henry Yule <https://archive.org/details/narrativeofmissi00yulerich>\n* မန္တလေးနှင့်အခြားမြို့ဟောင်းများ <https://archive.org/details/mandalayandothe02ocogoog/mode/2up>\n\nတိတ်ဆိတ်သောနွေဦးရာသီ\n\n* Silent Spring by Rachel Carson <https://archive.org/details/fp_Silent_Spring-Rachel_Carson-1962/mode/2up>\n\nဇီဝပဒေသာ (Biodiversity)\n\n* Life of Birds by David Attenborough\n* The Birds of Burma by Bertram E. Smythies <https://archive.org/details/birdsofburma0000bert> / <https://www.burmalibrary.org/docs13/Birds_of_Burma-ocr-to-op75-red.pdf>\n* Gastric Brooding Frog\n\nစိတ်မသက်သာဖွယ်အမှန်တရား An Inconvenient Truth by Al Gore\n\n* \"အစားကောင်းလေးတစ်ခု စားရရင် ကိုယ်နဲ့အတူ တခြားလူတွေကို ဝေကျွေးချင်တဲ့စိတ် ပေါ်လာသလိုပဲ ရုပ်ရှင်ကားလေးတစ်ခု ကြည့်ရရင်၊ စာအုပ်လေးတစ်အုပ်ဖတ်လိုက်ရရင် တခြားလူကိုပါကြည့်စေချင် ဖတ်စေချင်တဲ့စိတ်ပေါ်မိတယ်။\"\n* 1968 Apollo-8\n* 1972 Apollo-11\n* \"ခင်ဗျားကို ဒုက္ခရောက်စေတာက ခင်ဗျားမသိတဲ့ အရာကြောင့်မဟုတ်ဘူး။ အဲဒီလို မဖြစ်နိုင်ဘူးလို့ ခင်ဗျားသေချာပေါက် သိထားတဲ့ အရာကြောင့် ဒုက္ခရောက်တာ\"\n* \"It ain't what you don't know that gets you into trouble. It's what you know for sure that just ain't so.\""},
+   notes:"မယ်နုနှင့်ကုန်းဘောင်ရှာပုံတော်\n* Burma's Icy Mountains by Kingdon-Ward <https://archive.org/details/dli.pahar.2892/page/166/mode/2up>\n* A Narrative of the Mission to the Court of Ava in 1855 — Sir Henry Yule <https://archive.org/details/narrativeofmissi00yulerich>\n* မန္တလေးနှင့်အခြားမြို့ဟောင်းများ <https://archive.org/details/mandalayandothe02ocogoog/mode/2up>\nတိတ်ဆိတ်သောနွေဦးရာသီ\n* Silent Spring by Rachel Carson <https://archive.org/details/fp_Silent_Spring-Rachel_Carson-1962/mode/2up>\nဇီဝပဒေသာ (Biodiversity)\n* Life of Birds by David Attenborough\n* The Birds of Burma by Bertram E. Smythies <https://archive.org/details/birdsofburma0000bert> <https://www.burmalibrary.org/docs13/Birds_of_Burma-ocr-to-op75-red.pdf>\n* Gastric Brooding Frog\nစိတ်မသက်သာဖွယ်အမှန်တရား An Inconvenient Truth by Al Gore\n* \"အစားကောင်းလေးတစ်ခု စားရရင် ကိုယ်နဲ့အတူ တခြားလူတွေကို ဝေကျွေးချင်တဲ့စိတ် ပေါ်လာသလိုပဲ ရုပ်ရှင်ကားလေးတစ်ခု ကြည့်ရရင်၊ စာအုပ်လေးတစ်အုပ်ဖတ်လိုက်ရရင် တခြားလူကိုပါကြည့်စေချင် ဖတ်စေချင်တဲ့စိတ်ပေါ်မိတယ်။\"\n* 1968 Apollo-8\n* 1972 Apollo-11\n* \"ခင်ဗျားကို ဒုက္ခရောက်စေတာက ခင်ဗျားမသိတဲ့ အရာကြောင့်မဟုတ်ဘူး။ အဲဒီလို မဖြစ်နိုင်ဘူးလို့ ခင်ဗျားသေချာပေါက် သိထားတဲ့ အရာကြောင့် ဒုက္ခရောက်တာ\"\n* \"It ain't what you don't know that gets you into trouble. It's what you know for sure that just ain't so.\""},
   {id:uid(),title:"Leadership: Six Studies in World Strategy",author:"Henry Kissinger",lang:"English",status:"finished",notes:""},
   {id:uid(),title:"Steal Like an Artist",author:"Austin Kleon",lang:"English",status:"finished",notes:""},
   {id:uid(),title:"Becoming",author:"Michelle Obama",lang:"English",status:"toread",notes:""},
@@ -333,21 +343,19 @@ const seedBooks=[
 function uid(){return '_'+Math.random().toString(36).substr(2,9);}
 function cap(s){return s.charAt(0).toUpperCase()+s.slice(1);}
 function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
-function linkify(t){return esc(t).replace(/(https?:\/\/[^\s<]+)/g,'<a href="$1" target="_blank" rel="noopener">$1</a>');}
 function domainOf(u){try{return new URL(u).hostname.replace(/^www\./,'');}catch(e){return u;}}
 function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
 function hasNotes(b){return b.notes&&b.notes.trim();}
-function autoResize(el){if(!el)return;el.style.height='auto';el.style.height=el.scrollHeight+'px';}
+function autoResize(el){if(!el)return;el.style.height='auto';el.style.height=Math.min(el.scrollHeight,180)+'px';}
+function ctxBookId(){return currentView==='home'?homeReadingId:activeId;}
 
-// Backward-compat normalize (convert old entries[] to notes string)
 function normalize(b){
   if(Array.isArray(b.entries)){
     b.notes=b.entries.map(e=>{
       if(e.type==='quote')return`* "${e.text||''}"`;
       if(e.type==='link')return`* ${e.text||''} <${e.url||''}>`;
-      if(e.type==='point')return`* ${e.text||''}`;
-      return e.text||'';
-    }).filter(x=>x.trim()).join('\n');
+      return`* ${e.text||''}`;
+    }).filter(x=>x.trim()!=='*').join('\n');
     delete b.entries;return true;
   }
   if(b.notes===undefined){b.notes='';return true;}
@@ -355,99 +363,205 @@ function normalize(b){
 }
 function normalizeAll(){let ch=false;books.forEach(b=>{if(normalize(b))ch=true;});if(ch)saveLocal();}
 
-// ─── NOTE EDITOR ──────────────────────────────────────────
-const PLACEHOLDER=`Section heading (no prefix)
-
-* Bullet note
-* "Direct quote in quotes"
-* Note with link text <https://url>
-* Two links <https://url1> / <https://url2>`;
-
-function renderNotesEditor(bookId){
-  const b=books.find(x=>x.id===bookId);if(!b)return'';
-  return`<div class="notes-toolbar">
-    <button class="ntool-btn" onclick="ins('${bookId}','section')" title="New section heading">§ Section</button>
-    <button class="ntool-btn" onclick="ins('${bookId}','point')" title="Bullet point">* Point</button>
-    <button class="ntool-btn" onclick="ins('${bookId}','quote')" title="Wrap in quotes">" Quote</button>
-    <button class="ntool-btn" onclick="ins('${bookId}','link')" title="Insert link">⤷ Link</button>
-  </div>
-  <textarea id="notesArea" class="notes-textarea" oninput="notesChanged('${bookId}')" placeholder="${esc(PLACEHOLDER)}">${esc(b.notes)}</textarea>
-  <div class="notes-save-row"><span class="save-ind" id="saveStatus">Saves automatically</span></div>`;
+// ─── ITEMS: PARSE / SERIALIZE ─────────────────────────────
+// item = {kind:'section'|'note'|'quote', text, urls[]}
+function parseItems(text){
+  const items=[];
+  if(!text||!text.trim())return items;
+  const bulletRe=/^\s*[\*\-•▪◦·]\s+/;
+  text.split('\n').forEach(raw=>{
+    const t=raw.trim();
+    if(!t)return;
+    if(/^>\s?/.test(t)){items.push({kind:'quote',text:t.replace(/^>\s?/,''),urls:[]});return;}
+    if(bulletRe.test(raw)){
+      let c=raw.replace(bulletRe,'').trim();
+      if(c.startsWith('"')&&c.endsWith('"')&&c.length>2){items.push({kind:'quote',text:c.slice(1,-1),urls:[]});return;}
+      if(c.startsWith('“')&&c.endsWith('”')&&c.length>2){items.push({kind:'quote',text:c.slice(1,-1),urls:[]});return;}
+      const urls=[];
+      c=c.replace(/<(https?:\/\/[^>\s]+)>/g,(m,u)=>{urls.push(u);return' ';});
+      c=c.replace(/\((https?:\/\/[^)\s]+)\)/g,(m,u)=>{urls.push(u);return' ';});
+      c=c.replace(/(https?:\/\/[^\s]+)/g,(m,u)=>{urls.push(u);return' ';});
+      c=c.replace(/\s*\/\s*(?=\s|$)/g,' ').replace(/\s+/g,' ').trim();
+      items.push({kind:'note',text:c,urls});
+      return;
+    }
+    items.push({kind:'section',text:t,urls:[]});
+  });
+  return items;
 }
-
-function ins(bookId, type){
-  const ta=document.getElementById('notesArea');if(!ta)return;
-  ta.focus();
-  const s=ta.selectionStart,e=ta.selectionEnd,v=ta.value;
-  const sel=v.substring(s,e),pre=v.substring(0,s),post=v.substring(e);
-  let ins='',cursor=s;
-  const nl=pre.length>0&&!pre.endsWith('\n')?'\n':'';
-  if(type==='section'){ins=nl+'\n';cursor=s+nl.length+1;}
-  else if(type==='point'){ins=nl+'* ';cursor=s+nl.length+2;}
-  else if(type==='quote'){
-    if(sel){ta.value=pre+'"'+sel+'"'+post;ta.selectionStart=ta.selectionEnd=s+sel.length+2;notesChanged(bookId);autoResize(ta);return;}
-    ins='"  "';cursor=s+2;
-  }else if(type==='link'){ins='<https://>';cursor=s+1;}
-  ta.value=pre+ins+post;ta.selectionStart=ta.selectionEnd=cursor;
-  notesChanged(bookId);autoResize(ta);
+function serializeItems(items){
+  return items.map(it=>{
+    if(it.kind==='section')return it.text;
+    if(it.kind==='quote')return`* "${it.text}"`;
+    const u=(it.urls||[]).map(x=>` <${x}>`).join('');
+    return`* ${it.text}${u}`;
+  }).join('\n');
 }
-
-function notesChanged(bookId){
-  const b=books.find(x=>x.id===bookId);
-  const ta=document.getElementById('notesArea');
-  if(!b||!ta)return;
-  b.notes=ta.value;
-  autoResize(ta);
+function getItems(bookId){const b=books.find(x=>x.id===bookId);return b?parseItems(b.notes):[];}
+function setItems(bookId,items){
+  const b=books.find(x=>x.id===bookId);if(!b)return;
+  b.notes=serializeItems(items);
+  saveLocal();
   setSaveInd('Saving…','save-ind');
   clearTimeout(saveTimer);
-  saveTimer=setTimeout(()=>{saveLocal();syncToFirestore();setSaveInd('Saved ✓','save-ind saved');},600);
+  saveTimer=setTimeout(async()=>{await syncToFirestore();setSaveInd('Saved ✓','save-ind saved');},500);
+}
+function setSaveInd(txt,cls){['saveInd','saveStatus'].forEach(id=>{const el=document.getElementById(id);if(el){el.textContent=txt;el.className=cls;}});}
+
+// ─── NOTES LIST RENDER (shared: view & edit) ──────────────
+function chipsHtml(urls){
+  if(!urls||!urls.length)return'';
+  return`<div class="n-chips">${urls.map(u=>{
+    const dom=domainOf(u);
+    return`<a class="n-chip" href="${esc(u)}" target="_blank" rel="noopener" onclick="event.stopPropagation()"><img src="https://www.google.com/s2/favicons?domain=${encodeURIComponent(dom)}&sz=64" alt=""><span>${esc(dom)}</span></a>`;
+  }).join('')}</div>`;
 }
 
-function setSaveInd(txt,cls){
-  ['saveInd','saveStatus'].forEach(id=>{const el=document.getElementById(id);if(el){el.textContent=txt;el.className=cls;}});
+function itemInner(it){
+  if(it.kind==='section')return`<div class="n-section">${esc(it.text)}</div>`;
+  if(it.kind==='quote')return`<div class="n-quote">${esc(it.text)}</div>`;
+  return`<div class="n-note"><span>${esc(it.text)||'<span style="color:var(--text-muted)">(link)</span>'}</span></div>${chipsHtml(it.urls)}`;
 }
 
-// ─── NOTE RENDERER (view) ─────────────────────────────────
-function renderNotes(text){
-  if(!text||!text.trim())return'<div class="nv-empty">No notes yet.</div>';
-  const lines=text.split('\n');
-  const bulletRe=/^\s*[\*\-•▪◦·]\s+/;
-  const quoteLineRe=/^\s*>\s?/;
-  let html='<div class="notes-view">';
-  lines.forEach(raw=>{
-    const line=raw.trimEnd();
-    if(!line.trim())return;
-    if(quoteLineRe.test(line)){
-      // Legacy > quote
-      html+=`<blockquote class="nv-quote">${linkify(line.replace(quoteLineRe,'').trim())}</blockquote>`;
-    }else if(bulletRe.test(line)){
-      const content=line.replace(bulletRe,'').trim();
-      // Quote: starts AND ends with "
-      if(content.startsWith('"')&&content.endsWith('"')&&content.length>2){
-        html+=`<blockquote class="nv-quote-bullet">${linkify(content.slice(1,-1))}</blockquote>`;
-        return;
-      }
-      // Extract <url> and (url) links
-      const urls=[];
-      let label=content;
-      label=label.replace(/<(https?:\/\/[^>\s]+)>/g,(m,u)=>{urls.push(u);return'';});
-      label=label.replace(/\((https?:\/\/[^)\s]+)\)/g,(m,u)=>{urls.push(u);return'';});
-      label=label.replace(/\s*\/\s*/g,' ').replace(/\s+/g,' ').trim();
-      if(!urls.length){
-        html+=`<div class="nv-point">${linkify(content)}</div>`;
-      }else{
-        const chips=urls.map(u=>{
-          const dom=domainOf(u);
-          return`<a class="nv-chip" href="${esc(u)}" target="_blank" rel="noopener"><img class="nv-chip-icon" src="https://www.google.com/s2/favicons?domain=${encodeURIComponent(dom)}&sz=64" alt=""><span class="nv-chip-label">${esc(dom)}</span></a>`;
-        }).join('');
-        html+=`<div class="nv-point-with-links">${label?`<div class="nv-point-label">${esc(label)}</div>`:''}<div class="nv-chips">${chips}</div></div>`;
-      }
+function renderNotesList(bookId,editable){
+  const items=getItems(bookId);
+  let html=`<div class="notes-list" id="notesList">`;
+  if(!items.length&&!editable)html+=`<div class="nv-empty">No notes yet.</div>`;
+  items.forEach((it,idx)=>{
+    if(editable&&editIdx===idx){
+      html+=inlineEditor(it,idx);
+    }else if(editable){
+      html+=`<div class="n-item clickable" onclick="startEdit(${idx})">${itemInner(it)}<button class="n-x" onclick="event.stopPropagation();delItem(${idx})" title="Delete">×</button></div>`;
     }else{
-      // Section heading
-      html+=`<div class="nv-section">${esc(line.trim())}</div>`;
+      html+=`<div class="n-item">${itemInner(it)}</div>`;
     }
   });
-  html+='</div>';return html;
+  html+=`</div>`;
+  if(editable)html+=composerHtml(items.length);
+  return html;
+}
+
+function composerHtml(){
+  const ph=composerMode==='quote'?'Type or paste a quote…':composerMode==='section'?'Section heading…':'Write a note — paste links anywhere…';
+  return`<div class="composer">
+    <div class="mode-chips">
+      <button class="mode-chip ${composerMode==='note'?'active':''}" onclick="setMode('note')">Note</button>
+      <button class="mode-chip ${composerMode==='quote'?'active':''}" onclick="setMode('quote')">" Quote</button>
+      <button class="mode-chip ${composerMode==='section'?'active':''}" onclick="setMode('section')">§ Section</button>
+    </div>
+    <div class="composer-row">
+      <textarea class="composer-input" id="composerInput" rows="1" placeholder="${ph}" oninput="autoResize(this)" onkeydown="composerKey(event)"></textarea>
+      <button class="composer-send" onclick="composerAdd()" title="Add (Enter)">↵</button>
+    </div>
+    <div class="composer-hint">Enter to add · links become buttons automatically · tap a note to edit</div>
+  </div>`;
+}
+
+function inlineEditor(it,idx){
+  const text=it.kind==='note'?(it.text+((it.urls&&it.urls.length)?' '+it.urls.join(' '):'')):it.text;
+  return`<div class="n-editing">
+    <div class="mode-chips">
+      <button class="mode-chip ${editMode==='note'?'active':''}" onclick="setEditMode('note')">Note</button>
+      <button class="mode-chip ${editMode==='quote'?'active':''}" onclick="setEditMode('quote')">" Quote</button>
+      <button class="mode-chip ${editMode==='section'?'active':''}" onclick="setEditMode('section')">§ Section</button>
+    </div>
+    <div class="composer-row">
+      <textarea class="composer-input" id="editInput" rows="1" oninput="autoResize(this)" onkeydown="editKey(event,${idx})">${esc(text)}</textarea>
+    </div>
+    <div class="n-edit-actions">
+      <button class="n-edit-cancel" onclick="cancelEdit()">Cancel (Esc)</button>
+      <button class="n-edit-save" onclick="saveEdit(${idx})">Save</button>
+    </div>
+  </div>`;
+}
+
+function refreshNotesUI(){
+  const bookId=ctxBookId();if(!bookId)return;
+  const holder=document.getElementById('notesHolder');if(!holder)return;
+  const editable=currentView==='home'||currentView==='library';
+  // In library, finished books still editable directly (agile) — always editable when in detail
+  holder.innerHTML=renderNotesList(bookId,editable);
+  const ci=document.getElementById('composerInput');if(ci)autoResize(ci);
+  const ei=document.getElementById('editInput');if(ei){ei.focus();ei.setSelectionRange(ei.value.length,ei.value.length);autoResize(ei);}
+}
+
+// ─── COMPOSER ACTIONS ─────────────────────────────────────
+function setMode(m){
+  const ci=document.getElementById('composerInput');
+  const val=ci?ci.value:'';
+  composerMode=m;refreshNotesUI();
+  const ci2=document.getElementById('composerInput');
+  if(ci2){ci2.value=val;ci2.focus();autoResize(ci2);}
+}
+function composerKey(e){
+  if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();composerAdd();}
+}
+function composerAdd(){
+  const ci=document.getElementById('composerInput');if(!ci)return;
+  const raw=ci.value.trim();if(!raw)return;
+  const bookId=ctxBookId();if(!bookId)return;
+  const items=getItems(bookId);
+  items.push(buildItem(composerMode,raw));
+  if(composerMode==='section')composerMode='note'; // after a heading, next input is a note
+  setItems(bookId,items);
+  refreshNotesUI();
+  const ci2=document.getElementById('composerInput');
+  if(ci2){ci2.value='';ci2.focus();autoResize(ci2);}
+}
+function buildItem(kind,raw){
+  if(kind==='section')return{kind:'section',text:raw.replace(/\n+/g,' ').trim(),urls:[]};
+  if(kind==='quote')return{kind:'quote',text:raw.replace(/^["“]|["”]$/g,'').trim(),urls:[]};
+  // note: auto-extract urls
+  const urls=[];
+  let text=raw.replace(/<(https?:\/\/[^>\s]+)>/g,(m,u)=>{urls.push(u);return' ';});
+  text=text.replace(/\((https?:\/\/[^)\s]+)\)/g,(m,u)=>{urls.push(u);return' ';});
+  text=text.replace(/(https?:\/\/[^\s]+)/g,(m,u)=>{urls.push(u);return' ';});
+  text=text.replace(/\s*\/\s*(?=\s|$)/g,' ').replace(/\s+/g,' ').trim();
+  return{kind:'note',text,urls};
+}
+
+// ─── INLINE EDIT ACTIONS ──────────────────────────────────
+function startEdit(idx){
+  const items=getItems(ctxBookId());
+  editIdx=idx;editMode=items[idx]?items[idx].kind:'note';
+  refreshNotesUI();
+}
+function setEditMode(m){
+  const ei=document.getElementById('editInput');const val=ei?ei.value:'';
+  editMode=m;refreshNotesUI();
+  const ei2=document.getElementById('editInput');
+  if(ei2){ei2.value=val;ei2.focus();autoResize(ei2);}
+}
+function editKey(e,idx){
+  if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();saveEdit(idx);}
+  else if(e.key==='Escape'){e.preventDefault();cancelEdit();}
+}
+function saveEdit(idx){
+  const ei=document.getElementById('editInput');if(!ei)return;
+  const raw=ei.value.trim();
+  const bookId=ctxBookId();
+  const items=getItems(bookId);
+  if(!raw){items.splice(idx,1);}
+  else items[idx]=buildItem(editMode,raw);
+  editIdx=null;
+  setItems(bookId,items);
+  refreshNotesUI();
+}
+function cancelEdit(){editIdx=null;refreshNotesUI();}
+function delItem(idx){
+  const bookId=ctxBookId();
+  const items=getItems(bookId);
+  items.splice(idx,1);
+  if(editIdx===idx)editIdx=null;
+  setItems(bookId,items);
+  refreshNotesUI();
+}
+
+// ─── VIEW-ONLY RENDER (feed) ──────────────────────────────
+function renderNotesView(text){
+  const items=parseItems(text);
+  if(!items.length)return'<div class="nv-empty">No notes yet.</div>';
+  return`<div class="notes-list">${items.map(it=>`<div class="n-item">${itemInner(it)}</div>`).join('')}</div>`;
 }
 
 // ─── BOOK INFO (Open Library) ─────────────────────────────
@@ -472,7 +586,7 @@ async function fetchBookInfo(b){
 async function hydrateBookInfo(items){
   for(const it of items){
     const info=await fetchBookInfo(it.book);
-    if(it.coverId){const el=document.getElementById(it.coverId);if(el&&info.cover){el.style.backgroundImage=`url("${info.cover}")`;const l=el.querySelector('.card-letter');if(l)l.style.display='none';}}
+    if(it.coverId){const el=document.getElementById(it.coverId);if(el&&info.cover){el.style.backgroundImage=`url("${info.cover}")`;const l=el.querySelector('.card-letter');if(l)l.style.display='none';else el.textContent='';}}
     if(it.summaryId){const el=document.getElementById(it.summaryId);if(el)el.textContent=info.summary||'No summary found on Open Library.';}
   }
 }
@@ -498,13 +612,11 @@ function saveLocal(){localStorage.setItem(STORAGE_KEY,JSON.stringify(books));}
 
 // ─── VIEW SWITCHING ───────────────────────────────────────
 function setView(v){
-  currentView=v;
+  currentView=v;editIdx=null;
   ['home','feed','library'].forEach(n=>document.getElementById('view'+cap(n)).classList.toggle('show',n===v));
   document.querySelectorAll('.nav-btn').forEach(btn=>btn.classList.toggle('active',btn.dataset.view===v));
   if(v==='home')renderHome();else if(v==='feed')renderFeed();else renderLibrary();
 }
-
-function initTA(){setTimeout(()=>{const ta=document.getElementById('notesArea');if(ta){autoResize(ta);}},30);}
 
 // ─── HOME ─────────────────────────────────────────────────
 function renderHome(){
@@ -527,10 +639,10 @@ function renderHome(){
         <span class="save-ind" id="saveInd"></span>
       </div>
       <div class="notes-header"><span class="notes-label">Notes</span></div>
-      ${renderNotesEditor(b.id)}
+      <div id="notesHolder">${renderNotesList(b.id,true)}</div>
       <div class="home-foot"><a onclick="setView('feed')">Finished notes →</a><a onclick="setView('library')">Library →</a></div>
     </div>`;
-    initTA();
+    const ci=document.getElementById('composerInput');if(ci)autoResize(ci);
   }else{
     el.innerHTML=`<div class="container"><div class="home-suggest">
       <div class="suggest-toolbar"><div class="suggest-eyebrow">Your next read</div><button class="shuffle-btn" onclick="renderSuggest()">↺ Shuffle</button></div>
@@ -540,8 +652,8 @@ function renderHome(){
     renderSuggest();
   }
 }
-function homeSwitch(id){homeReadingId=id;renderHome();}
-function homeStatus(id,val){const b=books.find(x=>x.id===id);if(!b)return;b.status=val;saveLocal();syncToFirestore();homeReadingId=null;renderHome();}
+function homeSwitch(id){homeReadingId=id;editIdx=null;renderHome();}
+function homeStatus(id,val){const b=books.find(x=>x.id===id);if(!b)return;b.status=val;saveLocal();syncToFirestore();homeReadingId=null;editIdx=null;renderHome();}
 
 function renderSuggest(){
   const cont=document.getElementById('suggestList');if(!cont)return;
@@ -576,7 +688,7 @@ function renderFeedList(){
     <div class="entry-label">Finished &nbsp;·&nbsp; ${esc(b.lang)}</div>
     <div class="entry-title">${esc(b.title)}</div>
     <div class="entry-author">${esc(b.author)||'Unknown author'}</div>
-    ${hasNotes(b)?renderNotes(b.notes):'<div class="entry-none">No notes yet.</div>'}
+    ${hasNotes(b)?renderNotesView(b.notes):'<div class="entry-none">No notes yet.</div>'}
     <div class="entry-action"><button class="text-link" onclick="openInLibrary('${b.id}')">Open in Library ↗</button></div>
   </div>`).join('');
 }
@@ -613,17 +725,14 @@ function renderBookGrid(){
   cont.innerHTML=html;hydrateBookInfo(covers);
 }
 
-function openBook(id){activeId=id;const b=books.find(x=>x.id===id);if(!b)return;editMode=b.status!=='finished';libMode='detail';renderLibDetail();}
-function backToGrid(){libMode='grid';activeId=null;renderLibGrid();}
+function openBook(id){activeId=id;editIdx=null;libMode='detail';renderLibDetail();}
+function backToGrid(){libMode='grid';activeId=null;editIdx=null;renderLibGrid();}
 
 function renderLibDetail(){
   const b=books.find(x=>x.id===activeId);if(!b){libMode='grid';renderLibGrid();return;}
   const el=document.getElementById('viewLibrary');
   const cid='ld_'+b.id,sid='ls_'+b.id,showAbout=b.lang==='English';
   const about=showAbout?`<div class="detail-about"><div class="detail-about-label">About</div><div class="detail-about-text" id="${sid}">Loading…</div></div>`:'';
-  const body=editMode
-    ?`<div class="notes-header"><span class="notes-label">📝 Notes</span><span class="save-ind" id="saveStatus"></span></div>${renderNotesEditor(b.id)}`
-    :`<div class="notes-header"><span class="notes-label">📝 Notes</span></div>${renderNotes(b.notes)}`;
   el.innerHTML=`<div class="detail-wrap">
     <button class="back-btn" onclick="backToGrid()">← All books</button>
     <div class="detail-meta">
@@ -637,21 +746,20 @@ function renderLibDetail(){
             <option value="reading" ${b.status==='reading'?'selected':''}>Currently Reading</option>
             <option value="finished" ${b.status==='finished'?'selected':''}>Finished</option>
           </select>
-          ${editMode?`<button class="detail-edit-btn ghost" onclick="exitEdit()">Done</button>`:`<button class="detail-edit-btn" onclick="enterEdit()">Edit notes</button>`}
           <button class="detail-del" onclick="confirmDelete('${b.id}')">Delete</button>
         </div>
       </div>
     </div>
-    ${about}<hr class="detail-divider">${body}
+    ${about}<hr class="detail-divider">
+    <div class="notes-header"><span class="notes-label">📝 Notes</span><span class="save-ind" id="saveStatus"></span></div>
+    <div id="notesHolder">${renderNotesList(b.id,true)}</div>
   </div>`;
   if(showAbout)hydrateBookInfo([{coverId:cid,summaryId:sid,book:b}]);
-  if(editMode)initTA();
+  const ci=document.getElementById('composerInput');if(ci)autoResize(ci);
 }
 
-function openInLibrary(id){activeId=id;const b=books.find(x=>x.id===id);if(b)editMode=b.status!=='finished';libMode='detail';setView('library');}
-function enterEdit(){editMode=true;renderLibDetail();}
-function exitEdit(){saveLocal();syncToFirestore();editMode=false;renderLibDetail();}
-function changeStatus(id,val){const b=books.find(x=>x.id===id);if(!b)return;b.status=val;saveLocal();editMode=val!=='finished';renderLibDetail();syncToFirestore();}
+function openInLibrary(id){activeId=id;editIdx=null;libMode='detail';setView('library');}
+function changeStatus(id,val){const b=books.find(x=>x.id===id);if(!b)return;b.status=val;saveLocal();editIdx=null;renderLibDetail();syncToFirestore();}
 function confirmDelete(id){const b=books.find(x=>x.id===id);if(!b)return;if(!confirm(`Delete "${b.title}"?`))return;books=books.filter(x=>x.id!==id);activeId=null;libMode='grid';saveLocal();renderLibGrid();syncToFirestore();}
 
 // ─── ADD BOOK ─────────────────────────────────────────────
@@ -662,7 +770,7 @@ function addBook(){
   const b={id:uid(),title,author:document.getElementById('newAuthor').value.trim(),lang:document.getElementById('newLang').value,status:document.getElementById('newStatus').value,notes:''};
   books.unshift(b);saveLocal();closeAddBook();
   document.getElementById('newTitle').value='';document.getElementById('newAuthor').value='';
-  syncToFirestore();activeId=b.id;libMode='detail';editMode=true;setView('library');
+  syncToFirestore();activeId=b.id;libMode='detail';setView('library');
 }
 
 // ─── EXPORT / IMPORT ──────────────────────────────────────
